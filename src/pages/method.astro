@@ -3,7 +3,7 @@ import Base from '../layouts/Base.astro';
 import MethodePage from '../components/pages/MethodePage.astro';
 import { getContent } from '../i18n/content';
 
-const locale = 'fr' as const;
+const locale = 'en' as const;
 const c = getContent(locale);
 ---
 <Base title={c.methode.meta.title} description={c.methode.meta.description} pageId="methode" locale={locale}>

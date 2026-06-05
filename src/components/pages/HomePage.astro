@@ -1,6 +1,6 @@
 ---
 import { getContent } from '../../i18n/content';
-import { pathFor, type Locale } from '../../i18n/routes';
+import { pathFor, withBase, type Locale } from '../../i18n/routes';
 import SectionHeading from '../SectionHeading.astro';
 import EcosystemDiagram from '../EcosystemDiagram.astro';
 import Figure from '../Figure.astro';
@@ -19,21 +19,46 @@ const aboutHref = pathFor('about', locale);
 const replace = (file: string) => (isFr ? `À remplacer · public/images/${file}` : `Replace · public/images/${file}`);
 ---
 
-<!-- ============ HERO ============ -->
+<!-- ============ HERO (vidéo plein écran + géométrie) ============ -->
 <section class="hero">
-  <div class="container">
-    <span class="eyebrow" data-reveal>{h.hero.eyebrow}</span>
+  <div class="hero__media">
+    <video class="hero__video" autoplay muted loop playsinline preload="metadata" poster={withBase('/images/hero-poster.jpg')}>
+      <source src={withBase('/videos/hero.mp4')} type="video/mp4" />
+    </video>
+    <div class="hero__scrim"></div>
+    <svg class="hero__geo" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <defs>
+        <pattern id="hgrid" width="64" height="64" patternUnits="userSpaceOnUse">
+          <path d="M64 0H0V64" fill="none" stroke="#ffffff" stroke-width="0.5" opacity="0.1" />
+        </pattern>
+      </defs>
+      <rect width="1200" height="800" fill="url(#hgrid)" />
+      <circle cx="965" cy="400" r="330" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.16" />
+      <rect class="hero__geo-rot" x="805" y="240" width="320" height="320" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.13" />
+      <line x1="120" y1="150" x2="540" y2="640" stroke="#ffffff" stroke-width="1" opacity="0.1" />
+      <line x1="40" y1="560" x2="360" y2="560" stroke="#ffffff" stroke-width="1" opacity="0.12" />
+      <line class="hero__geo-line" x1="965" y1="70" x2="965" y2="730" stroke="#9db8dd" stroke-width="1.5" />
+      <circle cx="965" cy="400" r="4" fill="#9db8dd" />
+      <path d="M64 64 H128 M64 64 V128" stroke="#ffffff" stroke-width="1.2" opacity="0.5" />
+      <path d="M1136 736 H1072 M1136 736 V672" stroke="#ffffff" stroke-width="1.2" opacity="0.5" />
+    </svg>
+  </div>
+
+  <div class="container hero__inner">
+    <span class="eyebrow hero__eyebrow" data-reveal>{h.hero.eyebrow}</span>
     <h1 class="hero__title" data-reveal style="--reveal-delay:80ms">{h.hero.titleA} {h.hero.titleB}</h1>
-    <div class="hero__row">
-      <p class="hero__subtitle" data-reveal style="--reveal-delay:160ms">{h.hero.subtitle}</p>
-      <div class="hero__actions" data-reveal style="--reveal-delay:240ms">
-        <a class="btn" href={contactHref}>{c.common.ctaPrimary} <Arrow class="arrow" /></a>
-        <a class="arrow-link" href={conceptHref}>{c.common.ctaSecondary} <Arrow class="arrow" size={15} /></a>
-      </div>
+    <p class="hero__subtitle" data-reveal style="--reveal-delay:160ms">{h.hero.subtitle}</p>
+    <div class="hero__actions" data-reveal style="--reveal-delay:240ms">
+      <a class="btn hero__btn" href={contactHref}>{c.common.ctaPrimary} <Arrow class="arrow" /></a>
+      <a class="arrow-link hero__link" href={conceptHref}>{c.common.ctaSecondary} <Arrow class="arrow" size={15} /></a>
     </div>
   </div>
-  <div class="hero__media" data-reveal style="--reveal-delay:200ms">
-    <Figure src="/images/hero.jpg" ratio="21 / 9" reveal={false} label={isFr ? 'Photographie d’architecture — plein cadre' : 'Architecture photography — full bleed'} caption={replace('hero.jpg')} />
+
+  <div class="hero__foot">
+    <div class="container hero__foot-row">
+      <span class="hero__coord">40.71°N 74.00°W</span>
+      <span class="hero__cue">{isFr ? 'Défiler' : 'Scroll'} ↓</span>
+    </div>
   </div>
 </section>
 
@@ -192,21 +217,32 @@ const replace = (file: string) => (isFr ? `À remplacer · public/images/${file}
 </section>
 
 <style>
-  /* ---- HERO ---- */
-  .hero { padding-top: clamp(2.5rem, 7vh, 5rem); }
-  .hero .eyebrow { margin-bottom: var(--space-m); }
-  .hero__title {
-    font-size: var(--step-6); font-weight: 400; line-height: 1.02;
-    letter-spacing: var(--tracking-tight); max-width: 18ch;
-  }
-  .hero__row { display: flex; flex-direction: column; gap: var(--space-l); margin-top: var(--space-xl); }
-  .hero__subtitle { font-size: var(--step-1); line-height: 1.5; color: var(--text-muted); max-width: 52ch; }
-  .hero__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-m); }
-  .hero__media { margin-top: var(--space-xl); padding-inline: var(--gutter); }
-  @media (min-width: 60em) {
-    .hero__row { flex-direction: row; justify-content: space-between; align-items: flex-end; gap: var(--space-2xl); }
-    .hero__subtitle { max-width: 44ch; }
-  }
+  /* ---- HERO (vidéo plein écran + géométrie) ---- */
+  .hero { position: relative; min-height: 100vh; min-height: 100svh; display: grid; background: var(--ink); color: #fff; overflow: hidden; }
+  .hero__media { position: absolute; inset: 0; z-index: 0; }
+  .hero__video { width: 100%; height: 100%; object-fit: cover; }
+  .hero__scrim { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(14,14,16,0.5) 0%, rgba(14,14,16,0.55) 45%, rgba(14,14,16,0.78) 100%); }
+  .hero__geo { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .hero__geo-line { stroke-dasharray: 660; stroke-dashoffset: 660; animation: hdraw 2s var(--ease) 0.3s forwards; }
+  .hero__geo-rot { transform-box: fill-box; transform-origin: center; animation: hrot 90s linear infinite; }
+  @keyframes hdraw { to { stroke-dashoffset: 0; } }
+  @keyframes hrot { to { transform: rotate(360deg); } }
+  @media (prefers-reduced-motion: reduce) { .hero__geo-line { stroke-dashoffset: 0; animation: none; } .hero__geo-rot { animation: none; } }
+
+  .hero__inner { position: relative; z-index: 2; align-self: center; width: 100%; padding-block: var(--space-2xl); }
+  .hero .eyebrow { color: rgba(255,255,255,0.72); margin-bottom: var(--space-m); }
+  .hero .eyebrow::before { background: rgba(255,255,255,0.45); }
+  .hero__title { color: #fff; font-size: var(--step-6); font-weight: 400; line-height: 1.0; letter-spacing: var(--tracking-tight); max-width: 16ch; }
+  .hero__subtitle { color: rgba(255,255,255,0.86); font-size: var(--step-1); line-height: 1.5; max-width: 46ch; margin-top: var(--space-l); }
+  .hero__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-m); margin-top: var(--space-xl); }
+  .hero__btn { background: #fff; color: var(--ink); border-color: #fff; }
+  .hero__btn:hover { background: transparent; color: #fff; }
+  .hero__link { color: #fff; border-bottom-color: rgba(255,255,255,0.4); }
+  .hero__link:hover { border-bottom-color: #fff; }
+
+  .hero__foot { position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; padding-bottom: var(--space-l); }
+  .hero__foot-row { display: flex; justify-content: space-between; align-items: center; font-size: var(--step--1); letter-spacing: var(--tracking-wide); color: rgba(255,255,255,0.6); }
+  .hero__coord { color: var(--accent); }
 
   /* ---- CHIFFRES ---- */
   .figures-band { border-bottom: 1px solid var(--line); }

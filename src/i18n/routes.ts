@@ -1,8 +1,8 @@
 /** Routage bilingue FR (par défaut, sans préfixe) / EN (préfixe /en). */
 
-export const locales = ['fr', 'en'] as const;
+export const locales = ['en', 'fr'] as const;
 export type Locale = (typeof locales)[number];
-export const defaultLocale: Locale = 'fr';
+export const defaultLocale: Locale = 'en';
 
 export interface RouteDef {
   id: string;
@@ -14,17 +14,17 @@ export interface RouteDef {
 
 /** Pages du site, dans l'ordre de la navigation. */
 export const routes: RouteDef[] = [
-  { id: 'home', fr: '/', en: '/en/', labelFr: 'Accueil', labelEn: 'Home' },
-  { id: 'concept', fr: '/concept/', en: '/en/concept/', labelFr: 'Le concept', labelEn: 'Concept' },
-  { id: 'solutions', fr: '/solutions/', en: '/en/solutions/', labelFr: 'Solutions', labelEn: 'Solutions' },
-  { id: 'methode', fr: '/methode/', en: '/en/method/', labelFr: 'La méthode', labelEn: 'Method' },
-  { id: 'about', fr: '/a-propos/', en: '/en/about/', labelFr: 'À propos', labelEn: 'About' },
-  { id: 'contact', fr: '/contact/', en: '/en/contact/', labelFr: 'Contact', labelEn: 'Contact' },
+  { id: 'home', en: '/', fr: '/fr/', labelEn: 'Home', labelFr: 'Accueil' },
+  { id: 'concept', en: '/concept/', fr: '/fr/concept/', labelEn: 'Concept', labelFr: 'Le concept' },
+  { id: 'solutions', en: '/solutions/', fr: '/fr/solutions/', labelEn: 'Solutions', labelFr: 'Solutions' },
+  { id: 'methode', en: '/method/', fr: '/fr/methode/', labelEn: 'Method', labelFr: 'La méthode' },
+  { id: 'about', en: '/about/', fr: '/fr/a-propos/', labelEn: 'About', labelFr: 'À propos' },
+  { id: 'contact', en: '/contact/', fr: '/fr/contact/', labelEn: 'Contact', labelFr: 'Contact' },
 ];
 
 export function getLocaleFromUrl(url: URL): Locale {
   const [, first] = url.pathname.split('/');
-  return first === 'en' ? 'en' : 'fr';
+  return first === 'fr' ? 'fr' : 'en';
 }
 
 export function routeById(id: string): RouteDef {

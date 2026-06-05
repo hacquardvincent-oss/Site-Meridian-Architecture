@@ -6,23 +6,25 @@
    ============================================================= */
 
 :root {
-  /* ---- Neutres chauds (ivoire · pierre · sable · charbon) ---- */
-  --plaster: #f0ece3;        /* fond principal — ivoire chaud */
-  --plaster-deep: #e7e1d5;   /* fond alterné — sable */
-  --paper: #f7f3ea;          /* surfaces / cartes — ivoire clair */
-  --concrete: #d8d1c3;       /* pierre — séparateurs */
+  /* ---- Blanc & noir (charte principale) ---- */
+  --plaster: #ffffff;        /* fond principal — blanc */
+  --plaster-deep: #f4f5f6;   /* fond alterné — gris très clair, froid */
+  --paper: #ffffff;          /* surfaces / cartes */
+  --concrete: #e4e5e7;       /* séparateurs */
 
-  --ink: #1b1813;            /* charbon chaud — texte principal */
-  --ink-2: #262219;          /* charbon secondaire (surfaces sombres) */
-  --ink-soft: #4d473d;       /* texte secondaire */
-  --stone: #8c8678;          /* texte tertiaire / légendes */
+  --ink: #0e0e10;            /* noir — typographie */
+  --ink-2: #1a1a1d;          /* noir secondaire (surfaces sombres) */
+  --ink-soft: #43454a;       /* texte secondaire */
+  --stone: #8a8d93;          /* texte tertiaire / légendes */
 
-  /* ---- Pas d'accent coloré : « accent » = charbon (élégance mono) ---- */
-  --brass: #1b1813;
-  --brass-deep: #1b1813;
-  --brass-wash: #e7e1d5;
-  --on-accent: #f7f3ea;
-  --blueprint: #4d473d;
+  /* ---- Accent : BLEU PASTEL, réservé aux animations / détails ---- */
+  --accent: #9db8dd;         /* bleu pastel */
+  --accent-deep: #6f93c4;    /* bleu pastel plus soutenu */
+  --brass: #9db8dd;          /* alias accent (interactions discrètes) */
+  --brass-deep: #0e0e10;     /* texte : reste noir */
+  --brass-wash: #eef3fa;     /* bleu très dilué */
+  --on-accent: #0e0e10;
+  --blueprint: #9db8dd;
 
   /* ---- Sémantique ---- */
   --bg: var(--plaster);
@@ -31,10 +33,9 @@
   --text: var(--ink);
   --text-muted: var(--ink-soft);
   --text-subtle: var(--stone);
-  --accent: var(--ink);
   --accent-text: var(--ink);
-  --line: color-mix(in srgb, var(--ink) 14%, transparent);
-  --line-strong: color-mix(in srgb, var(--ink) 26%, transparent);
+  --line: color-mix(in srgb, var(--ink) 11%, transparent);
+  --line-strong: color-mix(in srgb, var(--ink) 20%, transparent);
 
   /* ---- Typographie : un seul sans raffiné (esprit SOM/BIG) ---- */
   --font-display: 'Hanken Grotesk', 'Helvetica Neue', Arial, sans-serif;
