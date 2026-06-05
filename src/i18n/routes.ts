@@ -33,9 +33,19 @@ export function routeById(id: string): RouteDef {
   return r;
 }
 
+const BASE = import.meta.env.BASE_URL || '/';
+
+/** Préfixe un chemin absolu par la base du site (utile pour un hébergement en sous-dossier). */
+export function withBase(path: string): string {
+  const p = path.startsWith('/') ? path : `/${path}`;
+  if (BASE === '/' || BASE === '') return p;
+  const b = BASE.endsWith('/') ? BASE.slice(0, -1) : BASE;
+  return `${b}${p}`;
+}
+
 export function pathFor(id: string, locale: Locale): string {
   const r = routeById(id);
-  return locale === 'en' ? r.en : r.fr;
+  return withBase(locale === 'en' ? r.en : r.fr);
 }
 
 export function labelFor(id: string, locale: Locale): string {
@@ -46,5 +56,5 @@ export function labelFor(id: string, locale: Locale): string {
 export function navItems(locale: Locale) {
   return routes
     .filter((r) => r.id !== 'home')
-    .map((r) => ({ href: locale === 'en' ? r.en : r.fr, label: locale === 'en' ? r.labelEn : r.labelFr, id: r.id }));
+    .map((r) => ({ href: withBase(locale === 'en' ? r.en : r.fr), label: locale === 'en' ? r.labelEn : r.labelFr, id: r.id }));
 }

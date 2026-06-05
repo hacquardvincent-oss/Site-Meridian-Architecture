@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { routes } from '../i18n/routes';
+import { routes, pathFor } from '../i18n/routes';
 
 const FALLBACK = new URL('https://meridian-architecture.com');
 
@@ -8,7 +8,11 @@ export const GET: APIRoute = ({ site }) => {
   const abs = (path: string) => new URL(path, base).href;
 
   const entries = routes
-    .flatMap((r) => [abs(r.fr), abs(r.en)].map((loc) => ({ loc, fr: abs(r.fr), en: abs(r.en) })))
+    .flatMap((r) => {
+      const fr = abs(pathFor(r.id, 'fr'));
+      const en = abs(pathFor(r.id, 'en'));
+      return [fr, en].map((loc) => ({ loc, fr, en }));
+    })
     .map(
       ({ loc, fr, en }) => `  <url>
     <loc>${loc}</loc>
