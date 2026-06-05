@@ -1,0 +1,40 @@
+---
+import Base from '../layouts/Base.astro';
+import Arrow from '../components/Arrow.astro';
+import { pathFor } from '../i18n/routes';
+import { getContent } from '../i18n/content';
+
+const locale = 'en' as const;
+const c = getContent(locale);
+const homeHref = pathFor('home', locale);
+const homeFr = pathFor('home', 'fr');
+const contactHref = pathFor('contact', locale);
+---
+<Base title="404 — Meridian Architecture" description="Page introuvable / Page not found." pageId="home" locale={locale}>
+  <section class="nf">
+    <div class="container nf__inner">
+      <svg class="nf__geo" viewBox="0 0 200 200" aria-hidden="true">
+        <circle cx="100" cy="100" r="80" fill="none" stroke="currentColor" stroke-width="1" opacity="0.18" />
+        <line x1="100" y1="20" x2="100" y2="180" stroke="#9db8dd" stroke-width="1.2" />
+        <line x1="20" y1="100" x2="180" y2="100" stroke="currentColor" stroke-width="1" opacity="0.18" />
+      </svg>
+      <span class="eyebrow">Error 404</span>
+      <h1 class="nf__title">Page not found.</h1>
+      <p class="nf__text">This address has moved or no longer exists. <span class="subtle">Cette page a été déplacée ou n’existe plus.</span></p>
+      <div class="nf__actions">
+        <a class="btn" href={homeHref}>Home <Arrow class="arrow" /></a>
+        <a class="arrow-link" href={homeFr}>Version française <Arrow class="arrow" size={15} /></a>
+        <a class="arrow-link" href={contactHref}>Contact <Arrow class="arrow" size={15} /></a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .nf { min-height: 70vh; display: grid; align-items: center; }
+  .nf__inner { position: relative; max-width: 44rem; }
+  .nf__geo { position: absolute; top: -3rem; right: 0; width: 12rem; height: 12rem; color: var(--ink); opacity: 0.8; pointer-events: none; }
+  .nf__title { font-size: var(--step-5); font-weight: 400; margin-block: var(--space-m); }
+  .nf__text { font-size: var(--step-1); color: var(--text-muted); max-width: 40ch; }
+  .nf__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-m); margin-top: var(--space-xl); }
+</style>
