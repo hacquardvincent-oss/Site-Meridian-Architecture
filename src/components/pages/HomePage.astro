@@ -3,12 +3,17 @@ import { getContent } from '../../i18n/content';
 import { pathFor, type Locale } from '../../i18n/routes';
 import SectionHeading from '../SectionHeading.astro';
 import EcosystemDiagram from '../EcosystemDiagram.astro';
+import Marquee from '../Marquee.astro';
 import Arrow from '../Arrow.astro';
 
 interface Props { locale: Locale }
 const { locale } = Astro.props;
 const c = getContent(locale);
 const h = c.home;
+const marqueeItems = [
+  ...c.modules.map((m) => m.name),
+  ...(locale === 'fr' ? ['Sur-mesure', 'Propulsé par l’IA', 'Interconnecté'] : ['Bespoke', 'AI-powered', 'Interconnected']),
+];
 const contactHref = pathFor('contact', locale);
 const conceptHref = pathFor('concept', locale);
 const solutionsHref = pathFor('solutions', locale);
@@ -21,39 +26,38 @@ const aboutHref = pathFor('about', locale);
   <div class="hero__bg" aria-hidden="true">
     <svg viewBox="0 0 600 600" preserveAspectRatio="xMidYMid slice" class="hero__plan">
       <defs>
-        <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-          <path d="M40 0H0V40" fill="none" stroke="currentColor" stroke-width="0.5" />
+        <pattern id="grid" width="44" height="44" patternUnits="userSpaceOnUse">
+          <path d="M44 0H0V44" fill="none" stroke="currentColor" stroke-width="0.5" />
         </pattern>
       </defs>
       <rect width="600" height="600" fill="url(#grid)" opacity="0.5" />
-      <circle cx="430" cy="300" r="190" fill="none" stroke="currentColor" stroke-width="1" />
-      <ellipse cx="430" cy="300" rx="74" ry="190" fill="none" stroke="currentColor" stroke-width="1" />
-      <line x1="430" y1="100" x2="430" y2="500" stroke="currentColor" stroke-width="1" />
-      <line x1="230" y1="300" x2="630" y2="300" stroke="#b08d57" stroke-width="1" opacity="0.6" />
-      <line x1="40" y1="60" x2="120" y2="60" stroke="currentColor" stroke-width="1" />
-      <line x1="40" y1="52" x2="40" y2="68" stroke="currentColor" stroke-width="1" />
-      <line x1="120" y1="52" x2="120" y2="68" stroke="currentColor" stroke-width="1" />
+      <circle class="hero__orbit" cx="445" cy="300" r="195" fill="none" stroke="currentColor" stroke-width="1" />
+      <ellipse cx="445" cy="300" rx="78" ry="195" fill="none" stroke="currentColor" stroke-width="1" />
+      <line class="hero__meridian" x1="445" y1="105" x2="445" y2="495" stroke="currentColor" stroke-width="1.5" />
+      <line x1="245" y1="300" x2="645" y2="300" stroke="#1f3bff" stroke-width="1.5" />
     </svg>
   </div>
 
   <div class="container hero__inner">
-    <span class="eyebrow" data-reveal>{h.hero.eyebrow}</span>
-    <h1 class="hero__title" data-reveal style="--reveal-delay:80ms">
-      <span class="hero__title-a">{h.hero.titleA}</span>
-      <span class="hero__title-b">{h.hero.titleB}</span>
+    <div class="hero__meta mono" data-reveal>
+      <span>{h.hero.eyebrow}</span>
+      <span class="hero__coord">40.71°N — 74.00°W</span>
+    </div>
+    <h1 class="hero__title">
+      <span class="hero__line" data-reveal>{h.hero.titleA}</span>
+      <span class="hero__line hero__line--accent" data-reveal style="--reveal-delay:90ms">{h.hero.titleB}</span>
     </h1>
-    <p class="hero__subtitle measure" data-reveal style="--reveal-delay:160ms">{h.hero.subtitle}</p>
-    <div class="hero__actions" data-reveal style="--reveal-delay:240ms">
-      <a class="btn" href={contactHref}>{c.common.ctaPrimary} <Arrow class="arrow" /></a>
-      <a class="btn btn--ghost" href={conceptHref}>{c.common.ctaSecondary}</a>
+    <div class="hero__foot">
+      <p class="hero__subtitle" data-reveal style="--reveal-delay:160ms">{h.hero.subtitle}</p>
+      <div class="hero__actions" data-reveal style="--reveal-delay:240ms">
+        <a class="btn" href={contactHref}>{c.common.ctaPrimary} <Arrow class="arrow" /></a>
+        <a class="btn btn--ghost" href={conceptHref}>{c.common.ctaSecondary}</a>
+      </div>
     </div>
   </div>
-
-  <div class="container hero__scroll" aria-hidden="true">
-    <span class="mono">{h.hero.scrollHint}</span>
-    <span class="hero__scroll-line"></span>
-  </div>
 </section>
+
+<Marquee items={marqueeItems} variant="ink" />
 
 <!-- ============ FIGURES ============ -->
 <section class="figures section--tight section--alt">
@@ -212,23 +216,42 @@ const aboutHref = pathFor('about', locale);
 
 <style>
   /* ---- HERO ---- */
-  .hero { position: relative; padding-block: clamp(4rem, 12vh, 9rem) var(--space-2xl); overflow: hidden; }
+  .hero { position: relative; padding-block: clamp(2.5rem, 8vh, 6rem) clamp(2.5rem, 6vh, 4.5rem); overflow: hidden; }
   .hero__bg { position: absolute; inset: 0; pointer-events: none; }
   .hero__plan {
-    position: absolute; top: 50%; right: -8%; transform: translateY(-50%);
-    width: min(58rem, 85%); height: auto; color: var(--line-strong); opacity: 0.55;
+    position: absolute; top: 50%; right: -10%; transform: translateY(-50%);
+    width: min(62rem, 92%); height: auto; color: var(--line-strong); opacity: 0.6;
   }
-  .hero__inner { position: relative; display: flex; flex-direction: column; gap: var(--space-m); }
-  .hero__title { font-size: var(--step-6); display: flex; flex-direction: column; }
-  .hero__title-b { color: var(--ink); }
-  .hero__title-a { position: relative; width: fit-content; }
-  .hero__subtitle { font-size: var(--step-1); line-height: 1.45; color: var(--text-muted); margin-top: var(--space-s); }
-  .hero__actions { display: flex; flex-wrap: wrap; gap: var(--space-s); margin-top: var(--space-m); }
-  .hero__scroll { position: relative; display: flex; align-items: center; gap: var(--space-s); margin-top: var(--space-2xl); color: var(--text-subtle); font-size: var(--step--1); }
-  .hero__scroll-line { display: inline-block; width: 4rem; height: 1px; background: var(--line-strong); position: relative; overflow: hidden; }
-  .hero__scroll-line::after { content: ''; position: absolute; inset: 0; width: 40%; background: var(--brass); animation: slide 2.4s var(--ease) infinite; }
-  @keyframes slide { 0% { transform: translateX(-110%); } 100% { transform: translateX(260%); } }
-  @media (prefers-reduced-motion: reduce) { .hero__scroll-line::after { animation: none; } }
+  .hero__meridian { stroke-dasharray: 400; stroke-dashoffset: 400; animation: draw 1.6s var(--ease) 0.3s forwards; }
+  .hero__orbit { stroke-dasharray: 1230; stroke-dashoffset: 1230; animation: draw 2.4s var(--ease) 0.2s forwards; }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+  @media (prefers-reduced-motion: reduce) { .hero__meridian, .hero__orbit { animation: none; stroke-dashoffset: 0; } }
+
+  .hero__inner { position: relative; display: flex; flex-direction: column; gap: var(--space-l); }
+  .hero__meta {
+    display: flex; justify-content: space-between; gap: var(--space-m);
+    font-size: var(--step--1); color: var(--text-subtle);
+    letter-spacing: var(--tracking-label); text-transform: uppercase;
+    border-top: 1px solid var(--ink); padding-top: var(--space-s);
+  }
+  .hero__coord { color: var(--accent-text); }
+
+  .hero__title {
+    font-family: var(--font-display); font-weight: 800; font-size: var(--step-6);
+    line-height: 0.9; letter-spacing: var(--tracking-mega); text-transform: uppercase;
+    display: flex; flex-direction: column;
+  }
+  .hero__line { display: block; }
+  .hero__line--accent { color: var(--accent); }
+
+  .hero__foot { display: flex; flex-direction: column; gap: var(--space-l); margin-top: var(--space-xs); }
+  .hero__subtitle { font-family: var(--font-sans); font-size: var(--step-1); line-height: 1.45; color: var(--text-muted); max-width: 52ch; }
+  .hero__actions { display: flex; flex-wrap: wrap; gap: var(--space-s); }
+  @media (min-width: 60em) {
+    .hero__foot { flex-direction: row; justify-content: space-between; align-items: flex-end; }
+    .hero__subtitle { max-width: 40ch; }
+    .hero__actions { flex-shrink: 0; }
+  }
 
   /* ---- FIGURES ---- */
   .figures__grid { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-l) var(--space-m); }

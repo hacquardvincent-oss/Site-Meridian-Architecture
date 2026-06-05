@@ -1,27 +1,30 @@
 /* =============================================================
-   MERIDIAN ARCHITECTURE — Design tokens (charte graphique)
-   Direction : « Swiss-grid meets warm loft » — clair & galerie.
-   Rigueur du design suisse/digital + matières d'un loft new-yorkais.
+   MERIDIAN ARCHITECTURE — Design tokens v2 « DS+R radical »
+   Monochrome très contrasté + un accent électrique unique.
+   La typographie devient le visuel. Angles francs, motion assumée.
+   (Noms de variables conservés ; seules les valeurs changent.)
    ============================================================= */
 
 :root {
-  /* ---- Couleurs : système neutre minéral + accent laiton ---- */
-  --plaster: #f4f1ec;        /* fond principal — plâtre / off-white */
-  --plaster-deep: #eae6dd;   /* fond alterné — béton clair */
-  --paper: #fcfaf6;          /* blanc chaud — cartes, surfaces */
-  --concrete: #d9d3c8;       /* gris béton — séparateurs, fonds subtils */
+  /* ---- Base monochrome ---- */
+  --plaster: #edebe4;        /* fond principal — papier béton clair */
+  --plaster-deep: #e2dfd6;   /* fond alterné subtil */
+  --paper: #f7f5f0;          /* surfaces / cartes — quasi blanc chaud */
+  --concrete: #d6d2c8;       /* séparateurs clairs */
 
-  --ink: #1a1815;            /* encre — texte principal (quasi noir chaud) */
-  --ink-soft: #4a453e;       /* texte secondaire */
-  --stone: #8c8579;          /* texte tertiaire, légendes, labels */
+  --ink: #0c0c0c;            /* encre — quasi noir */
+  --ink-2: #161616;          /* noir secondaire (cartes sur fond noir) */
+  --ink-soft: #38362f;       /* texte secondaire */
+  --stone: #74716a;          /* texte tertiaire / légendes */
 
-  --brass: #b08d57;          /* accent laiton — traits, détails */
-  --brass-deep: #8a6638;     /* laiton foncé — texte d'accent, liens, hover */
-  --brass-wash: #ece3d4;     /* laiton très dilué — fonds d'accent */
+  /* ---- Accent unique : bleu électrique (signal) ---- */
+  --brass: #1f3bff;          /* accent vif (ex-laiton) — traits, états, mots-clés */
+  --brass-deep: #1a30e6;     /* accent pour texte (contraste) */
+  --brass-wash: #e0e1fb;     /* accent très dilué — fonds */
+  --on-accent: #f7f5f0;      /* texte sur aplat d'accent */
+  --blueprint: #1f3bff;
 
-  --blueprint: #22324a;      /* bleu « plan » — accent secondaire rare */
-
-  /* ---- Couleurs sémantiques ---- */
+  /* ---- Sémantique ---- */
   --bg: var(--plaster);
   --bg-alt: var(--plaster-deep);
   --surface: var(--paper);
@@ -30,31 +33,33 @@
   --text-subtle: var(--stone);
   --accent: var(--brass);
   --accent-text: var(--brass-deep);
-  --line: color-mix(in srgb, var(--ink) 12%, transparent);
-  --line-strong: color-mix(in srgb, var(--ink) 22%, transparent);
+  --line: color-mix(in srgb, var(--ink) 16%, transparent);
+  --line-strong: color-mix(in srgb, var(--ink) 30%, transparent);
 
   /* ---- Typographie ---- */
-  --font-display: 'Schibsted Grotesk', 'Helvetica Neue', Arial, sans-serif;
+  --font-display: 'Syne', 'Helvetica Neue', Arial, sans-serif;
   --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
 
-  /* Échelle typographique fluide (clamp : mobile → desktop) */
-  --step--1: clamp(0.83rem, 0.80rem + 0.15vw, 0.92rem);
-  --step-0:  clamp(1.00rem, 0.96rem + 0.20vw, 1.13rem);
-  --step-1:  clamp(1.20rem, 1.12rem + 0.40vw, 1.50rem);
-  --step-2:  clamp(1.44rem, 1.30rem + 0.70vw, 2.00rem);
-  --step-3:  clamp(1.73rem, 1.50rem + 1.15vw, 2.66rem);
-  --step-4:  clamp(2.07rem, 1.70rem + 1.85vw, 3.55rem);
-  --step-5:  clamp(2.49rem, 1.95rem + 2.70vw, 4.74rem);
-  --step-6:  clamp(2.99rem, 2.15rem + 4.20vw, 6.31rem);
+  /* Échelle fluide, plus massive en haut (la typo = l'image) */
+  --step--1: clamp(0.8rem, 0.77rem + 0.12vw, 0.875rem);
+  --step-0:  clamp(1.00rem, 0.95rem + 0.20vw, 1.125rem);
+  --step-1:  clamp(1.20rem, 1.10rem + 0.42vw, 1.45rem);
+  --step-2:  clamp(1.50rem, 1.28rem + 0.95vw, 2.10rem);
+  --step-3:  clamp(1.90rem, 1.48rem + 1.65vw, 3.00rem);
+  --step-4:  clamp(2.40rem, 1.78rem + 2.60vw, 4.20rem);
+  --step-5:  clamp(3.00rem, 2.00rem + 4.40vw, 6.00rem);
+  --step-6:  clamp(3.60rem, 2.00rem + 7.00vw, 8.50rem);
+  --step-7:  clamp(4.00rem, 1.40rem + 11.0vw, 12.0rem);
 
-  --leading-tight: 1.04;
-  --leading-snug: 1.18;
+  --leading-tight: 0.98;
+  --leading-snug: 1.12;
   --leading-normal: 1.6;
-  --tracking-tight: -0.02em;
-  --tracking-label: 0.16em;   /* labels mono « plan d'architecte » */
+  --tracking-tight: -0.025em;
+  --tracking-mega: -0.04em;
+  --tracking-label: 0.18em;
 
-  /* ---- Grille & espacement (rythme architectural) ---- */
+  /* ---- Grille & espacement ---- */
   --space-3xs: 0.25rem;
   --space-2xs: 0.5rem;
   --space-xs: 0.75rem;
@@ -62,25 +67,27 @@
   --space-m: 1.5rem;
   --space-l: 2.5rem;
   --space-xl: 4rem;
-  --space-2xl: 6rem;
-  --space-3xl: 9rem;
+  --space-2xl: 6.5rem;
+  --space-3xl: 9.5rem;
 
-  --container: 78rem;        /* largeur max de contenu */
+  --container: 84rem;
   --container-narrow: 52rem;
-  --gutter: clamp(1.25rem, 5vw, 4rem);
+  --gutter: clamp(1.25rem, 4.5vw, 4rem);
 
-  /* ---- Formes : angles francs (esprit plan / architecture) ---- */
-  --radius: 2px;
-  --radius-lg: 4px;
-  --border: 1px solid var(--line);
+  /* ---- Formes : angles francs (brutalisme graphique) ---- */
+  --radius: 0px;
+  --radius-lg: 0px;
+  --border: 1px solid var(--ink);
 
-  /* ---- Élévation : très discrète (galerie) ---- */
-  --shadow-sm: 0 1px 2px color-mix(in srgb, var(--ink) 6%, transparent);
-  --shadow-md: 0 18px 40px -24px color-mix(in srgb, var(--ink) 32%, transparent);
+  /* ---- Élévation : plate, on travaille au trait ---- */
+  --shadow-sm: none;
+  --shadow-md: 0 24px 60px -30px color-mix(in srgb, var(--ink) 45%, transparent);
 
   /* ---- Mouvement ---- */
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-inout: cubic-bezier(0.76, 0, 0.24, 1);
   --dur-fast: 180ms;
   --dur: 420ms;
   --dur-slow: 900ms;
+  --marquee-dur: 32s;
 }

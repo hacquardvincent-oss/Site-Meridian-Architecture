@@ -46,7 +46,7 @@ const ogUrl = ogImage ? new URL(ogImage, Astro.site) : undefined;
     <meta property="og:locale" content={locale === 'fr' ? 'fr_FR' : 'en_US'} />
     {ogUrl && <meta property="og:image" content={ogUrl} />}
     <meta name="twitter:card" content={ogUrl ? 'summary_large_image' : 'summary'} />
-    <meta name="theme-color" content="#f4f1ec" />
+    <meta name="theme-color" content="#0c0c0c" />
 
     <link rel="icon" href={withBase('/favicon.svg')} type="image/svg+xml" />
 
@@ -54,7 +54,7 @@ const ogUrl = ogImage ? new URL(ogImage, Astro.site) : undefined;
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Schibsted+Grotesk:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Syne:wght@600;700;800&display=swap"
     />
   </head>
   <body>

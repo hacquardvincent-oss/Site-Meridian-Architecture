@@ -1,0 +1,15 @@
+---
+/** Bandeau typographique défilant (kinétique). Deux groupes identiques pour une boucle continue. */
+interface Props { items: string[]; variant?: 'default' | 'ink'; duration?: string }
+const { items, variant = 'default', duration } = Astro.props;
+const groups = [0, 1];
+---
+<div class:list={['marquee', { 'marquee--ink': variant === 'ink' }]} style={duration ? `--marquee-dur:${duration}` : undefined}>
+  <div class="marquee__track">
+    {groups.map(() => (
+      <div class="marquee__group" aria-hidden="true">
+        {items.map((item) => <span class="marquee__item">{item}</span>)}
+      </div>
+    ))}
+  </div>
+</div>
