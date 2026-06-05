@@ -5,6 +5,17 @@
 
 ---
 
+## ✅ Décisions validées (2026-06-05)
+
+| Sujet | Décision |
+|---|---|
+| **Objectifs prioritaires** | 1) Crédibiliser & rassurer · 2) Expliquer le concept (pédagogie). La conversion (RDV) reste secondaire, pas le moteur principal. |
+| **Ambiance visuelle** | Clair & galerie (fond plâtre lumineux, photo d'architecture mise en avant, accent laiton). |
+| **Stack technique** | Astro. |
+| **Périmètre v1** | Site multi-pages complet (pas une simple landing). |
+
+---
+
 ## 1. La marque en une phrase
 
 **Meridian Architecture** remplace la multitude de logiciels rigides des entreprises par un
@@ -37,14 +48,14 @@ rencontre le loft premium.**
 
 ## 3. Objectifs du site
 
-Hiérarchie à confirmer (cf. Questions A). Hypothèse de départ :
+Hiérarchie **validée** :
 
-1. **Convertir** — provoquer la prise de contact / le RDV de découverte (CTA principal).
-2. **Crédibiliser** — prouver le sérieux de la démarche et de la méthode (rassurer un dirigeant qui confie son SI).
-3. **Faire comprendre** — rendre limpide un concept abstrait (écosystème sur-mesure + IA) en 30 secondes.
+1. **Crédibiliser & rassurer** — prouver le sérieux de la démarche et de la méthode (rassurer un dirigeant qui confie son SI).
+2. **Faire comprendre (pédagogie)** — rendre limpide un concept abstrait (écosystème sur-mesure + IA) en quelques secondes.
+3. **Convertir** *(secondaire)* — faciliter la prise de contact / le RDV, sans en faire le moteur principal.
 
 Le site est une **vitrine de conviction**, pas un catalogue. Objectif : qu'un dirigeant se dise
-« c'est exactement le problème que j'ai » puis « je veux en parler à cette personne ».
+« c'est exactement le problème que j'ai » puis « cette personne sait de quoi elle parle, je veux en discuter ».
 
 ---
 
@@ -58,8 +69,17 @@ Le site est une **vitrine de conviction**, pas un catalogue. Objectif : qu'un di
 
 ## 5. Arborescence proposée
 
-**Recommandation v1 : une *landing* one-page en « scroll-telling »** (récit qui se déroule au scroll), puis extension
-en pages dédiées en v2. Séquence des sections :
+**Décision : site multi-pages complet.** L'expérience « scroll-telling » est conservée **page par page**.
+Sitemap proposé (à valider) :
+
+- **Accueil** — hero + pitch + aperçu des piliers + preuves + CTA.
+- **Le concept / la vision** — le problème (logiciels rigides) → la réponse Meridian (écosystème unique sur-mesure + IA).
+- **Solutions** — un bloc par module : BI · ERP · PLM · PIM · Sites & portails, + l'**interconnexion** (élément interactif).
+- **La méthode** — Cadrage → Conception → Build avec l'IA → Intégration → Évolution.
+- **À propos** — la vision, le fondateur, la crédibilité.
+- **Contact** — prise de RDV / formulaire.
+
+Séquence narrative type (sur l'accueil, puis déclinée dans les pages) :
 
 1. **Hero** — pitch + visuel signature (schéma vivant de l'écosystème / plan d'architecte animé) + CTA.
 2. **Le problème** — la multitude de logiciels rigides : fragmentation, coûts, rigidité, données en silos.
@@ -72,7 +92,7 @@ en pages dédiées en v2. Séquence des sections :
 9. **CTA final** — prendre RDV / échanger.
 10. **Footer** — contact, mentions légales, réseaux.
 
-Pages v2 possibles : `Solutions` (une page par module), `Méthode`, `À propos`, `Blog/Insights`, `Contact`.
+Extensions v2 : une page dédiée par module (BI, ERP, PLM, PIM, Sites), `Blog/Insights`, études de cas.
 
 ---
 
@@ -95,7 +115,7 @@ Un système **neutre minéral** + **un accent chaud métallique**.
 | **Accent (laiton)** | Bronze chaud | `#B08D57` |
 | Optionnel — « bleu plan » | Encre bleutée | `#22324A` |
 
-> Alternative possible : direction **sombre & premium** (fond charbon, texte plâtre, accent laiton) — cf. Questions C.
+> **Validé : direction claire & galerie.** (La variante sombre & premium est écartée pour la v1.)
 
 ### Typographie (proposition, polices web dispo)
 - **Titres / display :** une grotesque contemporaine et nette — p.ex. *Neue Montreal*, *Schibsted Grotesk* ou *Geist*.
@@ -122,7 +142,7 @@ Un système **neutre minéral** + **un accent chaud métallique**.
 
 ## 7. Stack technique (recommandation)
 
-- **Recommandé : [Astro](https://astro.build/).** Idéal pour un site vitrine très visuel : ultra-rapide, SEO au top,
+- **Validé : [Astro](https://astro.build/).** Idéal pour un site vitrine très visuel : ultra-rapide, SEO au top,
   composants modernes, animations possibles (GSAP / View Transitions), déploiement trivial. On garde la main sur 100 % du design.
 - Alternatives : **Next.js** (si web-app/espace client prévu plus tard), **HTML/CSS/JS pur** (ultra-léger), **CMS no-code** (Webflow/WordPress) si édition autonome prioritaire.
 - Je peux aussi **matérialiser la charte graphique dans Figma** (design system : couleurs, typo, composants) avant intégration, si tu veux valider visuellement d'abord.
@@ -149,6 +169,8 @@ Un système **neutre minéral** + **un accent chaud métallique**.
 ---
 
 ## 10. Questions ouvertes (à valider)
+
+> Déjà tranché (voir « Décisions validées » en haut) : objectifs (A1), ambiance (C1), stack (E1), périmètre (multi-pages).
 
 ### A. Stratégie & marché
 - A1. Objectif **prioritaire** du site (convertir / crédibiliser / expliquer / recruter) ?
