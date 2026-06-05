@@ -1,0 +1,41 @@
+---
+import { withBase } from '../i18n/routes';
+/**
+ * Image plein cadre, photo-led. Tant que le fichier n'existe pas dans
+ * public/images/, un placeholder élégant s'affiche (l'image cassée est masquée).
+ * Dépose simplement le fichier au bon nom pour l'activer.
+ */
+interface Props {
+  src?: string;
+  alt?: string;
+  ratio?: string;
+  label?: string;
+  caption?: string;
+  reveal?: boolean;
+  class?: string;
+}
+const {
+  src,
+  alt = '',
+  ratio = '16 / 9',
+  label = 'Image — à déposer',
+  caption,
+  reveal = true,
+  class: className = '',
+} = Astro.props;
+---
+<div class:list={['fig', className]}>
+  <figure class="figure figure--hover" style={`--ratio:${ratio}`} data-reveal-img={reveal ? '' : undefined}>
+    <span class="figure__ph"><span class="figure__ph-label">{label}</span></span>
+    {src && <img src={withBase(src)} alt={alt} loading="lazy" decoding="async" />}
+  </figure>
+  {caption && <figcaption class="fig__cap">{caption}</figcaption>}
+</div>
+
+<style>
+  .fig { display: flex; flex-direction: column; gap: var(--space-xs); }
+  .fig__cap {
+    font-size: var(--step--1); letter-spacing: var(--tracking-wide);
+    color: var(--text-subtle); text-transform: uppercase;
+  }
+</style>

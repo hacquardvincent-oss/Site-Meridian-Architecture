@@ -3,66 +3,44 @@ import { getContent } from '../../i18n/content';
 import { pathFor, type Locale } from '../../i18n/routes';
 import SectionHeading from '../SectionHeading.astro';
 import EcosystemDiagram from '../EcosystemDiagram.astro';
-import Marquee from '../Marquee.astro';
+import Figure from '../Figure.astro';
 import Arrow from '../Arrow.astro';
 
 interface Props { locale: Locale }
 const { locale } = Astro.props;
 const c = getContent(locale);
 const h = c.home;
-const marqueeItems = [
-  ...c.modules.map((m) => m.name),
-  ...(locale === 'fr' ? ['Sur-mesure', 'Propulsé par l’IA', 'Interconnecté'] : ['Bespoke', 'AI-powered', 'Interconnected']),
-];
+const isFr = locale === 'fr';
 const contactHref = pathFor('contact', locale);
 const conceptHref = pathFor('concept', locale);
 const solutionsHref = pathFor('solutions', locale);
 const methodeHref = pathFor('methode', locale);
 const aboutHref = pathFor('about', locale);
+const replace = (file: string) => (isFr ? `À remplacer · public/images/${file}` : `Replace · public/images/${file}`);
 ---
 
 <!-- ============ HERO ============ -->
 <section class="hero">
-  <div class="hero__bg" aria-hidden="true">
-    <svg viewBox="0 0 600 600" preserveAspectRatio="xMidYMid slice" class="hero__plan">
-      <defs>
-        <pattern id="grid" width="44" height="44" patternUnits="userSpaceOnUse">
-          <path d="M44 0H0V44" fill="none" stroke="currentColor" stroke-width="0.5" />
-        </pattern>
-      </defs>
-      <rect width="600" height="600" fill="url(#grid)" opacity="0.5" />
-      <circle class="hero__orbit" cx="445" cy="300" r="195" fill="none" stroke="currentColor" stroke-width="1" />
-      <ellipse cx="445" cy="300" rx="78" ry="195" fill="none" stroke="currentColor" stroke-width="1" />
-      <line class="hero__meridian" x1="445" y1="105" x2="445" y2="495" stroke="currentColor" stroke-width="1.5" />
-      <line x1="245" y1="300" x2="645" y2="300" stroke="#1f3bff" stroke-width="1.5" />
-    </svg>
-  </div>
-
-  <div class="container hero__inner">
-    <div class="hero__meta mono" data-reveal>
-      <span>{h.hero.eyebrow}</span>
-      <span class="hero__coord">40.71°N — 74.00°W</span>
-    </div>
-    <h1 class="hero__title">
-      <span class="hero__line" data-reveal>{h.hero.titleA}</span>
-      <span class="hero__line hero__line--accent" data-reveal style="--reveal-delay:90ms">{h.hero.titleB}</span>
-    </h1>
-    <div class="hero__foot">
+  <div class="container">
+    <span class="eyebrow" data-reveal>{h.hero.eyebrow}</span>
+    <h1 class="hero__title" data-reveal style="--reveal-delay:80ms">{h.hero.titleA} {h.hero.titleB}</h1>
+    <div class="hero__row">
       <p class="hero__subtitle" data-reveal style="--reveal-delay:160ms">{h.hero.subtitle}</p>
       <div class="hero__actions" data-reveal style="--reveal-delay:240ms">
         <a class="btn" href={contactHref}>{c.common.ctaPrimary} <Arrow class="arrow" /></a>
-        <a class="btn btn--ghost" href={conceptHref}>{c.common.ctaSecondary}</a>
+        <a class="arrow-link" href={conceptHref}>{c.common.ctaSecondary} <Arrow class="arrow" size={15} /></a>
       </div>
     </div>
   </div>
+  <div class="hero__media" data-reveal style="--reveal-delay:200ms">
+    <Figure src="/images/hero.jpg" ratio="21 / 9" reveal={false} label={isFr ? 'Photographie d’architecture — plein cadre' : 'Architecture photography — full bleed'} caption={replace('hero.jpg')} />
+  </div>
 </section>
 
-<Marquee items={marqueeItems} variant="ink" />
-
-<!-- ============ FIGURES ============ -->
-<section class="figures section--tight section--alt">
+<!-- ============ CHIFFRES ============ -->
+<section class="section--tight figures-band">
   <div class="container">
-    <ul class="figures__grid">
+    <ul class="figures">
       {h.figures.map((f, i) => (
         <li class="figures__item" data-reveal style={`--reveal-delay:${i * 70}ms`}>
           <span class="figures__value">{f.value}</span>
@@ -74,13 +52,13 @@ const aboutHref = pathFor('about', locale);
 </section>
 
 <!-- ============ PROBLÈME ============ -->
-<section class="section">
+<section class="section section--alt">
   <div class="container">
     <SectionHeading eyebrow={h.problem.eyebrow} title={h.problem.title} intro={h.problem.intro} />
     <ul class="cards cards--4">
       {h.problem.items.map((item, i) => (
-        <li class="card card--problem" data-reveal style={`--reveal-delay:${i * 70}ms`}>
-          <span class="card__index mono">{String(i + 1).padStart(2, '0')}</span>
+        <li class="card" data-reveal style={`--reveal-delay:${i * 70}ms`}>
+          <span class="card__index">{String(i + 1).padStart(2, '0')}</span>
           <h3 class="card__title">{item.title}</h3>
           <p class="muted">{item.text}</p>
         </li>
@@ -90,79 +68,77 @@ const aboutHref = pathFor('about', locale);
 </section>
 
 <!-- ============ VISION ============ -->
-<section class="section section--alt">
+<section class="section">
   <div class="container vision">
-    <div class="vision__head" data-reveal>
+    <div class="vision__media" data-reveal>
+      <Figure src="/images/vision.jpg" ratio="4 / 5" reveal={false} label={isFr ? 'Intérieur / loft NY' : 'NY interior / loft'} caption={replace('vision.jpg')} />
+    </div>
+    <div class="vision__text" data-reveal style="--reveal-delay:120ms">
       <span class="eyebrow">{h.vision.eyebrow}</span>
       <h2 class="vision__title">{h.vision.title}</h2>
       <p class="lead">{h.vision.lead}</p>
-    </div>
-    <div class="vision__body" data-reveal style="--reveal-delay:120ms">
-      <p class="vision__text measure">{h.vision.body}</p>
-      <ul class="vision__points">
+      <p class="vision__body muted">{h.vision.body}</p>
+      <ul class="ticks">
         {h.vision.points.map((p) => (
-          <li class="vision__point"><span class="vision__tick" aria-hidden="true"></span>{p}</li>
+          <li class="tick"><span class="tick__mark" aria-hidden="true"></span>{p}</li>
         ))}
       </ul>
     </div>
   </div>
 </section>
 
-<!-- ============ PILIERS ============ -->
-<section class="section">
+<!-- ============ SOLUTIONS (index singulier) ============ -->
+<section class="section section--alt">
   <div class="container">
     <SectionHeading eyebrow={h.pillars.eyebrow} title={h.pillars.title} intro={h.pillars.intro} />
-    <ul class="cards cards--3 pillars">
+    <ol class="index">
       {c.modules.map((m, i) => (
-        <li class="card card--pillar" data-reveal style={`--reveal-delay:${i * 60}ms`}>
-          <span class="pillar__abbr mono">{m.abbr}</span>
-          <h3 class="pillar__name">{m.name}</h3>
-          <p class="muted">{m.text}</p>
+        <li class="index__row" data-reveal style={`--reveal-delay:${i * 50}ms`}>
+          <span class="index__no">{String(i + 1).padStart(2, '0')}</span>
+          <h3 class="index__name">{m.name}</h3>
+          <p class="index__text muted">{m.text}</p>
+          <span class="index__abbr">{m.abbr}</span>
         </li>
       ))}
-      <li class="card card--pillar card--note" data-reveal style={`--reveal-delay:${c.modules.length * 60}ms`}>
-        <span class="pillar__plus" aria-hidden="true">+</span>
-        <p class="muted">{h.pillars.note}</p>
-        <a class="arrow-link" href={solutionsHref}>{c.common.ctaSecondary} <Arrow class="arrow" size={16} /></a>
-      </li>
-    </ul>
+    </ol>
+    <a class="arrow-link index__link" href={solutionsHref}>{c.common.ctaSecondary} <Arrow class="arrow" size={15} /></a>
   </div>
 </section>
 
-<!-- ============ ÉCOSYSTÈME / INTERCONNEXION ============ -->
-<section class="section section--alt">
+<!-- ============ ÉCOSYSTÈME ============ -->
+<section class="section">
   <div class="container">
     <SectionHeading eyebrow={h.ecosystem.eyebrow} title={h.ecosystem.title} intro={h.ecosystem.caption} align="center" />
     <div class="eco-wrap" data-reveal>
-      <EcosystemDiagram modules={c.modules} centerLabel={locale === 'fr' ? 'Socle' : 'Core'} centerSub={locale === 'fr' ? 'données + IA' : 'data + AI'} />
+      <EcosystemDiagram modules={c.modules} centerLabel={isFr ? 'Socle' : 'Core'} centerSub={isFr ? 'données + IA' : 'data + AI'} />
     </div>
   </div>
 </section>
 
 <!-- ============ MÉTHODE ============ -->
-<section class="section">
+<section class="section section--alt">
   <div class="container">
     <SectionHeading eyebrow={h.method.eyebrow} title={h.method.title} intro={h.method.intro} />
     <ol class="steps">
       {h.method.steps.map((s, i) => (
         <li class="step" data-reveal style={`--reveal-delay:${i * 60}ms`}>
-          <span class="step__n mono">{s.n}</span>
+          <span class="step__n">{s.n}</span>
           <h3 class="step__title">{s.title}</h3>
           <p class="muted step__text">{s.text}</p>
         </li>
       ))}
     </ol>
-    <a class="arrow-link steps__link" href={methodeHref}>{locale === 'fr' ? 'La méthode en détail' : 'The method in detail'} <Arrow class="arrow" size={16} /></a>
+    <a class="arrow-link steps__link" href={methodeHref}>{isFr ? 'La méthode en détail' : 'The method in detail'} <Arrow class="arrow" size={15} /></a>
   </div>
 </section>
 
 <!-- ============ POURQUOI ============ -->
-<section class="section section--alt">
+<section class="section">
   <div class="container">
     <SectionHeading eyebrow={h.why.eyebrow} title={h.why.title} />
     <ul class="cards cards--3">
       {h.why.items.map((item, i) => (
-        <li class="card card--why" data-reveal style={`--reveal-delay:${i * 70}ms`}>
+        <li class="card" data-reveal style={`--reveal-delay:${i * 70}ms`}>
           <h3 class="card__title">{item.title}</h3>
           <p class="muted">{item.text}</p>
         </li>
@@ -172,14 +148,14 @@ const aboutHref = pathFor('about', locale);
 </section>
 
 <!-- ============ CAS D'USAGE ============ -->
-<section class="section">
+<section class="section section--alt">
   <div class="container">
     <SectionHeading eyebrow={h.useCases.eyebrow} title={h.useCases.title} />
     <ul class="cards cards--3">
       {h.useCases.items.map((item, i) => (
         <li class="card card--use" data-reveal style={`--reveal-delay:${i * 70}ms`}>
-          <span class="use__tag mono">{item.tag}</span>
-          <h3 class="use__title">{item.title}</h3>
+          <span class="use__tag">{item.tag}</span>
+          <h3 class="card__title">{item.title}</h3>
           <p class="muted">{item.text}</p>
         </li>
       ))}
@@ -187,16 +163,17 @@ const aboutHref = pathFor('about', locale);
   </div>
 </section>
 
-<!-- ============ À PROPOS (teaser) ============ -->
-<section class="section section--alt">
-  <div class="container about-teaser" data-reveal>
-    <div class="about-teaser__head">
+<!-- ============ À PROPOS ============ -->
+<section class="section">
+  <div class="container about">
+    <div class="about__text" data-reveal>
       <span class="eyebrow">{h.about.eyebrow}</span>
-      <h2 class="about-teaser__title">{h.about.title}</h2>
-    </div>
-    <div class="about-teaser__body">
+      <h2 class="about__title">{h.about.title}</h2>
       <p class="lead">{h.about.text}</p>
-      <a class="arrow-link" href={aboutHref}>{h.about.cta} <Arrow class="arrow" size={16} /></a>
+      <a class="arrow-link" href={aboutHref}>{h.about.cta} <Arrow class="arrow" size={15} /></a>
+    </div>
+    <div class="about__media" data-reveal style="--reveal-delay:120ms">
+      <Figure src="/images/about.jpg" ratio="3 / 4" reveal={false} label={isFr ? 'Portrait / fondateur' : 'Portrait / founder'} caption={replace('about.jpg')} />
     </div>
   </div>
 </section>
@@ -204,130 +181,113 @@ const aboutHref = pathFor('about', locale);
 <!-- ============ CTA FINAL ============ -->
 <section class="section">
   <div class="container">
-    <div class="cta-panel" data-reveal>
-      <span class="eyebrow eyebrow--plain cta-panel__eyebrow">{h.finalCta.eyebrow}</span>
-      <h2 class="cta-panel__title">{h.finalCta.title}</h2>
-      <p class="cta-panel__text measure">{h.finalCta.text}</p>
-      <a class="btn btn--brass cta-panel__btn" href={contactHref}>{h.finalCta.button} <Arrow class="arrow" /></a>
-      <p class="cta-panel__micro mono">{h.finalCta.micro}</p>
+    <div class="cta" data-reveal>
+      <span class="eyebrow eyebrow--plain cta__eyebrow">{h.finalCta.eyebrow}</span>
+      <h2 class="cta__title">{h.finalCta.title}</h2>
+      <p class="cta__text measure">{h.finalCta.text}</p>
+      <a class="btn cta__btn" href={contactHref}>{h.finalCta.button} <Arrow class="arrow" /></a>
+      <p class="cta__micro">{h.finalCta.micro}</p>
     </div>
   </div>
 </section>
 
 <style>
   /* ---- HERO ---- */
-  .hero { position: relative; padding-block: clamp(2.5rem, 8vh, 6rem) clamp(2.5rem, 6vh, 4.5rem); overflow: hidden; }
-  .hero__bg { position: absolute; inset: 0; pointer-events: none; }
-  .hero__plan {
-    position: absolute; top: 50%; right: -10%; transform: translateY(-50%);
-    width: min(62rem, 92%); height: auto; color: var(--line-strong); opacity: 0.6;
-  }
-  .hero__meridian { stroke-dasharray: 400; stroke-dashoffset: 400; animation: draw 1.6s var(--ease) 0.3s forwards; }
-  .hero__orbit { stroke-dasharray: 1230; stroke-dashoffset: 1230; animation: draw 2.4s var(--ease) 0.2s forwards; }
-  @keyframes draw { to { stroke-dashoffset: 0; } }
-  @media (prefers-reduced-motion: reduce) { .hero__meridian, .hero__orbit { animation: none; stroke-dashoffset: 0; } }
-
-  .hero__inner { position: relative; display: flex; flex-direction: column; gap: var(--space-l); }
-  .hero__meta {
-    display: flex; justify-content: space-between; gap: var(--space-m);
-    font-size: var(--step--1); color: var(--text-subtle);
-    letter-spacing: var(--tracking-label); text-transform: uppercase;
-    border-top: 1px solid var(--ink); padding-top: var(--space-s);
-  }
-  .hero__coord { color: var(--accent-text); }
-
+  .hero { padding-top: clamp(2.5rem, 7vh, 5rem); }
+  .hero .eyebrow { margin-bottom: var(--space-m); }
   .hero__title {
-    font-family: var(--font-display); font-weight: 800; font-size: var(--step-6);
-    line-height: 0.9; letter-spacing: var(--tracking-mega); text-transform: uppercase;
-    display: flex; flex-direction: column;
+    font-size: var(--step-6); font-weight: 400; line-height: 1.02;
+    letter-spacing: var(--tracking-tight); max-width: 18ch;
   }
-  .hero__line { display: block; }
-  .hero__line--accent { color: var(--accent); }
-
-  .hero__foot { display: flex; flex-direction: column; gap: var(--space-l); margin-top: var(--space-xs); }
-  .hero__subtitle { font-family: var(--font-sans); font-size: var(--step-1); line-height: 1.45; color: var(--text-muted); max-width: 52ch; }
-  .hero__actions { display: flex; flex-wrap: wrap; gap: var(--space-s); }
+  .hero__row { display: flex; flex-direction: column; gap: var(--space-l); margin-top: var(--space-xl); }
+  .hero__subtitle { font-size: var(--step-1); line-height: 1.5; color: var(--text-muted); max-width: 52ch; }
+  .hero__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-m); }
+  .hero__media { margin-top: var(--space-xl); padding-inline: var(--gutter); }
   @media (min-width: 60em) {
-    .hero__foot { flex-direction: row; justify-content: space-between; align-items: flex-end; }
-    .hero__subtitle { max-width: 40ch; }
-    .hero__actions { flex-shrink: 0; }
+    .hero__row { flex-direction: row; justify-content: space-between; align-items: flex-end; gap: var(--space-2xl); }
+    .hero__subtitle { max-width: 44ch; }
   }
 
-  /* ---- FIGURES ---- */
-  .figures__grid { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-l) var(--space-m); }
-  .figures__item { display: flex; flex-direction: column; gap: 0.35rem; padding-left: var(--space-m); border-left: 1px solid var(--line-strong); }
-  .figures__value { font-family: var(--font-display); font-size: var(--step-4); font-weight: 500; line-height: 1; }
+  /* ---- CHIFFRES ---- */
+  .figures-band { border-bottom: 1px solid var(--line); }
+  .figures { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-l) var(--space-m); }
+  .figures__item { display: flex; flex-direction: column; gap: var(--space-2xs); }
+  .figures__value { font-family: var(--font-display); font-size: var(--step-4); font-weight: 300; line-height: 1; }
   .figures__label { font-size: var(--step--1); color: var(--text-subtle); }
-  @media (min-width: 52em) { .figures__grid { grid-template-columns: repeat(4, 1fr); } }
+  @media (min-width: 52em) { .figures { grid-template-columns: repeat(4, 1fr); } }
 
-  /* ---- CARTES (génériques) ---- */
+  /* ---- CARTES ---- */
   .cards { list-style: none; padding: 0; margin: var(--space-xl) 0 0; display: grid; gap: var(--space-m); }
   @media (min-width: 40em) { .cards--3, .cards--4 { grid-template-columns: repeat(2, 1fr); } }
   @media (min-width: 60em) { .cards--3 { grid-template-columns: repeat(3, 1fr); } .cards--4 { grid-template-columns: repeat(4, 1fr); } }
   .card {
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    padding: var(--space-l);
+    background: var(--surface); border: 1px solid var(--line); padding: var(--space-l);
     display: flex; flex-direction: column; gap: var(--space-xs);
     transition: border-color var(--dur) var(--ease), transform var(--dur) var(--ease);
   }
   .card:hover { border-color: var(--line-strong); transform: translateY(-3px); }
-  .card__index { color: var(--accent-text); font-size: var(--step--1); }
-  .card__title { font-size: var(--step-1); }
-
-  /* ---- PILIERS ---- */
-  .pillar__abbr { font-size: var(--step-2); color: var(--ink); letter-spacing: 0.02em; }
-  .pillar__name { font-size: var(--step-1); margin-top: var(--space-2xs); }
-  .card--note { justify-content: space-between; background: transparent; border-style: dashed; }
-  .pillar__plus { font-family: var(--font-display); font-size: var(--step-3); color: var(--accent); line-height: 1; }
+  .card__index { font-size: var(--step--1); color: var(--text-subtle); letter-spacing: var(--tracking-wide); }
+  .card__title { font-size: var(--step-1); font-weight: 500; }
+  .use__tag { font-size: var(--step--1); font-weight: 600; letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--text-subtle); }
 
   /* ---- VISION ---- */
   .vision { display: grid; gap: var(--space-xl); }
   .vision__title { margin-top: var(--space-s); }
-  .vision__head .lead { margin-top: var(--space-s); }
-  .vision__points { list-style: none; padding: 0; margin: var(--space-l) 0 0; display: grid; gap: var(--space-s); }
-  .vision__point { display: flex; align-items: baseline; gap: var(--space-s); font-size: var(--step-0); }
-  .vision__tick { flex: none; width: 1.1rem; height: 1px; background: var(--brass); transform: translateY(-0.35em); }
-  @media (min-width: 56em) { .vision { grid-template-columns: 0.9fr 1.1fr; gap: var(--space-2xl); } }
+  .vision__text .lead { margin-top: var(--space-m); }
+  .vision__body { margin-top: var(--space-m); max-width: 52ch; }
+  .ticks { list-style: none; padding: 0; margin: var(--space-l) 0 0; display: grid; gap: var(--space-s); }
+  .tick { display: flex; align-items: baseline; gap: var(--space-s); }
+  .tick__mark { flex: none; width: 1.2rem; height: 1px; background: var(--ink); transform: translateY(-0.35em); }
+  @media (min-width: 56em) { .vision { grid-template-columns: 0.9fr 1.1fr; gap: var(--space-2xl); align-items: center; } }
+
+  /* ---- INDEX (solutions, dispositif singulier) ---- */
+  .index { list-style: none; padding: 0; margin: var(--space-xl) 0 0; }
+  .index__row {
+    display: grid; grid-template-columns: auto 1fr; gap: var(--space-xs) var(--space-l);
+    align-items: baseline; padding-block: var(--space-l);
+    border-top: 1px solid var(--line-strong); position: relative;
+    transition: padding-left var(--dur) var(--ease);
+  }
+  .index__row:last-child { border-bottom: 1px solid var(--line-strong); }
+  .index__row:hover { padding-left: var(--space-s); }
+  .index__no { font-size: var(--step--1); color: var(--text-subtle); letter-spacing: var(--tracking-wide); padding-top: 0.5rem; }
+  .index__name { font-size: var(--step-3); font-weight: 400; letter-spacing: var(--tracking-tight); }
+  .index__text { grid-column: 2; max-width: 60ch; }
+  .index__abbr { position: absolute; top: var(--space-l); right: 0; font-size: var(--step--1); letter-spacing: var(--tracking-label); color: var(--text-subtle); }
+  .index__link { margin-top: var(--space-xl); }
+  @media (min-width: 56em) {
+    .index__row { grid-template-columns: 4rem 22rem 1fr; align-items: baseline; gap: var(--space-l); }
+    .index__text { grid-column: auto; margin: 0; }
+    .index__abbr { position: static; align-self: center; text-align: right; }
+  }
 
   /* ---- ÉCOSYSTÈME ---- */
   .eco-wrap { margin-top: var(--space-2xl); }
 
   /* ---- ÉTAPES ---- */
-  .steps { list-style: none; padding: 0; margin: var(--space-xl) 0 0; display: grid; gap: var(--space-l); counter-reset: step; }
+  .steps { list-style: none; padding: 0; margin: var(--space-xl) 0 0; display: grid; gap: var(--space-l); }
   @media (min-width: 48em) { .steps { grid-template-columns: repeat(5, 1fr); gap: var(--space-m); } }
   .step { padding-top: var(--space-m); border-top: 1px solid var(--line-strong); display: flex; flex-direction: column; gap: var(--space-2xs); }
-  .step__n { color: var(--accent-text); font-size: var(--step--1); }
-  .step__title { font-size: var(--step-1); }
+  .step__n { font-size: var(--step--1); color: var(--text-subtle); letter-spacing: var(--tracking-wide); }
+  .step__title { font-size: var(--step-1); font-weight: 500; }
   .step__text { font-size: var(--step--1); }
   .steps__link { margin-top: var(--space-xl); }
 
-  /* ---- CAS D'USAGE ---- */
-  .use__tag { font-size: 0.72rem; letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--accent-text); }
-  .use__title { font-size: var(--step-1); margin-top: var(--space-2xs); }
+  /* ---- À PROPOS ---- */
+  .about { display: grid; gap: var(--space-xl); }
+  .about__title { margin-top: var(--space-s); margin-bottom: var(--space-m); }
+  @media (min-width: 56em) { .about { grid-template-columns: 1.1fr 0.9fr; gap: var(--space-2xl); align-items: center; } .about__media { order: 2; } }
 
-  /* ---- À PROPOS teaser ---- */
-  .about-teaser { display: grid; gap: var(--space-l); }
-  .about-teaser__title { margin-top: var(--space-s); }
-  .about-teaser__body { display: flex; flex-direction: column; gap: var(--space-m); }
-  @media (min-width: 56em) { .about-teaser { grid-template-columns: 1fr 1fr; gap: var(--space-2xl); align-items: center; } }
-
-  /* ---- CTA PANEL ---- */
-  .cta-panel {
+  /* ---- CTA FINAL ---- */
+  .cta {
     background: var(--ink); color: var(--plaster);
-    border-radius: var(--radius-lg);
-    padding: clamp(2.5rem, 6vw, 5rem);
+    padding: clamp(2.5rem, 7vw, 6rem);
     display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-m);
-    position: relative; overflow: hidden;
   }
-  .cta-panel::before {
-    content: ''; position: absolute; top: -40%; right: -10%; width: 26rem; height: 26rem;
-    border: 1px solid color-mix(in srgb, var(--plaster) 14%, transparent); border-radius: 50%; pointer-events: none;
-  }
-  .cta-panel__eyebrow { color: var(--brass); }
-  .cta-panel__title { color: var(--plaster); font-size: var(--step-4); max-width: 18ch; }
-  .cta-panel__text { color: color-mix(in srgb, var(--plaster) 78%, transparent); }
-  .cta-panel__btn { margin-top: var(--space-s); }
-  .cta-panel__micro { color: color-mix(in srgb, var(--plaster) 50%, transparent); font-size: var(--step--1); }
+  .cta__eyebrow { color: color-mix(in srgb, var(--plaster) 60%, transparent); }
+  .cta__title { color: var(--plaster); font-size: var(--step-4); font-weight: 400; max-width: 20ch; }
+  .cta__text { color: color-mix(in srgb, var(--plaster) 78%, transparent); }
+  .cta__btn { background: var(--plaster); color: var(--ink); border-color: var(--plaster); margin-top: var(--space-s); }
+  .cta__btn:hover { background: transparent; color: var(--plaster); }
+  .cta__micro { color: color-mix(in srgb, var(--plaster) 50%, transparent); font-size: var(--step--1); }
 </style>

@@ -46,7 +46,7 @@ const ogUrl = ogImage ? new URL(ogImage, Astro.site) : undefined;
     <meta property="og:locale" content={locale === 'fr' ? 'fr_FR' : 'en_US'} />
     {ogUrl && <meta property="og:image" content={ogUrl} />}
     <meta name="twitter:card" content={ogUrl ? 'summary_large_image' : 'summary'} />
-    <meta name="theme-color" content="#0c0c0c" />
+    <meta name="theme-color" content="#1b1813" />
 
     <link rel="icon" href={withBase('/favicon.svg')} type="image/svg+xml" />
 
@@ -54,7 +54,7 @@ const ogUrl = ogImage ? new URL(ogImage, Astro.site) : undefined;
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Syne:wght@600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap"
     />
   </head>
   <body>
@@ -67,8 +67,18 @@ const ogUrl = ogImage ? new URL(ogImage, Astro.site) : undefined;
     <Footer locale={locale} />
 
     <script>
-      // Révélation au scroll
-      const items = document.querySelectorAll('[data-reveal]');
+      // Masque proprement une image absente (emplacements photo à remplir)
+      document.addEventListener(
+        'error',
+        (e) => {
+          const t = e.target as HTMLElement | null;
+          if (t && t.tagName === 'IMG') t.setAttribute('data-failed', 'true');
+        },
+        true
+      );
+
+      // Révélation au scroll (texte + images)
+      const items = document.querySelectorAll('[data-reveal], [data-reveal-img]');
       if ('IntersectionObserver' in window && items.length) {
         const io = new IntersectionObserver(
           (entries) => {

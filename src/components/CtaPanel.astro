@@ -32,9 +32,10 @@ const contactHref = pathFor('contact', locale);
     content: ''; position: absolute; top: -40%; right: -10%; width: 26rem; height: 26rem;
     border: 1px solid color-mix(in srgb, var(--plaster) 14%, transparent); border-radius: 50%; pointer-events: none;
   }
-  .cta-panel__eyebrow { color: var(--brass); }
+  .cta-panel__eyebrow { color: color-mix(in srgb, var(--plaster) 60%, transparent); }
   .cta-panel__title { color: var(--plaster); font-size: var(--step-4); max-width: 18ch; }
   .cta-panel__text { color: color-mix(in srgb, var(--plaster) 78%, transparent); }
-  .cta-panel__btn { margin-top: var(--space-s); }
+  .cta-panel__btn { margin-top: var(--space-s); background: var(--plaster); color: var(--ink); border-color: var(--plaster); }
+  .cta-panel__btn:hover { background: transparent; color: var(--plaster); }
   .cta-panel__micro { color: color-mix(in srgb, var(--plaster) 50%, transparent); font-size: var(--step--1); }
 </style>
