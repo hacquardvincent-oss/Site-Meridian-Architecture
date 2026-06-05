@@ -1,0 +1,40 @@
+---
+import Arrow from './Arrow.astro';
+import { getContent } from '../i18n/content';
+import { pathFor, type Locale } from '../i18n/routes';
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const cta = getContent(locale).home.finalCta;
+const contactHref = pathFor('contact', locale);
+---
+<section class="section">
+  <div class="container">
+    <div class="cta-panel" data-reveal>
+      <span class="eyebrow eyebrow--plain cta-panel__eyebrow">{cta.eyebrow}</span>
+      <h2 class="cta-panel__title">{cta.title}</h2>
+      <p class="cta-panel__text measure">{cta.text}</p>
+      <a class="btn btn--brass cta-panel__btn" href={contactHref}>{cta.button} <Arrow class="arrow" /></a>
+      <p class="cta-panel__micro mono">{cta.micro}</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta-panel {
+    background: var(--ink); color: var(--plaster);
+    border-radius: var(--radius-lg);
+    padding: clamp(2.5rem, 6vw, 5rem);
+    display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-m);
+    position: relative; overflow: hidden;
+  }
+  .cta-panel::before {
+    content: ''; position: absolute; top: -40%; right: -10%; width: 26rem; height: 26rem;
+    border: 1px solid color-mix(in srgb, var(--plaster) 14%, transparent); border-radius: 50%; pointer-events: none;
+  }
+  .cta-panel__eyebrow { color: var(--brass); }
+  .cta-panel__title { color: var(--plaster); font-size: var(--step-4); max-width: 18ch; }
+  .cta-panel__text { color: color-mix(in srgb, var(--plaster) 78%, transparent); }
+  .cta-panel__btn { margin-top: var(--space-s); }
+  .cta-panel__micro { color: color-mix(in srgb, var(--plaster) 50%, transparent); font-size: var(--step--1); }
+</style>

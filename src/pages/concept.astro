@@ -1,0 +1,11 @@
+---
+import Base from '../layouts/Base.astro';
+import ConceptPage from '../components/pages/ConceptPage.astro';
+import { getContent } from '../i18n/content';
+
+const locale = 'fr' as const;
+const c = getContent(locale);
+---
+<Base title={c.concept.meta.title} description={c.concept.meta.description} pageId="concept" locale={locale}>
+  <ConceptPage locale={locale} />
+</Base>

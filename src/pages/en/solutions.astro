@@ -1,0 +1,11 @@
+---
+import Base from '../../layouts/Base.astro';
+import SolutionsPage from '../../components/pages/SolutionsPage.astro';
+import { getContent } from '../../i18n/content';
+
+const locale = 'en' as const;
+const c = getContent(locale);
+---
+<Base title={c.solutions.meta.title} description={c.solutions.meta.description} pageId="solutions" locale={locale}>
+  <SolutionsPage locale={locale} />
+</Base>

@@ -1,0 +1,112 @@
+---
+import { getContent } from '../../i18n/content';
+import type { Locale } from '../../i18n/routes';
+import PageHero from '../PageHero.astro';
+import Arrow from '../Arrow.astro';
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const data = getContent(locale);
+const c = data.contact;
+const f = c.form;
+const sectors = locale === 'fr'
+  ? ['Retail & distribution', 'Services B2B', 'Industrie', 'Autre']
+  : ['Retail & distribution', 'B2B services', 'Industry', 'Other'];
+---
+<PageHero eyebrow={c.hero.eyebrow} title={c.hero.title} lead={c.hero.lead} index="05 — 05" />
+
+<section class="section">
+  <div class="container contact">
+    <form class="contact__form" data-contact-form novalidate data-reveal>
+      <div class="field">
+        <label for="name">{f.name}</label>
+        <input id="name" name="name" type="text" autocomplete="name" required />
+      </div>
+      <div class="field field--half">
+        <label for="company">{f.company}</label>
+        <input id="company" name="company" type="text" autocomplete="organization" />
+      </div>
+      <div class="field field--half">
+        <label for="email">{f.email}</label>
+        <input id="email" name="email" type="email" autocomplete="email" required />
+      </div>
+      <div class="field">
+        <label for="sector">{f.sector}</label>
+        <select id="sector" name="sector">
+          {sectors.map((s) => <option value={s}>{s}</option>)}
+        </select>
+      </div>
+      <div class="field">
+        <label for="message">{f.message}</label>
+        <textarea id="message" name="message" rows="5" placeholder={f.placeholderMessage} required></textarea>
+      </div>
+      <button class="btn btn--brass" type="submit">{f.submit} <Arrow class="arrow" /></button>
+      <p class="contact__note mono">{f.note}</p>
+      <p class="contact__success" data-success hidden>{f.success}</p>
+    </form>
+
+    <aside class="contact__aside" data-reveal style="--reveal-delay:120ms">
+      <span class="eyebrow">{c.details.eyebrow}</span>
+      <dl class="contact__details">
+        <div>
+          <dt class="mono">{c.details.emailLabel}</dt>
+          <dd><a class="arrow-link" href={`mailto:${data.site.email}`}>{data.site.email} <Arrow size={15} class="arrow" /></a></dd>
+        </div>
+        <div>
+          <dt class="mono">{c.details.areaLabel}</dt>
+          <dd>{data.site.location}</dd>
+        </div>
+        <div>
+          <dt class="mono">{c.details.responseLabel}</dt>
+          <dd>{c.details.response}</dd>
+        </div>
+      </dl>
+      <p class="contact__or muted">{f.orEmail}</p>
+      <a class="contact__bigmail" href={`mailto:${data.site.email}`}>{data.site.email}</a>
+    </aside>
+  </div>
+</section>
+
+<style>
+  .contact { display: grid; gap: var(--space-2xl); }
+  @media (min-width: 56em) { .contact { grid-template-columns: 1.25fr 0.75fr; gap: var(--space-3xl); align-items: start; } }
+
+  .contact__form { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-l); align-items: end; }
+  .field { display: flex; flex-direction: column; gap: var(--space-2xs); grid-column: 1 / -1; }
+  @media (min-width: 36em) { .field--half { grid-column: span 1; } }
+  .field label { font-family: var(--font-mono); font-size: var(--step--1); letter-spacing: 0.04em; color: var(--text-subtle); text-transform: uppercase; }
+  .field input, .field select, .field textarea {
+    background: transparent;
+    border: 0; border-bottom: 1px solid var(--line-strong);
+    padding: 0.65rem 0; font-size: var(--step-0); color: var(--ink);
+    border-radius: 0;
+    transition: border-color var(--dur-fast) var(--ease);
+  }
+  .field textarea { resize: vertical; }
+  .field input:focus, .field select:focus, .field textarea:focus { outline: none; border-bottom-color: var(--brass-deep); }
+  .contact__form .btn { grid-column: 1 / -1; justify-self: start; margin-top: var(--space-xs); }
+  .contact__note { grid-column: 1 / -1; font-size: var(--step--1); color: var(--text-subtle); }
+  .contact__success { grid-column: 1 / -1; padding: var(--space-m); border: 1px solid var(--brass); border-radius: var(--radius); color: var(--ink); background: var(--brass-wash); }
+
+  .contact__details { display: grid; gap: var(--space-l); margin-block: var(--space-l); }
+  .contact__details dt { font-size: 0.72rem; letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--text-subtle); margin-bottom: var(--space-3xs); }
+  .contact__details dd { font-size: var(--step-0); color: var(--text); }
+  .contact__or { margin-top: var(--space-l); font-size: var(--step--1); }
+  .contact__bigmail { display: inline-block; margin-top: var(--space-2xs); font-family: var(--font-display); font-size: var(--step-1); color: var(--ink); border-bottom: 1px solid var(--brass); padding-bottom: 2px; }
+</style>
+
+<script>
+  const form = document.querySelector('[data-contact-form]') as HTMLFormElement | null;
+  const success = document.querySelector('[data-success]') as HTMLElement | null;
+  if (form && success) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (!form.checkValidity()) { form.reportValidity(); return; }
+      success.hidden = false;
+      form.querySelectorAll('input, textarea, select, button').forEach((el) => {
+        (el as HTMLInputElement).disabled = true;
+      });
+      success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+  }
+</script>

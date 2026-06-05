@@ -1,0 +1,55 @@
+---
+import { getContent } from '../../i18n/content';
+import type { Locale } from '../../i18n/routes';
+import PageHero from '../PageHero.astro';
+import CtaPanel from '../CtaPanel.astro';
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const c = getContent(locale).about;
+---
+<PageHero eyebrow={c.hero.eyebrow} title={c.hero.title} lead={c.hero.lead} index="04 — 05" />
+
+<section class="section">
+  <div class="container story" data-reveal>
+    <div class="story__head">
+      <span class="eyebrow">{c.story.eyebrow}</span>
+      <h2 class="story__title">{c.story.title}</h2>
+    </div>
+    <p class="story__body">{c.story.body}</p>
+  </div>
+</section>
+
+<section class="section section--alt">
+  <div class="container">
+    <span class="eyebrow" data-reveal>{c.values.eyebrow}</span>
+    <h2 class="values__title" data-reveal style="--reveal-delay:80ms">{c.values.title}</h2>
+    <ul class="values">
+      {c.values.items.map((v, i) => (
+        <li class="value" data-reveal style={`--reveal-delay:${i * 70}ms`}>
+          <span class="value__n mono">{String(i + 1).padStart(2, '0')}</span>
+          <h3 class="value__name">{v.title}</h3>
+          <p class="muted">{v.text}</p>
+        </li>
+      ))}
+    </ul>
+    <p class="founder-note mono" data-reveal>{c.founderNote}</p>
+  </div>
+</section>
+
+<CtaPanel locale={locale} />
+
+<style>
+  .story { display: grid; gap: var(--space-l); }
+  .story__title { margin-top: var(--space-s); }
+  .story__body { font-size: var(--step-1); line-height: 1.6; color: var(--text-muted); max-width: 46ch; }
+  @media (min-width: 56em) { .story { grid-template-columns: 0.9fr 1.1fr; gap: var(--space-2xl); align-items: start; } .story__body { justify-self: end; } }
+
+  .values__title { margin-top: var(--space-s); }
+  .values { list-style: none; padding: 0; margin: var(--space-xl) 0 0; display: grid; gap: var(--space-l); }
+  @media (min-width: 48em) { .values { grid-template-columns: repeat(3, 1fr); gap: var(--space-xl); } }
+  .value { display: flex; flex-direction: column; gap: var(--space-2xs); padding-top: var(--space-m); border-top: 1px solid var(--line-strong); }
+  .value__n { color: var(--accent-text); font-size: var(--step--1); }
+  .value__name { font-size: var(--step-1); }
+  .founder-note { margin-top: var(--space-2xl); padding: var(--space-m) var(--space-l); border-left: 2px solid var(--brass); color: var(--text-subtle); background: var(--surface); font-size: var(--step--1); }
+</style>

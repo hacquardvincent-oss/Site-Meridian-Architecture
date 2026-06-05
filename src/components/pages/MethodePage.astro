@@ -1,0 +1,73 @@
+---
+import { getContent } from '../../i18n/content';
+import type { Locale } from '../../i18n/routes';
+import PageHero from '../PageHero.astro';
+import CtaPanel from '../CtaPanel.astro';
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const data = getContent(locale);
+const c = data.methode;
+const steps = data.home.method.steps;
+---
+<PageHero eyebrow={c.hero.eyebrow} title={c.hero.title} lead={c.hero.lead} index="03 — 05" />
+
+<section class="section">
+  <div class="container">
+    <ol class="flow">
+      {steps.map((s, i) => (
+        <li class="flow__step" data-reveal style={`--reveal-delay:${i * 60}ms`}>
+          <div class="flow__marker">
+            <span class="flow__n mono">{s.n}</span>
+            {i < steps.length - 1 && <span class="flow__line" aria-hidden="true"></span>}
+          </div>
+          <div class="flow__content">
+            <h2 class="flow__title">{s.title}</h2>
+            <p class="muted flow__text">{s.text}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<section class="section section--alt">
+  <div class="container">
+    <span class="eyebrow" data-reveal>{c.principles.eyebrow}</span>
+    <h2 class="commit__title" data-reveal style="--reveal-delay:80ms">{c.principles.title}</h2>
+    <ul class="commit">
+      {c.principles.items.map((p, i) => (
+        <li class="commit__item" data-reveal style={`--reveal-delay:${i * 70}ms`}>
+          <span class="commit__tick" aria-hidden="true"></span>
+          <h3 class="commit__name">{p.title}</h3>
+          <p class="muted">{p.text}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<CtaPanel locale={locale} />
+
+<style>
+  .flow { list-style: none; padding: 0; margin: 0; display: grid; gap: 0; }
+  .flow__step { display: grid; grid-template-columns: auto 1fr; gap: var(--space-l); }
+  .flow__marker { display: flex; flex-direction: column; align-items: center; }
+  .flow__n {
+    display: grid; place-items: center;
+    width: 3rem; height: 3rem; flex: none;
+    border: 1px solid var(--line-strong); border-radius: 50%;
+    font-size: var(--step--1); color: var(--accent-text); background: var(--surface);
+  }
+  .flow__line { flex: 1; width: 1px; background: var(--line-strong); margin-block: var(--space-2xs); }
+  .flow__content { padding-bottom: var(--space-xl); }
+  .flow__title { font-size: var(--step-2); }
+  .flow__text { margin-top: var(--space-2xs); max-width: 54ch; font-size: var(--step-0); }
+
+  .commit__title { margin-top: var(--space-s); }
+  .commit { list-style: none; padding: 0; margin: var(--space-xl) 0 0; display: grid; gap: var(--space-l); }
+  @media (min-width: 48em) { .commit { grid-template-columns: repeat(3, 1fr); gap: var(--space-xl); } }
+  .commit__item { display: flex; flex-direction: column; gap: var(--space-2xs); padding-top: var(--space-m); border-top: 1px solid var(--line-strong); }
+  .commit__tick { width: 1.5rem; height: 1px; background: var(--brass); margin-bottom: var(--space-xs); }
+  .commit__name { font-size: var(--step-1); }
+</style>

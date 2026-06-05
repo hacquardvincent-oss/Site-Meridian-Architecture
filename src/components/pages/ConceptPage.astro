@@ -1,0 +1,60 @@
+---
+import { getContent } from '../../i18n/content';
+import type { Locale } from '../../i18n/routes';
+import PageHero from '../PageHero.astro';
+import CtaPanel from '../CtaPanel.astro';
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const c = getContent(locale).concept;
+---
+<PageHero eyebrow={c.hero.eyebrow} title={c.hero.title} lead={c.hero.lead} index="01 — 05" />
+
+{c.sections.map((s, i) => (
+  <section class:list={['section', { 'section--alt': i % 2 === 1 }]}>
+    <div class="container narrative" data-reveal>
+      <div class="narrative__aside">
+        <span class="eyebrow">{s.eyebrow}</span>
+        <h2 class="narrative__title">{s.title}</h2>
+      </div>
+      <p class="narrative__body">{s.body}</p>
+    </div>
+  </section>
+))}
+
+<section class="section">
+  <div class="container">
+    <span class="eyebrow" data-reveal>{c.principles.eyebrow}</span>
+    <h2 class="principles__title" data-reveal style="--reveal-delay:80ms">{c.principles.title}</h2>
+    <ol class="principles">
+      {c.principles.items.map((p, i) => (
+        <li class="principle" data-reveal style={`--reveal-delay:${i * 70}ms`}>
+          <span class="principle__n mono">{String(i + 1).padStart(2, '0')}</span>
+          <div>
+            <h3 class="principle__title">{p.title}</h3>
+            <p class="muted">{p.text}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<CtaPanel locale={locale} />
+
+<style>
+  .narrative { display: grid; gap: var(--space-l); }
+  .narrative__title { margin-top: var(--space-s); }
+  .narrative__body { font-size: var(--step-1); line-height: 1.55; color: var(--text-muted); max-width: 40ch; }
+  @media (min-width: 56em) {
+    .narrative { grid-template-columns: 0.9fr 1.1fr; gap: var(--space-2xl); align-items: start; }
+    .narrative__body { justify-self: end; }
+  }
+
+  .principles__title { margin-top: var(--space-s); }
+  .principles { list-style: none; padding: 0; margin: var(--space-xl) 0 0; display: grid; gap: var(--space-l); }
+  @media (min-width: 48em) { .principles { grid-template-columns: repeat(2, 1fr); gap: var(--space-xl); } }
+  .principle { display: flex; gap: var(--space-m); padding-top: var(--space-m); border-top: 1px solid var(--line-strong); }
+  .principle__n { color: var(--accent-text); font-size: var(--step--1); flex: none; }
+  .principle__title { font-size: var(--step-1); margin-bottom: var(--space-2xs); }
+</style>

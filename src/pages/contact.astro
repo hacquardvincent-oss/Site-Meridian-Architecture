@@ -1,0 +1,11 @@
+---
+import Base from '../layouts/Base.astro';
+import ContactPage from '../components/pages/ContactPage.astro';
+import { getContent } from '../i18n/content';
+
+const locale = 'fr' as const;
+const c = getContent(locale);
+---
+<Base title={c.contact.meta.title} description={c.contact.meta.description} pageId="contact" locale={locale}>
+  <ContactPage locale={locale} />
+</Base>
