@@ -1,0 +1,82 @@
+---
+import Logo from './Logo.astro';
+import Arrow from './Arrow.astro';
+import { navItems, pathFor, type Locale } from '../i18n/routes';
+import { getContent } from '../i18n/content';
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+
+const c = getContent(locale);
+const t = c.common;
+const items = navItems(locale);
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer section--ink">
+  <div class="container">
+    <div class="site-footer__top">
+      <div class="site-footer__brand">
+        <Logo />
+        <p class="site-footer__tagline">{t.footerTagline}</p>
+        <a class="arrow-link site-footer__email" href={`mailto:${c.site.email}`}>
+          {c.site.email}
+          <Arrow size={16} />
+        </a>
+      </div>
+
+      <nav class="site-footer__nav" aria-label={t.footerNav}>
+        <p class="site-footer__heading mono">{t.footerNav}</p>
+        <ul>
+          {items.map((item) => (
+            <li><a href={item.href}>{item.label}</a></li>
+          ))}
+        </ul>
+      </nav>
+
+      <div class="site-footer__meta">
+        <p class="site-footer__heading mono">{t.footerContact}</p>
+        <ul>
+          <li>{c.site.location}</li>
+          <li><a href={`mailto:${c.site.email}`}>{c.site.email}</a></li>
+          <li><a href={pathFor('contact', locale)}>{t.ctaPrimary}</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <hr class="rule site-footer__rule" />
+
+    <div class="site-footer__bottom">
+      <p class="mono">© {year} {c.site.name}. {t.rights}</p>
+      <p class="mono site-footer__note">{t.builtNote}</p>
+      <a class="mono site-footer__top-link" href="#top">{t.backToTop} ↑</a>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer { padding-block: var(--space-2xl) var(--space-l); }
+  .site-footer__top {
+    display: grid;
+    gap: var(--space-xl);
+    grid-template-columns: 1fr;
+  }
+  .site-footer__brand { color: var(--plaster); max-width: 34rem; }
+  .site-footer__tagline { margin-top: var(--space-m); color: color-mix(in srgb, var(--plaster) 72%, transparent); max-width: 32ch; }
+  .site-footer__email { margin-top: var(--space-m); color: var(--brass); }
+
+  .site-footer__heading { font-size: var(--step--1); letter-spacing: var(--tracking-label); text-transform: uppercase; color: color-mix(in srgb, var(--plaster) 55%, transparent); margin-bottom: var(--space-s); }
+  .site-footer__nav ul, .site-footer__meta ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 0.6rem; }
+  .site-footer__nav a, .site-footer__meta a, .site-footer__meta li { color: color-mix(in srgb, var(--plaster) 80%, transparent); transition: color var(--dur-fast) var(--ease); }
+  .site-footer__nav a:hover, .site-footer__meta a:hover { color: var(--brass); }
+
+  .site-footer__rule { margin-block: var(--space-xl); background: color-mix(in srgb, var(--plaster) 18%, transparent); }
+  .site-footer__bottom { display: flex; flex-wrap: wrap; gap: var(--space-s) var(--space-l); align-items: center; justify-content: space-between; }
+  .site-footer__bottom p, .site-footer__top-link { font-size: var(--step--1); color: color-mix(in srgb, var(--plaster) 55%, transparent); }
+  .site-footer__note { flex: 1; text-align: center; }
+  .site-footer__top-link:hover { color: var(--brass); }
+
+  @media (min-width: 48em) {
+    .site-footer__top { grid-template-columns: 1.6fr 1fr 1fr; gap: var(--space-2xl); }
+  }
+</style>

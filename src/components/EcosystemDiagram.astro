@@ -1,0 +1,159 @@
+---
+/**
+ * Élément signature : un socle de données au centre, les modules autour,
+ * reliés par des liaisons qui s'illuminent (survol + cycle automatique).
+ */
+interface ModuleItem { abbr: string; name: string }
+interface Props { modules: ModuleItem[]; centerLabel: string; centerSub: string; class?: string }
+const { modules, centerLabel, centerSub, class: className = '' } = Astro.props;
+
+const cx = 200;
+const cy = 200;
+const R = 148;
+const nodes = modules.map((m, i) => {
+  const angle = (-90 + (360 / modules.length) * i) * (Math.PI / 180);
+  return { ...m, x: +(cx + R * Math.cos(angle)).toFixed(1), y: +(cy + R * Math.sin(angle)).toFixed(1), i };
+});
+---
+
+<div class:list={['eco', className]} data-eco>
+  <svg viewBox="0 0 400 400" class="eco__svg" role="img" aria-label="Diagramme de l'écosystème Meridian : un socle de données central relié à chaque module.">
+    <!-- orbite décorative -->
+    <circle cx={cx} cy={cy} r={R} class="eco__orbit" />
+
+    <!-- liaisons -->
+    {nodes.map((n) => (
+      <line x1={cx} y1={cy} x2={n.x} y2={n.y} class="eco__link" data-link={n.i} />
+    ))}
+
+    <!-- noeud central -->
+    <g class="eco__core">
+      <circle cx={cx} cy={cy} r="46" class="eco__core-disc" />
+      <text x={cx} y={cy - 4} class="eco__core-label">{centerLabel}</text>
+      <text x={cx} y={cy + 14} class="eco__core-sub">{centerSub}</text>
+    </g>
+
+    <!-- modules -->
+    {nodes.map((n) => (
+      <g class="eco__node" data-node={n.i} tabindex="0" role="listitem" aria-label={n.name}>
+        <circle cx={n.x} cy={n.y} r="33" class="eco__node-disc" />
+        <text x={n.x} y={n.y + 5} class="eco__node-abbr">{n.abbr}</text>
+      </g>
+    ))}
+  </svg>
+
+  <ul class="eco__legend">
+    {nodes.map((n) => (
+      <li class="eco__legend-item" data-legend={n.i}>
+        <span class="eco__legend-abbr mono">{n.abbr}</span>
+        <span class="eco__legend-name">{n.name}</span>
+      </li>
+    ))}
+  </ul>
+</div>
+
+<style>
+  .eco { display: grid; gap: var(--space-l); align-items: center; }
+  .eco__svg { width: 100%; max-width: 32rem; margin-inline: auto; overflow: visible; }
+
+  .eco__orbit { fill: none; stroke: var(--line); stroke-dasharray: 2 6; stroke-width: 1; }
+
+  .eco__link {
+    stroke: var(--line-strong);
+    stroke-width: 1;
+    transition: stroke var(--dur) var(--ease), stroke-width var(--dur) var(--ease);
+  }
+  .eco__core-disc { fill: var(--ink); }
+  .eco__core-label {
+    fill: var(--plaster); font-family: var(--font-display); font-size: 17px; font-weight: 600;
+    text-anchor: middle; letter-spacing: 0.02em;
+  }
+  .eco__core-sub {
+    fill: color-mix(in srgb, var(--plaster) 60%, transparent);
+    font-family: var(--font-mono); font-size: 8px; letter-spacing: 0.18em; text-anchor: middle; text-transform: uppercase;
+  }
+
+  .eco__node { cursor: default; outline: none; }
+  .eco__node-disc {
+    fill: var(--paper);
+    stroke: var(--line-strong);
+    stroke-width: 1.2;
+    transition: fill var(--dur) var(--ease), stroke var(--dur) var(--ease), transform var(--dur) var(--ease);
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+  .eco__node-abbr {
+    fill: var(--ink); font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+    text-anchor: middle; letter-spacing: 0.04em;
+    transition: fill var(--dur) var(--ease);
+  }
+
+  /* État actif (survol, focus, ou cycle auto) */
+  .eco__node:hover .eco__node-disc,
+  .eco__node:focus-visible .eco__node-disc,
+  .eco__node.is-active .eco__node-disc { fill: var(--ink); stroke: var(--ink); }
+  .eco__node:hover .eco__node-abbr,
+  .eco__node:focus-visible .eco__node-abbr,
+  .eco__node.is-active .eco__node-abbr { fill: var(--brass); }
+  .eco__link.is-active { stroke: var(--brass); stroke-width: 1.8; }
+
+  .eco__legend { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.55rem; }
+  .eco__legend-item {
+    display: flex; align-items: baseline; gap: 0.75rem;
+    padding-block: 0.35rem;
+    border-bottom: 1px solid var(--line);
+    transition: border-color var(--dur) var(--ease);
+  }
+  .eco__legend-abbr { font-size: var(--step--1); color: var(--accent-text); min-width: 2.75rem; }
+  .eco__legend-name { color: var(--text-muted); font-size: var(--step-0); }
+  .eco__legend-item.is-active { border-color: var(--brass); }
+  .eco__legend-item.is-active .eco__legend-name { color: var(--ink); }
+
+  @media (min-width: 56em) {
+    .eco { grid-template-columns: 1.2fr 0.8fr; gap: var(--space-2xl); }
+  }
+</style>
+
+<script>
+  const root = document.querySelector('[data-eco]');
+  if (root) {
+    const nodes = Array.from(root.querySelectorAll('[data-node]')) as SVGGElement[];
+    const links = Array.from(root.querySelectorAll('[data-link]')) as SVGLineElement[];
+    const legend = Array.from(root.querySelectorAll('[data-legend]')) as HTMLElement[];
+    const count = nodes.length;
+    let active = -1;
+    let timer: number | undefined;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const setActive = (i: number) => {
+      active = i;
+      nodes.forEach((n, k) => n.classList.toggle('is-active', k === i));
+      links.forEach((l, k) => l.classList.toggle('is-active', k === i));
+      legend.forEach((l, k) => l.classList.toggle('is-active', k === i));
+    };
+
+    const start = () => {
+      if (reduce) return;
+      stop();
+      timer = window.setInterval(() => setActive((active + 1) % count), 2400);
+    };
+    const stop = () => { if (timer) window.clearInterval(timer); timer = undefined; };
+
+    nodes.forEach((n, i) => {
+      const focus = () => { stop(); setActive(i); };
+      n.addEventListener('pointerenter', focus);
+      n.addEventListener('focus', focus);
+      n.addEventListener('pointerleave', start);
+      n.addEventListener('blur', start);
+    });
+    legend.forEach((l, i) => {
+      l.addEventListener('pointerenter', () => { stop(); setActive(i); });
+      l.addEventListener('pointerleave', start);
+    });
+
+    if (!reduce) {
+      setActive(0);
+      start();
+    }
+  }
+</script>

@@ -1,0 +1,86 @@
+/* =============================================================
+   MERIDIAN ARCHITECTURE — Design tokens (charte graphique)
+   Direction : « Swiss-grid meets warm loft » — clair & galerie.
+   Rigueur du design suisse/digital + matières d'un loft new-yorkais.
+   ============================================================= */
+
+:root {
+  /* ---- Couleurs : système neutre minéral + accent laiton ---- */
+  --plaster: #f4f1ec;        /* fond principal — plâtre / off-white */
+  --plaster-deep: #eae6dd;   /* fond alterné — béton clair */
+  --paper: #fcfaf6;          /* blanc chaud — cartes, surfaces */
+  --concrete: #d9d3c8;       /* gris béton — séparateurs, fonds subtils */
+
+  --ink: #1a1815;            /* encre — texte principal (quasi noir chaud) */
+  --ink-soft: #4a453e;       /* texte secondaire */
+  --stone: #8c8579;          /* texte tertiaire, légendes, labels */
+
+  --brass: #b08d57;          /* accent laiton — traits, détails */
+  --brass-deep: #8a6638;     /* laiton foncé — texte d'accent, liens, hover */
+  --brass-wash: #ece3d4;     /* laiton très dilué — fonds d'accent */
+
+  --blueprint: #22324a;      /* bleu « plan » — accent secondaire rare */
+
+  /* ---- Couleurs sémantiques ---- */
+  --bg: var(--plaster);
+  --bg-alt: var(--plaster-deep);
+  --surface: var(--paper);
+  --text: var(--ink);
+  --text-muted: var(--ink-soft);
+  --text-subtle: var(--stone);
+  --accent: var(--brass);
+  --accent-text: var(--brass-deep);
+  --line: color-mix(in srgb, var(--ink) 12%, transparent);
+  --line-strong: color-mix(in srgb, var(--ink) 22%, transparent);
+
+  /* ---- Typographie ---- */
+  --font-display: 'Schibsted Grotesk', 'Helvetica Neue', Arial, sans-serif;
+  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+
+  /* Échelle typographique fluide (clamp : mobile → desktop) */
+  --step--1: clamp(0.83rem, 0.80rem + 0.15vw, 0.92rem);
+  --step-0:  clamp(1.00rem, 0.96rem + 0.20vw, 1.13rem);
+  --step-1:  clamp(1.20rem, 1.12rem + 0.40vw, 1.50rem);
+  --step-2:  clamp(1.44rem, 1.30rem + 0.70vw, 2.00rem);
+  --step-3:  clamp(1.73rem, 1.50rem + 1.15vw, 2.66rem);
+  --step-4:  clamp(2.07rem, 1.70rem + 1.85vw, 3.55rem);
+  --step-5:  clamp(2.49rem, 1.95rem + 2.70vw, 4.74rem);
+  --step-6:  clamp(2.99rem, 2.15rem + 4.20vw, 6.31rem);
+
+  --leading-tight: 1.04;
+  --leading-snug: 1.18;
+  --leading-normal: 1.6;
+  --tracking-tight: -0.02em;
+  --tracking-label: 0.16em;   /* labels mono « plan d'architecte » */
+
+  /* ---- Grille & espacement (rythme architectural) ---- */
+  --space-3xs: 0.25rem;
+  --space-2xs: 0.5rem;
+  --space-xs: 0.75rem;
+  --space-s: 1rem;
+  --space-m: 1.5rem;
+  --space-l: 2.5rem;
+  --space-xl: 4rem;
+  --space-2xl: 6rem;
+  --space-3xl: 9rem;
+
+  --container: 78rem;        /* largeur max de contenu */
+  --container-narrow: 52rem;
+  --gutter: clamp(1.25rem, 5vw, 4rem);
+
+  /* ---- Formes : angles francs (esprit plan / architecture) ---- */
+  --radius: 2px;
+  --radius-lg: 4px;
+  --border: 1px solid var(--line);
+
+  /* ---- Élévation : très discrète (galerie) ---- */
+  --shadow-sm: 0 1px 2px color-mix(in srgb, var(--ink) 6%, transparent);
+  --shadow-md: 0 18px 40px -24px color-mix(in srgb, var(--ink) 32%, transparent);
+
+  /* ---- Mouvement ---- */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 180ms;
+  --dur: 420ms;
+  --dur-slow: 900ms;
+}
