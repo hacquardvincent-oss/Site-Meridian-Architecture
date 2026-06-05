@@ -13,6 +13,10 @@
 | **Ambiance visuelle** | Clair & galerie (fond plâtre lumineux, photo d'architecture mise en avant, accent laiton). |
 | **Stack technique** | Astro. |
 | **Périmètre v1** | Site multi-pages complet (pas une simple landing). |
+| **Identité visuelle** | À créer (logotype + charte complète). Aucune identité pré-existante imposée. |
+| **Copywriting** | Rédigé en proposition de mon côté, validé par Vincent. |
+| **Langues** | Bilingue FR + EN (structure i18n dès le départ). |
+| **Secteurs prioritaires** | Retail & distribution (PIM central) + Services B2B. Industrie/PLM en cible secondaire. |
 
 ---
 
@@ -63,7 +67,7 @@ Le site est une **vitrine de conviction**, pas un catalogue. Objectif : qu'un di
 
 - **Dirigeant·e de PME / ETI** qui subit un patchwork d'outils (Excel + 5 SaaS + un ERP rigide) et veut du sur-mesure sans l'enfer d'un développement classique.
 - **DSI / Responsable transfo** en quête d'un partenaire capable de livrer vite, sur-mesure, et interconnecté.
-- **Secteurs prioritaires :** à définir (industrie, retail/négoce, services, agro, luxe… le PLM/PIM oriente vers produit/industrie/retail).
+- **Secteurs prioritaires :** Retail & distribution (le PIM y est central) + Services B2B. Industrie/PLM en cible secondaire.
 
 ---
 
@@ -170,7 +174,7 @@ Un système **neutre minéral** + **un accent chaud métallique**.
 
 ## 10. Questions ouvertes (à valider)
 
-> Déjà tranché (voir « Décisions validées » en haut) : objectifs (A1), ambiance (C1), stack (E1), périmètre (multi-pages).
+> Déjà tranché (voir « Décisions validées » en haut) : objectifs (A1), secteurs (A2), logo/identité (B1), ambiance (C1), copywriting (D1), langues FR+EN (D4), stack (E1), périmètre (multi-pages).
 
 ### A. Stratégie & marché
 - A1. Objectif **prioritaire** du site (convertir / crédibiliser / expliquer / recruter) ?
