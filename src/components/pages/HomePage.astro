@@ -4,6 +4,8 @@ import { pathFor, withBase, type Locale } from '../../i18n/routes';
 import SectionHeading from '../SectionHeading.astro';
 import EcosystemDiagram from '../EcosystemDiagram.astro';
 import Figure from '../Figure.astro';
+import IsoStructure from '../graphics/IsoStructure.astro';
+import ModuleGlyph from '../graphics/ModuleGlyph.astro';
 import Arrow from '../Arrow.astro';
 
 interface Props { locale: Locale }
@@ -96,7 +98,7 @@ const replace = (file: string) => (isFr ? `À remplacer · public/images/${file}
 <section class="section">
   <div class="container vision">
     <div class="vision__media" data-reveal>
-      <Figure src="/images/vision.jpg" ratio="4 / 5" reveal={false} label={isFr ? 'Intérieur / loft NY' : 'NY interior / loft'} caption={replace('vision.jpg')} />
+      <IsoStructure />
     </div>
     <div class="vision__text" data-reveal style="--reveal-delay:120ms">
       <span class="eyebrow">{h.vision.eyebrow}</span>
@@ -119,10 +121,12 @@ const replace = (file: string) => (isFr ? `À remplacer · public/images/${file}
     <ol class="index">
       {c.modules.map((m, i) => (
         <li class="index__row" data-reveal style={`--reveal-delay:${i * 50}ms`}>
-          <span class="index__no">{String(i + 1).padStart(2, '0')}</span>
-          <h3 class="index__name">{m.name}</h3>
+          <div class="index__head">
+            <span class="index__no">{String(i + 1).padStart(2, '0')}</span>
+            <ModuleGlyph abbr={m.abbr} class="index__glyph" />
+            <h3 class="index__name">{m.name}</h3>
+          </div>
           <p class="index__text muted">{m.text}</p>
-          <span class="index__abbr">{m.abbr}</span>
         </li>
       ))}
     </ol>
@@ -279,22 +283,21 @@ const replace = (file: string) => (isFr ? `À remplacer · public/images/${file}
   /* ---- INDEX (solutions, dispositif singulier) ---- */
   .index { list-style: none; padding: 0; margin: var(--space-xl) 0 0; }
   .index__row {
-    display: grid; grid-template-columns: auto 1fr; gap: var(--space-xs) var(--space-l);
-    align-items: baseline; padding-block: var(--space-l);
-    border-top: 1px solid var(--line-strong); position: relative;
+    display: grid; gap: var(--space-s) var(--space-l);
+    padding-block: var(--space-l); border-top: 1px solid var(--line-strong);
     transition: padding-left var(--dur) var(--ease);
   }
   .index__row:last-child { border-bottom: 1px solid var(--line-strong); }
   .index__row:hover { padding-left: var(--space-s); }
-  .index__no { font-size: var(--step--1); color: var(--text-subtle); letter-spacing: var(--tracking-wide); padding-top: 0.5rem; }
+  .index__head { display: flex; align-items: center; gap: var(--space-m); }
+  .index__no { font-size: var(--step--1); color: var(--text-subtle); letter-spacing: var(--tracking-wide); }
+  .index__glyph { flex: none; }
+  .index__row:hover .index__glyph { color: var(--accent); }
   .index__name { font-size: var(--step-3); font-weight: 400; letter-spacing: var(--tracking-tight); }
-  .index__text { grid-column: 2; max-width: 60ch; }
-  .index__abbr { position: absolute; top: var(--space-l); right: 0; font-size: var(--step--1); letter-spacing: var(--tracking-label); color: var(--text-subtle); }
+  .index__text { color: var(--text-muted); max-width: 56ch; }
   .index__link { margin-top: var(--space-xl); }
   @media (min-width: 56em) {
-    .index__row { grid-template-columns: 4rem 22rem 1fr; align-items: baseline; gap: var(--space-l); }
-    .index__text { grid-column: auto; margin: 0; }
-    .index__abbr { position: static; align-self: center; text-align: right; }
+    .index__row { grid-template-columns: 0.95fr 1.05fr; align-items: center; }
   }
 
   /* ---- ÉCOSYSTÈME ---- */
