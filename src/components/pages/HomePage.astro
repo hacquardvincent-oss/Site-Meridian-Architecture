@@ -6,6 +6,7 @@ import EcosystemDiagram from '../EcosystemDiagram.astro';
 import Figure from '../Figure.astro';
 import IsoStructure from '../graphics/IsoStructure.astro';
 import ModuleGlyph from '../graphics/ModuleGlyph.astro';
+import GeoComposition from '../graphics/GeoComposition.astro';
 import Arrow from '../Arrow.astro';
 
 interface Props { locale: Locale }
@@ -202,7 +203,7 @@ const replace = (file: string) => (isFr ? `À remplacer · public/images/${file}
       <a class="arrow-link" href={aboutHref}>{h.about.cta} <Arrow class="arrow" size={15} /></a>
     </div>
     <div class="about__media" data-reveal style="--reveal-delay:120ms">
-      <Figure src="/images/about.jpg" ratio="3 / 4" reveal={false} label={isFr ? 'Portrait / fondateur' : 'Portrait / founder'} caption={replace('about.jpg')} />
+      <GeoComposition variant="arc" />
     </div>
   </div>
 </section>

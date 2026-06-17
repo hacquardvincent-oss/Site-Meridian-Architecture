@@ -3,6 +3,7 @@ import { getContent } from '../../i18n/content';
 import type { Locale } from '../../i18n/routes';
 import PageHero from '../PageHero.astro';
 import CtaPanel from '../CtaPanel.astro';
+import ModuleGlyph from '../graphics/ModuleGlyph.astro';
 
 interface Props { locale: Locale }
 const { locale } = Astro.props;
@@ -16,8 +17,9 @@ const c = getContent(locale).solutions;
       {c.detail.map((m, i) => (
         <li class="module" data-reveal style={`--reveal-delay:${i * 50}ms`}>
           <div class="module__id">
-            <span class="module__abbr mono">{m.abbr}</span>
-            <span class="module__no mono">{String(i + 1).padStart(2, '0')}</span>
+            <ModuleGlyph abbr={m.abbr} class="module__glyph" />
+            <span class="module__abbr">{m.abbr}</span>
+            <span class="module__no">{String(i + 1).padStart(2, '0')}</span>
           </div>
           <div class="module__body">
             <h2 class="module__name">{m.name}</h2>
@@ -50,7 +52,8 @@ const c = getContent(locale).solutions;
     border-top: 1px solid var(--line);
   }
   .module:last-child { border-bottom: 1px solid var(--line); }
-  .module__id { display: flex; align-items: baseline; justify-content: space-between; }
+  .module__id { display: flex; align-items: center; gap: var(--space-m); }
+  .module__glyph { width: 2.75rem; height: 2.75rem; flex: none; color: var(--ink); }
   .module__abbr { font-family: var(--font-display); font-size: var(--step-3); font-weight: 500; color: var(--ink); letter-spacing: 0.01em; }
   .module__no { color: var(--text-subtle); font-size: var(--step--1); }
   .module__name { font-size: var(--step-2); }
@@ -58,7 +61,7 @@ const c = getContent(locale).solutions;
   .module__more { margin-top: var(--space-s); max-width: 62ch; }
   @media (min-width: 56em) {
     .module { grid-template-columns: 0.32fr 0.68fr; gap: var(--space-2xl); align-items: start; }
-    .module__id { flex-direction: column; gap: var(--space-s); }
+    .module__id { flex-direction: column; align-items: flex-start; gap: var(--space-s); }
   }
 
   .interconnect { display: grid; gap: var(--space-l); }
