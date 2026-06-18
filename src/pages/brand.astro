@@ -1,0 +1,88 @@
+---
+import Base from '../layouts/Base.astro';
+import LogoConcept from '../components/graphics/LogoConcept.astro';
+
+const locale = 'en' as const;
+const concepts = [
+  { id: 'a', label: 'A — Axe méridien', desc: 'Anneau + axe + ticks de coordonnées (version actuelle, affinée).' },
+  { id: 'b', label: 'B — Monogramme M', desc: 'Un « M » géométrique (colonnes / fronton). Lecture immédiate, fort en favicon.' },
+  { id: 'c', label: 'C — Plan', desc: 'Carré architectural traversé par l’axe. Sobre, « plan d’architecte ».' },
+  { id: 'd', label: 'D — Coordonnée', desc: 'Réticule cartographique. Idée de précision / point de référence.' },
+  { id: 'e', label: 'E — Édifice', desc: 'Plateaux empilés = l’écosystème. Raccord direct avec le site.' },
+  { id: 'f', label: 'F — Arc & axe', desc: 'Horizon + méridien. Minimal, élégant, ouvert.' },
+];
+---
+<Base title="Concepts de logo — Meridian Architecture" description="Page de travail : concepts de logo à arbitrer." pageId="home" locale={locale}>
+  <section class="section">
+    <div class="container">
+      <span class="eyebrow">Atelier de marque · interne</span>
+      <h1 class="brand__title">Concepts de logo</h1>
+      <p class="lead">Six directions autour du « méridien ». Dis-moi tes préférées (1 à 3), et ce que tu veux pousser — on affine ensuite la chosen, ses variantes et le wordmark. Page de travail, non liée au menu.</p>
+
+      <ul class="grid-c">
+        {concepts.map((c) => (
+          <li class="cc">
+            <div class="cc__stage"><LogoConcept concept={c.id} /></div>
+            <div class="cc__meta">
+              <h3 class="cc__label">{c.label}</h3>
+              <p class="muted">{c.desc}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section--ink">
+    <div class="container">
+      <span class="eyebrow">Sur fond noir</span>
+      <h2 class="brand__h2">Test en négatif</h2>
+      <ul class="grid-dark">
+        {concepts.map((c) => (
+          <li class="cd"><LogoConcept concept={c.id} /><span class="cd__id">{c.id.toUpperCase()}</span></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <span class="eyebrow">Lockups (exemples)</span>
+      <h2 class="brand__h2">Mark + nom</h2>
+      <ul class="locks">
+        {['b', 'a', 'd'].map((id) => (
+          <li class="lock">
+            <LogoConcept concept={id} class="lock__mark" />
+            <span class="lock__word"><span class="lock__name">Meridian</span><span class="lock__sub">Architecture</span></span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .brand__title { font-size: var(--step-5); font-weight: 400; margin-block: var(--space-s) var(--space-m); }
+  .brand__h2 { font-size: var(--step-3); font-weight: 400; margin-block: var(--space-s) var(--space-xl); }
+
+  .grid-c { list-style: none; padding: 0; margin: var(--space-2xl) 0 0; display: grid; gap: var(--space-l); }
+  @media (min-width: 40em) { .grid-c { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 64em) { .grid-c { grid-template-columns: repeat(3, 1fr); } }
+  .cc { border: 1px solid var(--line); display: flex; flex-direction: column; }
+  .cc__stage { display: grid; place-items: center; padding: var(--space-2xl); border-bottom: 1px solid var(--line); background: var(--paper); }
+  .cc__meta { padding: var(--space-l); }
+  .cc__label { font-size: var(--step-1); font-weight: 500; margin-bottom: var(--space-2xs); }
+
+  .grid-dark { list-style: none; padding: 0; margin: var(--space-xl) 0 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-l); }
+  @media (min-width: 48em) { .grid-dark { grid-template-columns: repeat(6, 1fr); } }
+  .cd { display: flex; flex-direction: column; align-items: center; gap: var(--space-s); color: var(--plaster); }
+  .cd__id { font-size: var(--step--1); color: color-mix(in srgb, var(--plaster) 55%, transparent); }
+
+  .locks { list-style: none; padding: 0; margin: var(--space-xl) 0 0; display: grid; gap: var(--space-xl); }
+  @media (min-width: 48em) { .locks { grid-template-columns: repeat(3, 1fr); } }
+  .lock { display: flex; align-items: center; gap: var(--space-s); }
+  .lock__mark { width: 2.75rem; height: 2.75rem; flex: none; }
+  .lock__word { display: flex; flex-direction: column; line-height: 1; }
+  .lock__name { font-family: var(--font-display); font-size: 1.25rem; font-weight: 500; letter-spacing: -0.01em; }
+  .lock__sub { font-size: 0.62rem; font-weight: 600; letter-spacing: 0.26em; text-transform: uppercase; color: var(--text-subtle); margin-top: 0.25rem; }
+</style>
