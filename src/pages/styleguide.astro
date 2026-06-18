@@ -1,0 +1,236 @@
+---
+import Base from '../layouts/Base.astro';
+import Logo from '../components/Logo.astro';
+import ModuleGlyph from '../components/graphics/ModuleGlyph.astro';
+import Picto from '../components/graphics/Picto.astro';
+import GeoComposition from '../components/graphics/GeoComposition.astro';
+import IsoStructure from '../components/graphics/IsoStructure.astro';
+import Arrow from '../components/Arrow.astro';
+
+const locale = 'en' as const;
+const colors = [
+  { name: 'Blanc', hex: '#ffffff', use: 'Fond principal', dark: false },
+  { name: 'Noir (encre)', hex: '#0e0e10', use: 'Texte, traits', dark: true },
+  { name: 'Gris foncé', hex: '#43454a', use: 'Texte secondaire', dark: true },
+  { name: 'Gris (pierre)', hex: '#8a8d93', use: 'Légendes, surtitres', dark: true },
+  { name: 'Filet', hex: '#e4e5e7', use: 'Séparateurs', dark: false },
+  { name: 'Bleu pastel', hex: '#9db8dd', use: 'Accent — animations / détails uniquement', dark: false },
+];
+const type = [
+  { label: 'Display', step: 'var(--step-6)', weight: 400, sample: 'Un seul édifice' },
+  { label: 'Titre H1', step: 'var(--step-5)', weight: 400, sample: 'Le logiciel comme architecture' },
+  { label: 'Titre H2', step: 'var(--step-4)', weight: 500, sample: 'Cinq domaines, un écosystème' },
+  { label: 'Titre H3', step: 'var(--step-2)', weight: 500, sample: 'Business Intelligence' },
+  { label: 'Lead', step: 'var(--step-1)', weight: 400, sample: 'Un plan d’ensemble, des fondations solides.' },
+  { label: 'Corps', step: 'var(--step-0)', weight: 400, sample: 'Texte courant en Hanken Grotesk, lisible et aéré.' },
+];
+const spaces = [
+  { n: '2xs', v: '0.5rem' }, { n: 'xs', v: '0.75rem' }, { n: 's', v: '1rem' },
+  { n: 'm', v: '1.5rem' }, { n: 'l', v: '2.5rem' }, { n: 'xl', v: '4.5rem' }, { n: '2xl', v: '7rem' },
+];
+const glyphs = ['BI', 'ERP', 'PLM', 'PIM', 'WEB'];
+---
+<Base title="Charte graphique — Meridian Architecture" description="Styleguide vivant : logo, couleurs, typographie, langage graphique." pageId="home" locale={locale}>
+  <section class="section sg-head">
+    <div class="container">
+      <span class="eyebrow">Charte graphique · document vivant</span>
+      <h1 class="sg-title">Le système Meridian</h1>
+      <p class="lead">La référence visuelle du cabinet : à décliner sur le site, les chiffrages, les cadrages et les présentations. <a class="arrow-link" href="./brand/">Concepts de logo <Arrow class="arrow" size={14} /></a></p>
+    </div>
+  </section>
+
+  <!-- LOGO -->
+  <section class="section">
+    <div class="container">
+      <span class="eyebrow">01 — Logo</span>
+      <h2 class="sg-h2">Logo & déclinaisons</h2>
+      <div class="sg-logos">
+        <div class="sg-logo sg-logo--light"><Logo /></div>
+        <div class="sg-logo sg-logo--dark section--ink"><Logo /></div>
+        <div class="sg-logo sg-logo--light"><Logo variant="mark" /></div>
+      </div>
+      <ul class="sg-notes">
+        <li><strong>Zone de protection</strong> : au moins la hauteur du mark autour du logo.</li>
+        <li><strong>Taille minimale</strong> : mark ≥ 20 px ; lockup complet ≥ 120 px de large.</li>
+        <li><strong>Le point bleu pastel</strong> est la signature couleur — toujours présent, jamais remplacé.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- COULEURS -->
+  <section class="section section--alt">
+    <div class="container">
+      <span class="eyebrow">02 — Couleurs</span>
+      <h2 class="sg-h2">Palette</h2>
+      <ul class="sw">
+        {colors.map((c) => (
+          <li class="sw__item">
+            <span class="sw__chip" style={`background:${c.hex}; color:${c.dark ? '#fff' : '#0e0e10'};`}>{c.hex}</span>
+            <span class="sw__name">{c.name}</span>
+            <span class="sw__use muted">{c.use}</span>
+          </li>
+        ))}
+      </ul>
+      <p class="sg-rule">Règle : le bleu pastel ne sert <strong>jamais</strong> à un aplat ou à du texte courant — uniquement traits, survols, points et tracés animés.</p>
+    </div>
+  </section>
+
+  <!-- TYPO -->
+  <section class="section">
+    <div class="container">
+      <span class="eyebrow">03 — Typographie</span>
+      <h2 class="sg-h2">Hanken Grotesk</h2>
+      <p class="muted sg-sub">Une seule famille. Hiérarchie par taille + graisse (300 → 700). Surtitres en capitales lettrées.</p>
+      <ul class="type">
+        {type.map((t) => (
+          <li class="type__row">
+            <span class="type__label mono">{t.label}</span>
+            <span class="type__sample" style={`font-size:${t.step}; font-weight:${t.weight};`}>{t.sample}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- GRILLE -->
+  <section class="section section--alt">
+    <div class="container">
+      <span class="eyebrow">04 — Grille & espacement</span>
+      <h2 class="sg-h2">Rythme</h2>
+      <ul class="sp">
+        {spaces.map((s) => (
+          <li class="sp__row">
+            <span class="sp__bar" style={`width:${s.v}`}></span>
+            <span class="sp__label mono">{s.n} · {s.v}</span>
+          </li>
+        ))}
+      </ul>
+      <p class="muted sg-sub">Conteneur max 82rem · gouttières fluides 1,25 → 4,5rem · beaucoup de blanc.</p>
+    </div>
+  </section>
+
+  <!-- LANGAGE GRAPHIQUE -->
+  <section class="section">
+    <div class="container">
+      <span class="eyebrow">05 — Langage graphique</span>
+      <h2 class="sg-h2">Le capital de marque</h2>
+      <div class="sg-graph">
+        <div class="sg-graph__iso"><IsoStructure /></div>
+        <div class="sg-graph__compos">
+          <div><GeoComposition variant="fragments" /></div>
+          <div><GeoComposition variant="arc" /></div>
+          <div><GeoComposition variant="plan" /></div>
+        </div>
+      </div>
+
+      <h3 class="sg-h3">Glyphes par domaine</h3>
+      <ul class="sg-row">
+        {glyphs.map((g) => (
+          <li class="sg-cell"><ModuleGlyph abbr={g} /><span class="mono">{g}</span></li>
+        ))}
+      </ul>
+
+      <h3 class="sg-h3">Pictos</h3>
+      <ul class="sg-row">
+        {[0, 1, 2, 3, 4, 5].map((v) => (
+          <li class="sg-cell"><Picto variant={v} /></li>
+        ))}
+      </ul>
+      <p class="muted sg-sub">Constantes : traits fins 1,2–1,4 px · couleur encre · un seul accent pastel par composition · formes décalées · ticks de coordonnées.</p>
+    </div>
+  </section>
+
+  <!-- COMPOSANTS -->
+  <section class="section section--alt">
+    <div class="container">
+      <span class="eyebrow">06 — Composants</span>
+      <h2 class="sg-h2">Éléments d’interface</h2>
+      <div class="sg-comp">
+        <a class="btn" href="#">Bouton principal <Arrow class="arrow" /></a>
+        <a class="btn btn--ghost" href="#">Bouton secondaire</a>
+        <a class="arrow-link" href="#">Lien fléché <Arrow class="arrow" size={15} /></a>
+      </div>
+      <div class="card sg-card">
+        <Picto variant={2} class="card__picto" />
+        <h3 class="card__title">Carte type</h3>
+        <p class="muted">Fond blanc, filet fin, picto géométrique, élévation discrète au survol.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- DO / DON'T -->
+  <section class="section">
+    <div class="container sg-rules">
+      <div>
+        <span class="eyebrow">À faire</span>
+        <ul class="sg-list sg-list--do">
+          <li>Beaucoup de blanc, traits fins, formes géométriques.</li>
+          <li>Le bleu pastel par petites touches (survol, tracé, point).</li>
+          <li>Une seule typo, hiérarchie par taille/graisse.</li>
+          <li>Garder l’axe « méridien » et le point pastel comme signatures.</li>
+        </ul>
+      </div>
+      <div>
+        <span class="eyebrow">À éviter</span>
+        <ul class="sg-list sg-list--dont">
+          <li>Aplats ou texte en bleu pastel (contraste insuffisant).</li>
+          <li>Dégradés, ombres lourdes, effets « tech ».</li>
+          <li>Plusieurs polices ou couleurs vives.</li>
+          <li>Déformer le logo / supprimer le point pastel.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .sg-title { font-size: var(--step-5); font-weight: 400; margin-block: var(--space-s) var(--space-m); }
+  .sg-h2 { font-size: var(--step-3); font-weight: 400; margin-block: var(--space-s) var(--space-xl); }
+  .sg-h3 { font-size: var(--step-1); font-weight: 500; margin-block: var(--space-2xl) var(--space-m); }
+  .sg-sub { margin-top: var(--space-l); max-width: 60ch; }
+  .sg-rule { margin-top: var(--space-l); max-width: 62ch; }
+  .sg-notes { list-style: none; padding: 0; margin: var(--space-xl) 0 0; display: grid; gap: var(--space-s); color: var(--text-muted); }
+
+  .sg-logos { display: grid; gap: var(--space-l); grid-template-columns: 1fr; margin-top: var(--space-xl); }
+  @media (min-width: 48em) { .sg-logos { grid-template-columns: repeat(3, 1fr); } }
+  .sg-logo { display: grid; place-items: center; padding: var(--space-2xl); border: 1px solid var(--line); }
+  .sg-logo--dark { color: var(--plaster); }
+
+  .sw { list-style: none; padding: 0; margin: var(--space-xl) 0 0; display: grid; gap: var(--space-m); grid-template-columns: repeat(2, 1fr); }
+  @media (min-width: 48em) { .sw { grid-template-columns: repeat(3, 1fr); } }
+  .sw__item { display: flex; flex-direction: column; gap: var(--space-2xs); }
+  .sw__chip { display: grid; place-items: center; height: 5rem; border: 1px solid var(--line); font-family: var(--font-mono); font-size: var(--step--1); }
+  .sw__name { font-weight: 600; font-size: var(--step-0); }
+  .sw__use { font-size: var(--step--1); }
+
+  .type { list-style: none; padding: 0; margin: var(--space-xl) 0 0; display: grid; gap: var(--space-l); }
+  .type__row { display: grid; gap: var(--space-2xs); border-top: 1px solid var(--line); padding-top: var(--space-m); }
+  .type__label { font-size: var(--step--1); color: var(--text-subtle); letter-spacing: var(--tracking-label); text-transform: uppercase; }
+  .type__sample { line-height: 1.1; }
+  @media (min-width: 48em) { .type__row { grid-template-columns: 8rem 1fr; gap: var(--space-l); align-items: baseline; } }
+
+  .sp { list-style: none; padding: 0; margin: var(--space-xl) 0 0; display: grid; gap: var(--space-s); }
+  .sp__row { display: flex; align-items: center; gap: var(--space-m); }
+  .sp__bar { height: 0.85rem; background: var(--ink); display: block; }
+  .sp__label { font-size: var(--step--1); color: var(--text-subtle); }
+
+  .sg-graph { display: grid; gap: var(--space-2xl); margin-top: var(--space-xl); align-items: center; }
+  @media (min-width: 56em) { .sg-graph { grid-template-columns: 0.8fr 1.2fr; } }
+  .sg-graph__iso { max-width: 18rem; margin-inline: auto; }
+  .sg-graph__compos { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-l); }
+
+  .sg-row { list-style: none; padding: 0; margin: var(--space-m) 0 0; display: flex; flex-wrap: wrap; gap: var(--space-xl); align-items: center; }
+  .sg-cell { display: flex; flex-direction: column; align-items: center; gap: var(--space-2xs); color: var(--text-subtle); }
+  .sg-cell :global(.glyph), .sg-cell :global(.picto) { width: 2.5rem; height: 2.5rem; color: var(--ink); }
+
+  .sg-comp { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-m); margin-top: var(--space-xl); }
+  .sg-card { max-width: 22rem; margin-top: var(--space-xl); }
+
+  .sg-rules { display: grid; gap: var(--space-2xl); }
+  @media (min-width: 48em) { .sg-rules { grid-template-columns: repeat(2, 1fr); } }
+  .sg-list { list-style: none; padding: 0; margin: var(--space-m) 0 0; display: grid; gap: var(--space-s); }
+  .sg-list li { padding-left: var(--space-m); position: relative; color: var(--text-muted); }
+  .sg-list li::before { position: absolute; left: 0; }
+  .sg-list--do li::before { content: '+'; color: var(--accent-deep); }
+  .sg-list--dont li::before { content: '\2013'; color: var(--text-subtle); }
+</style>

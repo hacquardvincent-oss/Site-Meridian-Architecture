@@ -2,6 +2,8 @@
 
 Document vivant. État de l'identité actuelle + pistes pour la renforcer.
 
+> **Pages vivantes du site** : charte complète → `/styleguide` · concepts de logo → `/brand`.
+
 ## 1. Essence
 
 **« Le logiciel comme architecture. »** On bâtit des écosystèmes logiciels sur-mesure,
