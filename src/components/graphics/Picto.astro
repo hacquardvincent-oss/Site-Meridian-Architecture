@@ -1,0 +1,53 @@
+---
+/** Petit picto géométrique abstrait pour habiller les cartes. Décliné par variante. */
+interface Props { variant?: number; class?: string }
+const { variant = 0, class: className = '' } = Astro.props;
+const v = (((variant % 6) + 6) % 6);
+const A = '#9db8dd';
+---
+<svg class:list={['picto', className]} viewBox="0 0 32 32" fill="none" role="img" aria-hidden="true">
+  {v === 0 && (
+    <g stroke="currentColor" stroke-width="1.4">
+      <rect x="5" y="18" width="9" height="9" />
+      <rect x="15" y="9" width="9" height="9" />
+      <circle cx="27" cy="6" r="1.7" fill={A} stroke="none" />
+    </g>
+  )}
+  {v === 1 && (
+    <g stroke="currentColor" stroke-width="1.4">
+      <circle cx="16" cy="16" r="10" />
+      <line x1="3" y1="16" x2="29" y2="16" />
+      <circle cx="16" cy="16" r="1.9" fill={A} stroke="none" />
+    </g>
+  )}
+  {v === 2 && (
+    <g stroke="currentColor" stroke-width="1.4">
+      <path d="M16 5 L27 27 L5 27 Z" />
+      <line x1="9" y1="21" x2="23" y2="21" opacity="0.5" />
+    </g>
+  )}
+  {v === 3 && (
+    <g stroke="currentColor" stroke-width="1.4">
+      <rect x="6" y="7" width="14" height="14" />
+      <rect x="13" y="14" width="13" height="13" opacity="0.55" />
+    </g>
+  )}
+  {v === 4 && (
+    <g stroke="currentColor" stroke-width="1.4">
+      <path d="M6 26 A20 20 0 0 1 26 6" />
+      <path d="M6 11 L6 6 L11 6" />
+      <circle cx="26" cy="26" r="1.9" fill={A} stroke="none" />
+    </g>
+  )}
+  {v === 5 && (
+    <g stroke="currentColor" stroke-width="1.4">
+      <rect x="6" y="6" width="20" height="20" />
+      <line x1="16" y1="6" x2="16" y2="26" />
+      <line x1="6" y1="16" x2="26" y2="16" />
+    </g>
+  )}
+</svg>
+
+<style>
+  .picto { width: 1.85rem; height: 1.85rem; color: var(--ink); transition: color var(--dur) var(--ease); }
+</style>

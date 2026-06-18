@@ -3,13 +3,15 @@ interface Props {
   eyebrow?: string;
   title: string;
   intro?: string;
+  num?: string;
   align?: 'start' | 'center';
   as?: 'h2' | 'h3';
   class?: string;
 }
-const { eyebrow, title, intro, align = 'start', as: Tag = 'h2', class: className = '' } = Astro.props;
+const { eyebrow, title, intro, num, align = 'start', as: Tag = 'h2', class: className = '' } = Astro.props;
 ---
 <div class:list={['sh', `sh--${align}`, className]} data-reveal>
+  {num && <span class="sh__num" aria-hidden="true">{num}</span>}
   {eyebrow && <span class="eyebrow">{eyebrow}</span>}
   <Tag class="sh__title">{title}</Tag>
   {intro && <p class="sh__intro lead">{intro}</p>}
@@ -19,6 +21,11 @@ const { eyebrow, title, intro, align = 'start', as: Tag = 'h2', class: className
   .sh { display: flex; flex-direction: column; gap: var(--space-m); max-width: 54rem; }
   .sh--center { align-items: center; text-align: center; margin-inline: auto; }
   .sh--center .sh__intro { margin-inline: auto; }
+  .sh__num {
+    font-family: var(--font-display); font-size: var(--step-4); font-weight: 300; line-height: 1;
+    letter-spacing: -0.02em; color: color-mix(in srgb, var(--ink) 16%, transparent);
+    margin-bottom: calc(-1 * var(--space-xs));
+  }
   .sh__title { margin-top: 0.2rem; }
   .sh__intro { margin-top: 0.25rem; }
 </style>

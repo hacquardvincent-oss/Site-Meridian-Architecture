@@ -7,6 +7,7 @@ import Figure from '../Figure.astro';
 import IsoStructure from '../graphics/IsoStructure.astro';
 import ModuleGlyph from '../graphics/ModuleGlyph.astro';
 import GeoComposition from '../graphics/GeoComposition.astro';
+import Picto from '../graphics/Picto.astro';
 import Arrow from '../Arrow.astro';
 
 interface Props { locale: Locale }
@@ -82,10 +83,11 @@ const replace = (file: string) => (isFr ? `À remplacer · public/images/${file}
 <!-- ============ PROBLÈME ============ -->
 <section class="section section--alt">
   <div class="container">
-    <SectionHeading eyebrow={h.problem.eyebrow} title={h.problem.title} intro={h.problem.intro} />
+    <SectionHeading num="01" eyebrow={h.problem.eyebrow} title={h.problem.title} intro={h.problem.intro} />
     <ul class="cards cards--4">
       {h.problem.items.map((item, i) => (
         <li class="card" data-reveal style={`--reveal-delay:${i * 70}ms`}>
+          <Picto variant={i} class="card__picto" />
           <span class="card__index">{String(i + 1).padStart(2, '0')}</span>
           <h3 class="card__title">{item.title}</h3>
           <p class="muted">{item.text}</p>
@@ -118,7 +120,7 @@ const replace = (file: string) => (isFr ? `À remplacer · public/images/${file}
 <!-- ============ SOLUTIONS (index singulier) ============ -->
 <section class="section section--alt">
   <div class="container">
-    <SectionHeading eyebrow={h.pillars.eyebrow} title={h.pillars.title} intro={h.pillars.intro} />
+    <SectionHeading num="02" eyebrow={h.pillars.eyebrow} title={h.pillars.title} intro={h.pillars.intro} />
     <ol class="index">
       {c.modules.map((m, i) => (
         <li class="index__row" data-reveal style={`--reveal-delay:${i * 50}ms`}>
@@ -138,7 +140,7 @@ const replace = (file: string) => (isFr ? `À remplacer · public/images/${file}
 <!-- ============ ÉCOSYSTÈME ============ -->
 <section class="section">
   <div class="container">
-    <SectionHeading eyebrow={h.ecosystem.eyebrow} title={h.ecosystem.title} intro={h.ecosystem.caption} align="center" />
+    <SectionHeading num="03" eyebrow={h.ecosystem.eyebrow} title={h.ecosystem.title} intro={h.ecosystem.caption} align="center" />
     <div class="eco-wrap" data-reveal>
       <EcosystemDiagram modules={c.modules} centerLabel={isFr ? 'Socle' : 'Core'} centerSub={isFr ? 'données + IA' : 'data + AI'} />
     </div>
@@ -148,7 +150,7 @@ const replace = (file: string) => (isFr ? `À remplacer · public/images/${file}
 <!-- ============ MÉTHODE ============ -->
 <section class="section section--alt">
   <div class="container">
-    <SectionHeading eyebrow={h.method.eyebrow} title={h.method.title} intro={h.method.intro} />
+    <SectionHeading num="04" eyebrow={h.method.eyebrow} title={h.method.title} intro={h.method.intro} />
     <ol class="steps">
       {h.method.steps.map((s, i) => (
         <li class="step" data-reveal style={`--reveal-delay:${i * 60}ms`}>
@@ -165,10 +167,11 @@ const replace = (file: string) => (isFr ? `À remplacer · public/images/${file}
 <!-- ============ POURQUOI ============ -->
 <section class="section">
   <div class="container">
-    <SectionHeading eyebrow={h.why.eyebrow} title={h.why.title} />
+    <SectionHeading num="05" eyebrow={h.why.eyebrow} title={h.why.title} />
     <ul class="cards cards--3">
       {h.why.items.map((item, i) => (
         <li class="card" data-reveal style={`--reveal-delay:${i * 70}ms`}>
+          <Picto variant={i + 2} class="card__picto" />
           <h3 class="card__title">{item.title}</h3>
           <p class="muted">{item.text}</p>
         </li>
@@ -180,10 +183,11 @@ const replace = (file: string) => (isFr ? `À remplacer · public/images/${file}
 <!-- ============ CAS D'USAGE ============ -->
 <section class="section section--alt">
   <div class="container">
-    <SectionHeading eyebrow={h.useCases.eyebrow} title={h.useCases.title} />
+    <SectionHeading num="06" eyebrow={h.useCases.eyebrow} title={h.useCases.title} />
     <ul class="cards cards--3">
       {h.useCases.items.map((item, i) => (
         <li class="card card--use" data-reveal style={`--reveal-delay:${i * 70}ms`}>
+          <Picto variant={i + 4} class="card__picto" />
           <span class="use__tag">{item.tag}</span>
           <h3 class="card__title">{item.title}</h3>
           <p class="muted">{item.text}</p>
@@ -267,6 +271,8 @@ const replace = (file: string) => (isFr ? `À remplacer · public/images/${file}
     transition: border-color var(--dur) var(--ease), transform var(--dur) var(--ease);
   }
   .card:hover { border-color: var(--line-strong); transform: translateY(-3px); }
+  .card__picto { margin-bottom: var(--space-2xs); }
+  .card:hover .card__picto { color: var(--accent); }
   .card__index { font-size: var(--step--1); color: var(--text-subtle); letter-spacing: var(--tracking-wide); }
   .card__title { font-size: var(--step-1); font-weight: 500; }
   .use__tag { font-size: var(--step--1); font-weight: 600; letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--text-subtle); }

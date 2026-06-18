@@ -1,37 +1,47 @@
 ---
-interface Props { eyebrow: string; title: string; lead: string; index?: string }
-const { eyebrow, title, lead, index } = Astro.props;
+import GeoComposition from './graphics/GeoComposition.astro';
+import IsoStructure from './graphics/IsoStructure.astro';
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  lead: string;
+  index?: string;
+  graphic?: 'fragments' | 'arc' | 'plan' | 'iso';
+}
+const { eyebrow, title, lead, index, graphic } = Astro.props;
 ---
 <section class="page-hero">
-  <svg class="page-hero__deco" viewBox="0 0 220 220" aria-hidden="true" fill="none">
-    <circle cx="150" cy="86" r="70" stroke="currentColor" stroke-width="1" opacity="0.16" />
-    <line x1="150" y1="6" x2="150" y2="210" stroke="#9db8dd" stroke-width="1.2" opacity="0.85" />
-    <path d="M44 44 L74 44 M44 44 L44 74" stroke="currentColor" stroke-width="1.2" opacity="0.4" />
-    <path d="M168 150 L198 165 L168 180 L138 165 Z" stroke="currentColor" stroke-width="1" opacity="0.4" />
-    <circle cx="150" cy="86" r="3.4" fill="#9db8dd" />
-  </svg>
-  <div class="container">
+  <div class="container page-hero__grid">
     <div class="page-hero__inner">
       <span class="eyebrow" data-reveal>{eyebrow}</span>
       <h1 class="page-hero__title" data-reveal style="--reveal-delay:80ms">{title}</h1>
       <p class="page-hero__lead lead" data-reveal style="--reveal-delay:160ms">{lead}</p>
     </div>
-    {index && <span class="page-hero__index mono" aria-hidden="true">{index}</span>}
+    {graphic && (
+      <div class="page-hero__illus" data-reveal style="--reveal-delay:120ms">
+        {graphic === 'iso' ? <IsoStructure /> : <GeoComposition variant={graphic} />}
+      </div>
+    )}
+    {index && <span class="page-hero__index" aria-hidden="true">{index}</span>}
   </div>
   <div class="container"><hr class="rule page-hero__rule" data-reveal /></div>
 </section>
 
 <style>
   .page-hero { padding-block: clamp(3rem, 9vh, 6rem) 0; position: relative; overflow: hidden; }
-  .page-hero .container { position: relative; z-index: 1; }
-  .page-hero__deco { position: absolute; top: 2.5rem; right: -2.5rem; width: 16rem; height: 16rem; color: var(--ink); pointer-events: none; z-index: 0; }
-  @media (max-width: 48em) { .page-hero__deco { width: 11rem; right: -3rem; opacity: 0.6; } }
-  .page-hero__inner { max-width: 50rem; display: flex; flex-direction: column; gap: var(--space-m); }
-  .page-hero__title { font-size: var(--step-5); margin-top: 0.2rem; }
+  .page-hero__grid { position: relative; display: grid; gap: var(--space-xl); align-items: center; }
+  .page-hero__inner { max-width: 46rem; display: flex; flex-direction: column; gap: var(--space-m); }
+  .page-hero__title { font-size: var(--step-5); font-weight: 400; margin-top: 0.2rem; }
   .page-hero__lead { margin-top: var(--space-xs); }
   .page-hero__index {
     position: absolute; top: 0; right: 0; font-size: var(--step--1); color: var(--text-subtle);
     letter-spacing: var(--tracking-label);
   }
+  .page-hero__illus { display: none; }
   .page-hero__rule { margin-top: var(--space-2xl); }
+  @media (min-width: 60em) {
+    .page-hero__grid { grid-template-columns: 1fr auto; }
+    .page-hero__illus { display: block; width: min(18rem, 26vw); justify-self: end; }
+  }
 </style>
