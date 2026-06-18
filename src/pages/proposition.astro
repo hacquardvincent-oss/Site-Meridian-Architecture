@@ -1,0 +1,225 @@
+---
+import '../styles/global.css';
+import Logo from '../components/Logo.astro';
+
+const ref = 'Réf. 2026-LD-01';
+---
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>Proposition & chiffrage — Loiselet & Daigremont</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&display=swap" />
+  </head>
+  <body class="doc-body">
+    <div class="screen">
+      <p class="hint">Document modèle · ouvre <strong>Imprimer → Enregistrer en PDF</strong> (format A4) pour le livrable. Page non indexée.</p>
+
+      <!-- ===== PAGE 1 — COUVERTURE ===== -->
+      <article class="page cover">
+        <div class="cover__top">
+          <span class="cover__brand"><Logo /></span>
+          <span class="cover__tag">Proposition</span>
+        </div>
+        <svg class="cover__geo" viewBox="0 0 400 560" aria-hidden="true" fill="none">
+          <line x1="300" y1="40" x2="300" y2="520" stroke="#9db8dd" stroke-width="1.2" />
+          <circle cx="300" cy="300" r="150" stroke="#ffffff" stroke-width="1" opacity="0.16" />
+          <rect x="190" y="190" width="220" height="220" stroke="#ffffff" stroke-width="1" opacity="0.12" transform="rotate(7 300 300)" />
+          <path d="M70 70 H110 M70 70 V110" stroke="#ffffff" stroke-width="1.2" opacity="0.5" />
+          <circle cx="300" cy="300" r="3.4" fill="#9db8dd" />
+        </svg>
+        <div class="cover__body">
+          <span class="cover__client">Loiselet &amp; Daigremont — Services immobiliers</span>
+          <h1 class="cover__title">Proposition technique <span class="i">&amp; chiffrage</span></h1>
+          <p class="cover__sub">Site vitrine — refonte &amp; back-office d'édition</p>
+        </div>
+        <div class="cover__meta">
+          <span>Juin 2026</span><span>{ref}</span><span>48.86°N 2.35°E</span><span>Confidentiel</span>
+        </div>
+      </article>
+
+      <!-- ===== PAGE 2 — CONTEXTE + RECO ===== -->
+      <article class="page sheet">
+        <header class="rh"><span class="rh__l"><Logo variant="mark" /> Meridian Architecture</span><span class="rh__r">Proposition · Loiselet &amp; Daigremont</span></header>
+
+        <section class="blk">
+          <span class="blk__n">01</span>
+          <div class="blk__main">
+            <h2 class="blk__title">Contexte &amp; objectifs</h2>
+            <p class="lede">Moderniser la présence en ligne de Loiselet &amp; Daigremont — administrateur de biens, entreprise familiale (1951–2026, 75 ans).</p>
+            <ul class="ticks">
+              <li>Un front vitrine « grand cabinet immobilier ».</li>
+              <li>Mise en avant des réalisations / chantiers (≈ 5 / an) avec archive propre.</li>
+              <li>Une homepage simple, à accès rapide.</li>
+              <li>Un back-office d'édition autonome.</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="blk">
+          <span class="blk__n">02</span>
+          <div class="blk__main">
+            <h2 class="blk__title">Recommandation technique</h2>
+            <p class="lede">Architecture moderne <strong>front découplé + CMS « headless »</strong> : un site statique ultra-rapide, un back-office d'édition simple.</p>
+            <table class="spec">
+              <tr><th>Brique</th><th>Choix</th><th>Pourquoi</th></tr>
+              <tr><td>Front</td><td>Astro + Tailwind</td><td>Rapide, SEO au top, simple à maintenir</td></tr>
+              <tr><td>Back-office</td><td>Sanity (offre gratuite)</td><td>0 € à ce volume, aucun serveur, éditeur soigné</td></tr>
+              <tr><td>Hébergement</td><td>Vercel / Netlify</td><td>Gratuit, déploiement automatique</td></tr>
+            </table>
+            <p class="callout"><span class="callout__k">Recommandation</span> Astro + Sanity — 0 € de fonctionnement, éditeur confortable pour un non-technicien.</p>
+          </div>
+        </section>
+        <footer class="rf"><span>Meridian Architecture</span><span>02 — 04</span></footer>
+      </article>
+
+      <!-- ===== PAGE 3 — FONCTIONS + CHIFFRAGE ===== -->
+      <article class="page sheet">
+        <header class="rh"><span class="rh__l"><Logo variant="mark" /> Meridian Architecture</span><span class="rh__r">Proposition · Loiselet &amp; Daigremont</span></header>
+
+        <section class="blk">
+          <span class="blk__n">03</span>
+          <div class="blk__main">
+            <h2 class="blk__title">Chiffrage à tiroir</h2>
+            <p class="lede">Estimations indicatives (€ HT), base TJM 500 € HT.</p>
+            <div class="lots">
+              <article class="lot">
+                <div class="lot__head"><span class="lot__id">Lot 1</span><span class="lot__name">Front vitrine</span></div>
+                <ul class="lot__lines">
+                  <li><span>Cadrage &amp; UX / arborescence</span><span>2 j</span></li>
+                  <li><span>Direction artistique + maquettes</span><span>4 j</span></li>
+                  <li><span>Intégration front (design system)</span><span>6 j</span></li>
+                  <li><span>SEO · perf · responsive · accessibilité</span><span>2 j</span></li>
+                  <li><span>Formulaire · recette · déploiement · DNS</span><span>3 j</span></li>
+                </ul>
+                <div class="lot__price"><span class="price">8 500</span><span class="cur">€ HT</span><span class="range">fourchette 7 000 – 9 500</span></div>
+              </article>
+              <article class="lot">
+                <div class="lot__head"><span class="lot__id">Lot 2</span><span class="lot__name">Back-office autonome (incrément)</span></div>
+                <ul class="lot__lines">
+                  <li><span>Mise en place Sanity + modélisation</span><span>3 j</span></li>
+                  <li><span>Workflow brouillon / publié / archivé</span><span>3 j</span></li>
+                  <li><span>Connexion dynamique + rebuild auto</span><span>3 j</span></li>
+                  <li><span>Recherche / filtres / archive</span><span>2 j</span></li>
+                  <li><span>Médias · recette · formation</span><span>3 j</span></li>
+                </ul>
+                <div class="lot__price"><span class="price">7 000</span><span class="cur">€ HT</span><span class="range">cumulé ≈ 15 500</span></div>
+              </article>
+            </div>
+            <p class="callout callout--soft"><span class="callout__k">Lot 3 — Maintenance &amp; évolutions</span> TMA 100–250 € / mois · évolutions 500 € / j · budget conseillé 2 000–4 000 € / an.</p>
+          </div>
+        </section>
+        <footer class="rf"><span>Meridian Architecture</span><span>03 — 04</span></footer>
+      </article>
+
+      <!-- ===== PAGE 4 — SYNTHÈSE + COLOPHON ===== -->
+      <article class="page sheet">
+        <header class="rh"><span class="rh__l"><Logo variant="mark" /> Meridian Architecture</span><span class="rh__r">Proposition · Loiselet &amp; Daigremont</span></header>
+
+        <section class="blk">
+          <span class="blk__n">04</span>
+          <div class="blk__main">
+            <h2 class="blk__title">Synthèse</h2>
+            <table class="synth">
+              <tr><td><strong>Lot 1</strong><span>Front vitrine moderne</span></td><td class="synth__p">≈ 8 500 € HT</td></tr>
+              <tr><td><strong>Lot 1 + 2</strong><span>Front + back-office (Sanity)</span></td><td class="synth__p">≈ 15 500 € HT</td></tr>
+              <tr><td><strong>Lot 3</strong><span>Maintenance + évolutions</span></td><td class="synth__p">100–250 € / mois</td></tr>
+            </table>
+            <p class="muted small">Coûts de fonctionnement : domaine ≈ 15 €/an · hébergement 0 € · Sanity 0 € · emails 0–20 €/mois. Estimations à affiner après l'atelier de cadrage.</p>
+          </div>
+        </section>
+
+        <section class="colophon">
+          <span class="colophon__brand"><Logo /></span>
+          <p>Nous remplaçons la multitude de logiciels rigides par un écosystème unique, sur-mesure et propulsé par l'IA.</p>
+          <span class="colophon__meta mono">contact@meridian-architecture.com · {ref}</span>
+        </section>
+        <footer class="rf"><span>Meridian Architecture</span><span>04 — 04</span></footer>
+      </article>
+    </div>
+
+    <style>
+      .doc-body { background: #d7d6d2; }
+      .screen { padding: 2.5rem 1rem; }
+      .hint { max-width: 210mm; margin: 0 auto 1.5rem; font-size: 0.8rem; color: #555; text-align: center; }
+      .page {
+        width: 210mm; min-height: 297mm; margin: 0 auto 1.5rem; background: var(--plaster);
+        position: relative; overflow: hidden; box-shadow: 0 14px 40px -18px rgba(0,0,0,0.4);
+        display: flex; flex-direction: column;
+      }
+
+      /* COVER */
+      .cover { background: var(--ink); color: #fff; padding: 22mm 20mm; }
+      .cover__geo { position: absolute; top: 0; right: -6mm; height: 100%; width: auto; opacity: 0.9; }
+      .cover__top { display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 2; color: #fff; }
+      .cover__brand { color: #fff; }
+      .cover__tag { font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.6); }
+      .cover__body { margin-top: auto; position: relative; z-index: 2; }
+      .cover__client { font-size: 0.82rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); }
+      .cover__title { font-family: var(--font-display); font-weight: 400; font-size: 3.4rem; line-height: 1.02; letter-spacing: -0.02em; margin-top: 1rem; color: #fff; }
+      .cover__title .i { font-style: italic; font-weight: 300; }
+      .cover__sub { font-size: 1.05rem; color: rgba(255,255,255,0.8); margin-top: 0.8rem; }
+      .cover__meta { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-top: 2.5rem; position: relative; z-index: 2; font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.55); }
+
+      /* SHEETS */
+      .sheet { padding: 16mm 20mm; color: var(--ink); }
+      .rh { display: flex; justify-content: space-between; align-items: center; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-subtle); border-bottom: 1px solid var(--line); padding-bottom: 8mm; }
+      .rh__l { display: inline-flex; align-items: center; gap: 0.5rem; }
+      .rh__l :global(.logo__mark) { width: 1.1rem; height: 1.1rem; }
+      .rf { margin-top: auto; display: flex; justify-content: space-between; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-subtle); border-top: 1px solid var(--line); padding-top: 6mm; }
+
+      .blk { display: grid; grid-template-columns: 3.2rem 1fr; gap: 1.5rem; margin-top: 12mm; }
+      .blk__n { font-family: var(--font-display); font-size: 2rem; font-weight: 300; color: color-mix(in srgb, var(--ink) 18%, transparent); line-height: 1; }
+      .blk__title { font-size: 1.7rem; font-weight: 500; letter-spacing: -0.01em; }
+      .lede { font-size: 1.02rem; color: var(--text-muted); margin-top: 0.6rem; max-width: 52ch; }
+      .ticks { list-style: none; padding: 0; margin: 1.1rem 0 0; display: grid; gap: 0.5rem; }
+      .ticks li { position: relative; padding-left: 1.4rem; color: var(--text-muted); }
+      .ticks li::before { content: ''; position: absolute; left: 0; top: 0.6em; width: 0.8rem; height: 1px; background: var(--ink); }
+
+      .spec { width: 100%; border-collapse: collapse; margin-top: 1.1rem; font-size: 0.92rem; }
+      .spec th, .spec td { text-align: left; padding: 0.7rem 0.5rem; border-bottom: 1px solid var(--line); vertical-align: top; }
+      .spec th { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-subtle); font-weight: 600; }
+      .spec td:first-child { font-weight: 600; white-space: nowrap; }
+
+      .callout { margin-top: 1.2rem; padding: 1rem 1.2rem; border-left: 2px solid var(--accent); background: var(--brass-wash); font-size: 0.95rem; }
+      .callout--soft { background: transparent; border-left-color: var(--line-strong); }
+      .callout__k { display: block; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-deep); margin-bottom: 0.25rem; }
+
+      .lots { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-top: 1.3rem; }
+      .lot { border: 1px solid var(--line-strong); padding: 1.2rem; display: flex; flex-direction: column; }
+      .lot__head { display: flex; align-items: baseline; gap: 0.6rem; border-bottom: 1px solid var(--line); padding-bottom: 0.7rem; }
+      .lot__id { font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent-deep); }
+      .lot__name { font-weight: 600; font-size: 1.02rem; }
+      .lot__lines { list-style: none; padding: 0; margin: 0.8rem 0; display: grid; gap: 0.45rem; font-size: 0.84rem; }
+      .lot__lines li { display: flex; justify-content: space-between; gap: 1rem; color: var(--text-muted); }
+      .lot__lines li span:last-child { color: var(--text-subtle); white-space: nowrap; }
+      .lot__price { margin-top: auto; display: flex; align-items: baseline; gap: 0.4rem; flex-wrap: wrap; padding-top: 0.7rem; border-top: 1px solid var(--line); }
+      .price { font-family: var(--font-display); font-size: 2.6rem; font-weight: 300; line-height: 1; }
+      .cur { font-size: 0.9rem; color: var(--text-muted); }
+      .range { width: 100%; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-subtle); }
+
+      .synth { width: 100%; border-collapse: collapse; margin-top: 1.2rem; }
+      .synth td { padding: 1rem 0.4rem; border-bottom: 1px solid var(--line); vertical-align: baseline; }
+      .synth td:first-child span { display: block; font-size: 0.85rem; color: var(--text-subtle); margin-top: 0.15rem; }
+      .synth__p { text-align: right; font-family: var(--font-display); font-size: 1.3rem; font-weight: 400; white-space: nowrap; }
+      .small { font-size: 0.8rem; margin-top: 1rem; }
+
+      .colophon { margin-top: 14mm; padding-top: 8mm; border-top: 1px solid var(--line); display: flex; flex-direction: column; gap: 0.8rem; }
+      .colophon p { max-width: 46ch; color: var(--text-muted); }
+      .colophon__meta { font-size: 0.72rem; letter-spacing: 0.08em; color: var(--text-subtle); }
+
+      @media print {
+        @page { size: A4; margin: 0; }
+        .doc-body { background: #fff; }
+        .screen { padding: 0; }
+        .hint { display: none; }
+        .page { margin: 0; box-shadow: none; page-break-after: always; }
+        .cover { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      }
+    </style>
+  </body>
+</html>
