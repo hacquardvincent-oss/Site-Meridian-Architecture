@@ -1,0 +1,165 @@
+---
+import '../styles/global.css';
+import '../styles/doc.css';
+import Logo from '../components/Logo.astro';
+const ref = 'Réf. 2026-LD-01';
+---
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>Cadrage & suivi — Loiselet & Daigremont</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" />
+  </head>
+  <body class="doc-body">
+    <div class="screen">
+      <p class="hint">Document modèle · <strong>Imprimer → Enregistrer en PDF</strong> (A4). Page non indexée.</p>
+
+      <!-- COVER -->
+      <article class="page cover">
+        <div class="cover__top"><span class="cover__brand"><Logo /></span><span class="cover__tag">Cadrage &amp; suivi</span></div>
+        <svg class="cover__geo" viewBox="0 0 400 560" aria-hidden="true" fill="none">
+          <line x1="300" y1="40" x2="300" y2="520" stroke="#9db8dd" stroke-width="1.2" />
+          <rect x="190" y="190" width="220" height="220" stroke="#ffffff" stroke-width="1" opacity="0.12" transform="rotate(7 300 300)" />
+          <line x1="150" y1="300" x2="450" y2="300" stroke="#ffffff" stroke-width="1" opacity="0.14" />
+          <path d="M70 70 H110 M70 70 V110" stroke="#ffffff" stroke-width="1.2" opacity="0.5" />
+          <circle cx="300" cy="300" r="3.4" fill="#9db8dd" />
+        </svg>
+        <div class="cover__body">
+          <span class="cover__client">Loiselet &amp; Daigremont — Services immobiliers</span>
+          <h1 class="cover__title">Cadrage <span class="i">&amp; suivi de projet</span></h1>
+          <p class="cover__sub">Gouvernance · démos &amp; allers-retours · planning · recette</p>
+        </div>
+        <div class="cover__meta"><span>Juin 2026</span><span>{ref}</span><span>Document de référence</span><span>Confidentiel</span></div>
+      </article>
+
+      <!-- P2 — GOUVERNANCE -->
+      <article class="page sheet">
+        <header class="rh"><span class="rh__l"><Logo variant="mark" /> Meridian Architecture</span><span class="rh__r">Cadrage · Loiselet &amp; Daigremont</span></header>
+        <section class="blk">
+          <span class="blk__n">01</span>
+          <div class="blk__main">
+            <h2 class="blk__title">Gouvernance &amp; rôles</h2>
+            <table class="spec">
+              <tr><th>Rôle</th><th>Responsabilité</th></tr>
+              <tr><td>Sponsor client</td><td>Décision finale, budget, validation des jalons</td></tr>
+              <tr><td>Référent client unique</td><td>Centralise et consolide TOUS les retours</td></tr>
+              <tr><td>Chef de projet / Dev</td><td>Pilotage, conception, développement, démos</td></tr>
+              <tr><td>Contributeurs contenu</td><td>Fournissent textes, photos, logos, accès</td></tr>
+            </table>
+            <p class="callout"><span class="callout__k">Règle d'or</span> Un seul canal de retours, via le référent unique. Les retours épars ne sont pas pris en compte. Point hebdo de 30 min + accès permanent aux previews.</p>
+          </div>
+        </section>
+        <footer class="rf"><span>Meridian Architecture</span><span>02 — 06</span></footer>
+      </article>
+
+      <!-- P3 — PHASES -->
+      <article class="page sheet">
+        <header class="rh"><span class="rh__l"><Logo variant="mark" /> Meridian Architecture</span><span class="rh__r">Cadrage · Loiselet &amp; Daigremont</span></header>
+        <section class="blk">
+          <span class="blk__n">02</span>
+          <div class="blk__main">
+            <h2 class="blk__title">Phases, jalons &amp; livrables</h2>
+            <p class="lede">Projet itératif, jalonné par des validations formelles (PV = feu vert). Chaque jalon est <strong>bloquant</strong>.</p>
+            <table class="spec">
+              <tr><th>Phase</th><th>Objectif</th><th>Livrable</th></tr>
+              <tr><td>P0 Cadrage</td><td>Aligner besoin, arbo, contenus, CMS</td><td>Specs + arborescence + planning</td></tr>
+              <tr><td>P1 Direction artistique</td><td>Univers visuel</td><td>Planche de style + 1 maquette home</td></tr>
+              <tr><td>P2 Maquettes</td><td>Tous les gabarits clés</td><td>Maquettes (home, liste, détail, contact)</td></tr>
+              <tr><td>P3 Dev front</td><td>Intégration du design</td><td>Site de preview</td></tr>
+              <tr><td>P4 Dev back</td><td>CMS + édition autonome</td><td>Back-office + front dynamique</td></tr>
+              <tr><td>P5 Recette</td><td>Tests + vrais contenus</td><td>Site complet en staging</td></tr>
+              <tr><td>P6 Mise en ligne</td><td>Déploiement + formation</td><td>Site en prod + doc + formation</td></tr>
+            </table>
+          </div>
+        </section>
+        <footer class="rf"><span>Meridian Architecture</span><span>03 — 06</span></footer>
+      </article>
+
+      <!-- P4 — PROCESS DEMOS -->
+      <article class="page sheet">
+        <header class="rh"><span class="rh__l"><Logo variant="mark" /> Meridian Architecture</span><span class="rh__r">Cadrage · Loiselet &amp; Daigremont</span></header>
+        <section class="blk">
+          <span class="blk__n">03</span>
+          <div class="blk__main">
+            <h2 class="blk__title">Démos &amp; allers-retours</h2>
+            <ol class="flow-steps">
+              <li>Production du livrable.</li>
+              <li>Démo guidée (visio / présentiel).</li>
+              <li>Retours consolidés par le référent unique — 5 j ouvrés max, un seul document.</li>
+              <li>Reprise (1 itération).</li>
+              <li>Démo de validation.</li>
+              <li>Validation formelle (PV) → jalon suivant débloqué.</li>
+            </ol>
+            <p class="callout callout--soft"><span class="callout__k">Règles (à inscrire au devis)</span> 2 tours de retours inclus en design · retours consolidés &amp; uniques · délai client 5 j ouvrés · tour supplémentaire après validation → avenant · retours actionnables.</p>
+          </div>
+        </section>
+        <footer class="rf"><span>Meridian Architecture</span><span>04 — 06</span></footer>
+      </article>
+
+      <!-- P5 — PLANNING + RECETTE -->
+      <article class="page sheet">
+        <header class="rh"><span class="rh__l"><Logo variant="mark" /> Meridian Architecture</span><span class="rh__r">Cadrage · Loiselet &amp; Daigremont</span></header>
+        <section class="blk">
+          <span class="blk__n">04</span>
+          <div class="blk__main">
+            <h2 class="blk__title">Planning prévisionnel</h2>
+            <div class="timeline">
+              <div class="timeline__cell"><span class="timeline__ph">P0</span><span class="timeline__wk">S1-2</span></div>
+              <div class="timeline__cell"><span class="timeline__ph">P1</span><span class="timeline__wk">S3</span></div>
+              <div class="timeline__cell"><span class="timeline__ph">P2</span><span class="timeline__wk">S4-5</span></div>
+              <div class="timeline__cell"><span class="timeline__ph">P3</span><span class="timeline__wk">S6-9</span></div>
+              <div class="timeline__cell"><span class="timeline__ph">P4</span><span class="timeline__wk">S10-12</span></div>
+              <div class="timeline__cell"><span class="timeline__ph">P5</span><span class="timeline__wk">S13-14</span></div>
+              <div class="timeline__cell"><span class="timeline__ph">P6</span><span class="timeline__wk">S15</span></div>
+            </div>
+            <p class="small muted">≈ 15 semaines bout en bout (hors délais de retour client). Lot 1 jusqu'à ≈ S9 ; Lot 2 ajoute P4.</p>
+          </div>
+        </section>
+        <section class="blk">
+          <span class="blk__n">05</span>
+          <div class="blk__main">
+            <h2 class="blk__title">Recette &amp; acceptation</h2>
+            <ul class="ticks">
+              <li>Conforme aux maquettes validées · responsive sans défaut bloquant.</li>
+              <li>Performance Lighthouse ≥ 90 (perf, SEO, accessibilité).</li>
+              <li>Back-office : créer / modifier / archiver un chantier en autonomie.</li>
+              <li>RGPD : mentions légales, confidentialité, bandeau cookies.</li>
+            </ul>
+            <p class="callout callout--soft"><span class="callout__k">Critère de livraison</span> Bugs classés P1/P2/P3. Livraison conditionnée à 0 bug P1/P2.</p>
+          </div>
+        </section>
+        <footer class="rf"><span>Meridian Architecture</span><span>05 — 06</span></footer>
+      </article>
+
+      <!-- P6 — RISQUES + SUITE -->
+      <article class="page sheet">
+        <header class="rh"><span class="rh__l"><Logo variant="mark" /> Meridian Architecture</span><span class="rh__r">Cadrage · Loiselet &amp; Daigremont</span></header>
+        <section class="blk">
+          <span class="blk__n">06</span>
+          <div class="blk__main">
+            <h2 class="blk__title">Risques &amp; prochaine étape</h2>
+            <table class="spec">
+              <tr><th>Risque</th><th>Mitigation</th></tr>
+              <tr><td>Contenus client en retard</td><td>Gabarits + contenus d'exemple ; jalon contenu dédié</td></tr>
+              <tr><td>Retours non consolidés</td><td>Référent unique + 1 document + 2 tours inclus</td></tr>
+              <tr><td>Périmètre qui s'étend</td><td>Hors-périmètre explicite + avenants</td></tr>
+              <tr><td>Dépendance CMS</td><td>Contenu exportable ; option git-based si souveraineté</td></tr>
+            </table>
+            <p class="callout"><span class="callout__k">Atelier de cadrage (P0)</span> Valider l'arborescence &amp; le périmètre · choisir le CMS · recenser les contenus · caler le planning des démos.</p>
+          </div>
+        </section>
+        <section class="colophon">
+          <span class="colophon__brand"><Logo /></span>
+          <p>Stack : Astro + Tailwind · Sanity · Vercel/Netlify · Resend. Conçu et développé sur-mesure.</p>
+          <span class="colophon__meta mono">contact@meridian-architecture.com · {ref}</span>
+        </section>
+        <footer class="rf"><span>Meridian Architecture</span><span>06 — 06</span></footer>
+      </article>
+    </div>
+  </body>
+</html>
