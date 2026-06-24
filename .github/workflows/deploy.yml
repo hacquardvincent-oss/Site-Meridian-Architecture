@@ -22,9 +22,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      # Sert le site sous https://hacquardvincent-oss.github.io/Site-Meridian-Architecture/
-      SITE_URL: https://hacquardvincent-oss.github.io
-      BASE_PATH: /Site-Meridian-Architecture
+      # Sert le site sur le domaine custom, à la racine (cf. public/CNAME)
+      SITE_URL: https://meridian-architecture.com
+      BASE_PATH: /
     steps:
       - name: Checkout
         uses: actions/checkout@v4
