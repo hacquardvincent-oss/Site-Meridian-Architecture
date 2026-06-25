@@ -18,7 +18,43 @@ const c = getContent(locale);
 const canonical = new URL(pathFor(pageId, locale), Astro.site);
 const altFr = new URL(pathFor(pageId, 'fr'), Astro.site);
 const altEn = new URL(pathFor(pageId, 'en'), Astro.site);
-const ogUrl = ogImage ? new URL(ogImage, Astro.site) : undefined;
+const ogImagePath = ogImage ?? withBase('/brand/og.png');
+const ogUrl = new URL(ogImagePath, Astro.site);
+
+const homeUrl = new URL(withBase('/'), Astro.site).href;
+const logoUrl = new URL(withBase('/brand/meridian-mark.png'), Astro.site).href;
+
+// Google Search Console : colle ici le code « balise HTML » si tu choisis cette méthode.
+// (Sinon, vérification recommandée par enregistrement DNS TXT chez Gandi — couvre tout le domaine.)
+const GOOGLE_SITE_VERIFICATION = '';
+
+// Désambiguïsation d'entité (SEO + GEO) : on déclare explicitement le secteur LOGICIEL,
+// pour ne pas être confondu avec un cabinet d'architecture du bâtiment.
+const orgSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: c.site.name,
+  alternateName: 'Meridian — Architecture logicielle',
+  url: homeUrl,
+  logo: logoUrl,
+  image: ogUrl.href,
+  email: c.site.email,
+  description: c.site.metaDescription,
+  slogan: c.site.tagline,
+  knowsAbout: [
+    'Architecture logicielle',
+    'Software architecture',
+    'Écosystème logiciel sur-mesure',
+    'Business Intelligence',
+    'ERP',
+    'PLM',
+    'PIM',
+    'Développement logiciel sur-mesure',
+    'Intelligence artificielle',
+  ],
+  areaServed: 'FR',
+  // sameAs: ['https://www.linkedin.com/company/…'], // ← à compléter (LinkedIn, GitHub…)
+};
 ---
 
 <!doctype html>
@@ -44,9 +80,14 @@ const ogUrl = ogImage ? new URL(ogImage, Astro.site) : undefined;
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:locale" content={locale === 'fr' ? 'fr_FR' : 'en_US'} />
-    {ogUrl && <meta property="og:image" content={ogUrl} />}
-    <meta name="twitter:card" content={ogUrl ? 'summary_large_image' : 'summary'} />
-    <meta name="theme-color" content="#1b1813" />
+    <meta property="og:image" content={ogUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={ogUrl} />
+    <meta name="theme-color" content="#0e0e10" />
+    {GOOGLE_SITE_VERIFICATION && <meta name="google-site-verification" content={GOOGLE_SITE_VERIFICATION} />}
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(orgSchema)} />
 
     <link rel="icon" href={withBase('/favicon.svg')} type="image/svg+xml" />
 
