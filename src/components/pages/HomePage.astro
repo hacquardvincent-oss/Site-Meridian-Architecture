@@ -26,25 +26,12 @@ const replace = (file: string) => (isFr ? `À remplacer · public/images/${file}
 <!-- ============ HERO (vidéo plein écran + géométrie) ============ -->
 <section class="hero">
   <div class="hero__media">
-    <video class="hero__video" autoplay muted loop playsinline preload="metadata" poster={withBase('/images/hero-poster.jpg')}>
-      <source src={withBase('/videos/hero.mp4')} type="video/mp4" />
-    </video>
+    <img class="hero__img" src={withBase('/images/hero.jpg')} alt="" fetchpriority="high" />
     <div class="hero__scrim"></div>
     <svg class="hero__geo" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-      <defs>
-        <pattern id="hgrid" width="64" height="64" patternUnits="userSpaceOnUse">
-          <path d="M64 0H0V64" fill="none" stroke="#ffffff" stroke-width="0.5" opacity="0.1" />
-        </pattern>
-      </defs>
-      <rect width="1200" height="800" fill="url(#hgrid)" />
-      <circle cx="965" cy="400" r="330" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.16" />
-      <rect class="hero__geo-rot" x="805" y="240" width="320" height="320" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.13" />
-      <line x1="120" y1="150" x2="540" y2="640" stroke="#ffffff" stroke-width="1" opacity="0.1" />
-      <line x1="40" y1="560" x2="360" y2="560" stroke="#ffffff" stroke-width="1" opacity="0.12" />
-      <line class="hero__geo-line" x1="965" y1="70" x2="965" y2="730" stroke="#9db8dd" stroke-width="1.5" />
-      <circle cx="965" cy="400" r="4" fill="#9db8dd" />
-      <path d="M64 64 H128 M64 64 V128" stroke="#ffffff" stroke-width="1.2" opacity="0.5" />
-      <path d="M1136 736 H1072 M1136 736 V672" stroke="#ffffff" stroke-width="1.2" opacity="0.5" />
+      <path d="M64 64 H128 M64 64 V128" stroke="#ffffff" stroke-width="1.2" opacity="0.45" />
+      <path d="M1136 736 H1072 M1136 736 V672" stroke="#ffffff" stroke-width="1.2" opacity="0.45" />
+      <circle cx="1090" cy="112" r="5" fill="#9db8dd" />
     </svg>
   </div>
 
@@ -229,8 +216,10 @@ const replace = (file: string) => (isFr ? `À remplacer · public/images/${file}
   /* ---- HERO (vidéo plein écran + géométrie) ---- */
   .hero { position: relative; min-height: 100vh; min-height: 100svh; display: grid; background: var(--ink); color: #fff; overflow: hidden; }
   .hero__media { position: absolute; inset: 0; z-index: 0; }
-  .hero__video { width: 100%; height: 100%; object-fit: cover; }
-  .hero__scrim { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(14,14,16,0.5) 0%, rgba(14,14,16,0.55) 45%, rgba(14,14,16,0.78) 100%); }
+  .hero__img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .hero__scrim { position: absolute; inset: 0; background:
+    linear-gradient(90deg, rgba(12,12,15,0.80) 0%, rgba(12,12,15,0.44) 42%, rgba(12,12,15,0.06) 72%, rgba(12,12,15,0.30) 100%),
+    linear-gradient(180deg, rgba(12,12,15,0.22) 0%, rgba(12,12,15,0.05) 45%, rgba(12,12,15,0.60) 100%); }
   .hero__geo { position: absolute; inset: 0; width: 100%; height: 100%; }
   .hero__geo-line { stroke-dasharray: 660; stroke-dashoffset: 660; animation: hdraw 2s var(--ease) 0.3s forwards; }
   .hero__geo-rot { transform-box: fill-box; transform-origin: center; animation: hrot 90s linear infinite; }
