@@ -104,6 +104,17 @@ const replace = (file: string) => (isFr ? `À remplacer · public/images/${file}
   </div>
 </section>
 
+<!-- ============ BANDEAU PHOTO (manifeste) ============ -->
+<section class="photoband" aria-label="Manifeste">
+  <img class="photoband__img" src={withBase('/images/band.jpg')} alt="" loading="lazy" />
+  <div class="photoband__scrim"></div>
+  <div class="container photoband__inner" data-reveal>
+    <span class="photoband__eyebrow">{isFr ? 'Notre conviction' : 'Our conviction'}</span>
+    <p class="photoband__quote">{isFr ? 'Le logiciel se conçoit comme un édifice — une structure, des fondations, un plan.' : 'Software, built like a building — a structure, foundations, a plan.'}</p>
+    <span class="photoband__coord">40.71°N 74.00°W</span>
+  </div>
+</section>
+
 <!-- ============ SOLUTIONS (index singulier) ============ -->
 <section class="section section--alt">
   <div class="container">
@@ -241,6 +252,15 @@ const replace = (file: string) => (isFr ? `À remplacer · public/images/${file}
   .hero__foot { position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; padding-bottom: var(--space-l); }
   .hero__foot-row { display: flex; justify-content: space-between; align-items: center; font-size: var(--step--1); letter-spacing: var(--tracking-wide); color: rgba(255,255,255,0.6); }
   .hero__coord { color: var(--accent); }
+
+  /* ---- BANDEAU PHOTO (manifeste) ---- */
+  .photoband { position: relative; min-height: 76vh; display: grid; place-items: center; overflow: hidden; background: var(--ink); color: #fff; }
+  .photoband__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .photoband__scrim { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(12,12,15,0.52) 0%, rgba(12,12,15,0.34) 45%, rgba(12,12,15,0.62) 100%); }
+  .photoband__inner { position: relative; z-index: 2; text-align: center; padding-block: var(--space-2xl); }
+  .photoband__eyebrow { display: inline-block; font-size: var(--step--1); letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--accent); margin-bottom: var(--space-m); }
+  .photoband__quote { font-family: var(--font-display); font-weight: 400; font-size: var(--step-4); line-height: 1.12; letter-spacing: var(--tracking-tight); max-width: 24ch; margin: 0 auto; color: #fff; }
+  .photoband__coord { display: block; margin-top: var(--space-l); font-size: var(--step--1); letter-spacing: var(--tracking-wide); color: rgba(255,255,255,0.6); }
 
   /* ---- CHIFFRES ---- */
   .figures-band { border-bottom: 1px solid var(--line); }
