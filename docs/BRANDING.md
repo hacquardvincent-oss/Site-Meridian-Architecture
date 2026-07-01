@@ -79,3 +79,19 @@ Le site est **graphique** par défaut (zéro dépendance photo). Si tu ajoutes d
 
 Calme, précise, confiante — **un architecte, pas un vendeur**. Vocabulaire de l'architecture
 (plan, structure, édifice, fondations, sur-mesure). La tech en filigrane.
+
+## 10. Évolution « v2 » — Site & présentations (photographie)
+
+La charte **documents** reste inchangée (elle fonctionne). Pour le **site et les présentations**,
+expression plus **moderne et graphique**, inspiration **Guggenheim** :
+
+- **Photographie d'architecture N&B** (courbes, spirales, lumière), **plein cadre**, gradée en
+  **B&W contrasté** (ou duotone encre→bleu). Sujets calmes, sculpturaux : béton, escaliers, atriums.
+- **Un seul accent** : le **point bleu pastel `#9db8dd`** sur le N&B. Rien d'autre en couleur.
+- **Mise en page « musée »** : titres géants (Hanken), grand vide, **voile latéral** pour la lisibilité ;
+  détails **coordonnées** (`40.71°N`) + **ticks d'angle** conservés.
+- **Droits** : uniquement des images **libres de droits** (Pexels/Unsplash) ou à soi.
+- Le langage géométrique droit (axe/ticks/iso) devient un **accent discret** par-dessus la photo.
+
+Hero du site : `public/images/hero.jpg` (image gradée, ~contraste 1.25). Pour changer d'image :
+remplacer ce fichier et rebuild.
