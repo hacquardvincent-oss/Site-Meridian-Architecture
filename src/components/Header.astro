@@ -3,8 +3,8 @@ import Logo from './Logo.astro';
 import { navItems, pathFor, type Locale } from '../i18n/routes';
 import { getContent } from '../i18n/content';
 
-interface Props { locale: Locale; pageId: string }
-const { locale, pageId } = Astro.props;
+interface Props { locale: Locale; pageId: string; heroTheme?: 'dark' | 'light' }
+const { locale, pageId, heroTheme } = Astro.props;
 
 const t = getContent(locale).common;
 const items = navItems(locale);
@@ -13,7 +13,7 @@ const otherLocale: Locale = locale === 'fr' ? 'en' : 'fr';
 const switchHref = pathFor(pageId, otherLocale);
 ---
 
-<header class="site-header" data-header>
+<header class="site-header" data-header data-transparent={heroTheme ? '' : undefined} data-hero-theme={heroTheme}>
   <div class="container site-header__inner">
     <a class="site-header__brand" href={homeHref} aria-label={getContent(locale).site.name}>
       <Logo />
@@ -75,6 +75,54 @@ const switchHref = pathFor(pageId, otherLocale);
     border-bottom-color: var(--line);
     background: color-mix(in srgb, var(--plaster) 92%, transparent);
   }
+
+  /* ---- Header transparent + adaptatif (pages à hero plein écran) ---- */
+  .site-header[data-transparent] {
+    position: fixed; left: 0; right: 0; top: 0;
+    background: transparent;
+    backdrop-filter: none; -webkit-backdrop-filter: none;
+    border-bottom-color: transparent;
+    transition: background var(--dur) var(--ease), color var(--dur) var(--ease), border-color var(--dur) var(--ease);
+  }
+  .site-header[data-transparent][data-hero-theme='dark'] { color: #fff; }
+  .site-header[data-transparent][data-hero-theme='dark'] .site-header__brand { color: #fff; }
+  .site-header[data-transparent][data-hero-theme='dark'] .site-header__link { color: rgba(255,255,255,0.72); }
+  .site-header[data-transparent][data-hero-theme='dark'] .site-header__link:hover,
+  .site-header[data-transparent][data-hero-theme='dark'] .site-header__link.is-active { color: #fff; }
+  .site-header[data-transparent][data-hero-theme='dark'] .site-header__link::after { background: #fff; }
+  .site-header[data-transparent][data-hero-theme='dark'] .site-header__lang { color: rgba(255,255,255,0.7); }
+  .site-header[data-transparent][data-hero-theme='dark'] .site-header__lang:hover { color: #fff; }
+  .site-header[data-transparent][data-hero-theme='dark'] .site-header__cta { color: #fff; border-color: rgba(255,255,255,0.5); }
+  .site-header[data-transparent][data-hero-theme='dark'] .site-header__cta:hover { background: #fff; color: var(--ink); }
+  .site-header[data-transparent][data-hero-theme='dark'] .site-header__burger { border-color: rgba(255,255,255,0.4); }
+  .site-header[data-transparent][data-hero-theme='dark'] .site-header__burger-bar { background: #fff; }
+  .site-header[data-transparent][data-hero-theme='light'] { color: var(--ink); }
+
+  /* solidifié (hero dépassé) ou menu mobile ouvert : header standard, texte encre */
+  .site-header[data-transparent][data-solid],
+  .site-header[data-transparent][data-open] {
+    background: color-mix(in srgb, var(--plaster) 92%, transparent);
+    backdrop-filter: saturate(140%) blur(10px); -webkit-backdrop-filter: saturate(140%) blur(10px);
+    border-bottom-color: var(--line);
+    color: var(--ink);
+  }
+  .site-header[data-transparent][data-solid] .site-header__brand,
+  .site-header[data-transparent][data-open] .site-header__brand { color: var(--ink); }
+  .site-header[data-transparent][data-solid] .site-header__link,
+  .site-header[data-transparent][data-open] .site-header__link { color: var(--text-muted); }
+  .site-header[data-transparent][data-solid] .site-header__link::after,
+  .site-header[data-transparent][data-open] .site-header__link::after { background: var(--brass); }
+  .site-header[data-transparent][data-solid] .site-header__link:hover,
+  .site-header[data-transparent][data-solid] .site-header__link.is-active,
+  .site-header[data-transparent][data-open] .site-header__link:hover { color: var(--ink); }
+  .site-header[data-transparent][data-solid] .site-header__lang,
+  .site-header[data-transparent][data-open] .site-header__lang { color: var(--text-subtle); }
+  .site-header[data-transparent][data-solid] .site-header__cta,
+  .site-header[data-transparent][data-open] .site-header__cta { color: var(--ink); border-color: var(--line-strong); }
+  .site-header[data-transparent][data-solid] .site-header__burger,
+  .site-header[data-transparent][data-open] .site-header__burger { border-color: var(--line-strong); }
+  .site-header[data-transparent][data-solid] .site-header__burger-bar,
+  .site-header[data-transparent][data-open] .site-header__burger-bar { background: var(--ink); }
   .site-header__inner {
     display: flex;
     align-items: center;
@@ -189,11 +237,16 @@ const switchHref = pathFor(pageId, otherLocale);
   }
 
   if (header) {
+    const transparent = header.hasAttribute('data-transparent');
+    const hero = document.querySelector('[data-hero]') as HTMLElement | null;
+    const threshold = () =>
+      transparent && hero ? hero.offsetHeight - header.offsetHeight - 8 : 8;
     const onScroll = () => {
-      if (window.scrollY > 8) header.setAttribute('data-scrolled', '');
-      else header.removeAttribute('data-scrolled');
+      if (transparent) header.toggleAttribute('data-solid', window.scrollY >= threshold());
+      else header.toggleAttribute('data-scrolled', window.scrollY > 8);
     };
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
   }
 </script>

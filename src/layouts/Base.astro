@@ -11,8 +11,10 @@ interface Props {
   pageId: string;
   locale: Locale;
   ogImage?: string;
+  /** Si la page ouvre sur un hero plein écran : header transparent + texte adapté ('dark' = texte blanc, 'light' = encre). */
+  heroTheme?: 'dark' | 'light';
 }
-const { title, description, pageId, locale, ogImage } = Astro.props;
+const { title, description, pageId, locale, ogImage, heroTheme } = Astro.props;
 
 const c = getContent(locale);
 const canonical = new URL(pathFor(pageId, locale), Astro.site);
@@ -101,7 +103,7 @@ const orgSchema = {
   <body>
     <a id="top"></a>
     <a class="skip-link" href="#main">{c.common.skip}</a>
-    <Header locale={locale} pageId={pageId} />
+    <Header locale={locale} pageId={pageId} heroTheme={heroTheme} />
     <main id="main">
       <slot />
     </main>
