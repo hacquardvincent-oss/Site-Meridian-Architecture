@@ -9,7 +9,7 @@ interface Props { locale: Locale }
 const { locale } = Astro.props;
 const c = getContent(locale).solutions;
 ---
-<PageHero eyebrow={c.hero.eyebrow} title={c.hero.title} lead={c.hero.lead} index="02 — 05" graphic="plan" />
+<PageHero eyebrow={c.hero.eyebrow} title={c.hero.title} lead={c.hero.lead} index="02 — 05" image="/images/solutions.jpg" theme="light" />
 
 <section class="section">
   <div class="container">

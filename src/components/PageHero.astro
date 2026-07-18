@@ -1,6 +1,7 @@
 ---
 import GeoComposition from './graphics/GeoComposition.astro';
 import IsoStructure from './graphics/IsoStructure.astro';
+import { withBase } from '../i18n/routes';
 
 interface Props {
   eyebrow: string;
@@ -8,25 +9,50 @@ interface Props {
   lead: string;
   index?: string;
   graphic?: 'fragments' | 'arc' | 'plan' | 'iso';
+  /** Chemin d'un visuel → hero photo plein écran (ex: '/images/concept.jpg'). */
+  image?: string;
+  /** 'light' = photo claire, texte encre ; 'dark' = photo sombre, texte blanc. */
+  theme?: 'light' | 'dark';
 }
-const { eyebrow, title, lead, index, graphic } = Astro.props;
+const { eyebrow, title, lead, index, graphic, image, theme = 'dark' } = Astro.props;
 ---
-<section class="page-hero">
-  <div class="container page-hero__grid">
-    <div class="page-hero__inner">
-      <span class="eyebrow" data-reveal>{eyebrow}</span>
-      <h1 class="page-hero__title" data-reveal style="--reveal-delay:80ms">{title}</h1>
-      <p class="page-hero__lead lead" data-reveal style="--reveal-delay:160ms">{lead}</p>
+
+{image ? (
+  <section class:list={['page-hero', 'page-hero--photo', `page-hero--${theme}`]} data-hero>
+    <div class="page-hero__media">
+      <img class="page-hero__img" src={withBase(image)} alt="" fetchpriority="high" />
+      <div class="page-hero__scrim"></div>
     </div>
-    {graphic && (
-      <div class="page-hero__illus" data-reveal style="--reveal-delay:120ms">
-        {graphic === 'iso' ? <IsoStructure /> : <GeoComposition variant={graphic} />}
+    <div class="container page-hero__pinner">
+      <span class="eyebrow" data-reveal>{eyebrow}</span>
+      <h1 class="page-hero__ptitle" data-reveal style="--reveal-delay:80ms">{title}</h1>
+      <p class="page-hero__plead lead" data-reveal style="--reveal-delay:160ms">{lead}</p>
+    </div>
+    <div class="page-hero__foot">
+      <div class="container page-hero__foot-row">
+        {index && <span class="page-hero__coord">{index}</span>}
+        <span class="page-hero__cue" aria-hidden="true">↓</span>
       </div>
-    )}
-    {index && <span class="page-hero__index" aria-hidden="true">{index}</span>}
-  </div>
-  <div class="container"><hr class="rule page-hero__rule" data-reveal /></div>
-</section>
+    </div>
+  </section>
+) : (
+  <section class="page-hero">
+    <div class="container page-hero__grid">
+      <div class="page-hero__inner">
+        <span class="eyebrow" data-reveal>{eyebrow}</span>
+        <h1 class="page-hero__title" data-reveal style="--reveal-delay:80ms">{title}</h1>
+        <p class="page-hero__lead lead" data-reveal style="--reveal-delay:160ms">{lead}</p>
+      </div>
+      {graphic && (
+        <div class="page-hero__illus" data-reveal style="--reveal-delay:120ms">
+          {graphic === 'iso' ? <IsoStructure /> : <GeoComposition variant={graphic} />}
+        </div>
+      )}
+      {index && <span class="page-hero__index" aria-hidden="true">{index}</span>}
+    </div>
+    <div class="container"><hr class="rule page-hero__rule" data-reveal /></div>
+  </section>
+)}
 
 <style>
   .page-hero { padding-block: clamp(3rem, 9vh, 6rem) 0; position: relative; overflow: hidden; }
@@ -44,4 +70,42 @@ const { eyebrow, title, lead, index, graphic } = Astro.props;
     .page-hero__grid { grid-template-columns: 1fr auto; }
     .page-hero__illus { display: block; width: min(18rem, 26vw); justify-self: end; }
   }
+
+  /* ---- Hero photo plein écran (sous-pages) ---- */
+  .page-hero--photo {
+    padding-block: 0;
+    min-height: 88vh; min-height: 88svh;
+    display: grid; align-content: center;
+  }
+  .page-hero--photo.page-hero--dark { background: var(--ink); color: #fff; }
+  .page-hero--photo.page-hero--light { background: var(--plaster); color: var(--ink); }
+  .page-hero__media { position: absolute; inset: 0; z-index: 0; }
+  .page-hero__img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .page-hero__scrim { position: absolute; inset: 0; }
+  .page-hero--dark .page-hero__scrim {
+    background:
+      linear-gradient(90deg, rgba(12,12,15,0.86) 0%, rgba(12,12,15,0.62) 42%, rgba(12,12,15,0.26) 70%, rgba(12,12,15,0.42) 100%),
+      linear-gradient(180deg, rgba(12,12,15,0.34) 0%, rgba(12,12,15,0.10) 45%, rgba(12,12,15,0.58) 100%);
+  }
+  .page-hero--light .page-hero__scrim {
+    background:
+      linear-gradient(90deg, rgba(247,247,245,0.86) 0%, rgba(247,247,245,0.46) 46%, rgba(247,247,245,0.12) 76%, rgba(247,247,245,0.34) 100%),
+      linear-gradient(180deg, rgba(247,247,245,0.5) 0%, rgba(247,247,245,0.1) 45%, rgba(247,247,245,0.58) 100%);
+  }
+  .page-hero__pinner {
+    position: relative; z-index: 2; max-width: 48rem;
+    display: flex; flex-direction: column; gap: var(--space-m); padding-block: var(--space-2xl);
+  }
+  .page-hero__ptitle { font-size: var(--step-6); font-weight: 400; line-height: 1.02; letter-spacing: var(--tracking-tight); max-width: 16ch; }
+  .page-hero--dark .page-hero__ptitle { color: #fff; }
+  .page-hero--light .page-hero__ptitle { color: var(--ink); }
+  .page-hero__plead { max-width: 44ch; margin-top: var(--space-s); }
+  .page-hero--dark .page-hero__plead { color: rgba(255,255,255,0.86); }
+  .page-hero--dark .eyebrow { color: rgba(255,255,255,0.72); }
+  .page-hero--dark .eyebrow::before { background: rgba(255,255,255,0.45); }
+  .page-hero__foot { position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; padding-bottom: var(--space-l); }
+  .page-hero__foot-row { display: flex; justify-content: space-between; align-items: center; font-size: var(--step--1); letter-spacing: var(--tracking-wide); }
+  .page-hero__coord { color: var(--accent); }
+  .page-hero--light .page-hero__foot-row { color: var(--text-subtle); }
+  .page-hero--dark .page-hero__foot-row { color: rgba(255,255,255,0.6); }
 </style>

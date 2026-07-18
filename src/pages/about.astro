@@ -6,6 +6,6 @@ import { getContent } from '../i18n/content';
 const locale = 'en' as const;
 const c = getContent(locale);
 ---
-<Base title={c.about.meta.title} description={c.about.meta.description} pageId="about" locale={locale}>
+<Base title={c.about.meta.title} description={c.about.meta.description} pageId="about" locale={locale} heroTheme="dark">
   <AboutPage locale={locale} />
 </Base>
