@@ -12,8 +12,11 @@ propulsés par l'IA. L'univers visuel dit **architecture / luxe / précision** �
 
 ## 2. Logo
 
-**Aujourd'hui :** un mark géométrique (axe « méridien » + anneau + ticks de coordonnées) avec
-un **point bleu pastel** au centre. Moderne, sobre, ownable. ✔️ Bonne base.
+**Aujourd'hui :** un **monogramme « M » réductif** — deux montants + deux diagonales qui ne se
+touchent pas, le **point bleu pastel** comblant le nœud du vertex (le point *est* la structure, pas
+un ornement). Bâti sur l'axe central « méridien » (x = 24), viewBox 48, trait `currentColor` 1,6.
+Lisible du favicon 16 px au grand format, increvable en inversion sur fond encre. Réf. `src/components/Logo.astro`.
+*(L'ancien mark — anneau + ticks de coordonnées — reste dans le langage graphique décoratif, mais n'est plus le logo.)*
 
 **Recommandations**
 - En faire un **système** : (a) lockup complet *mark + « Meridian Architecture »*, (b) compact
