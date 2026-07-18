@@ -17,7 +17,7 @@ const sectors = locale === 'fr'
 
 <section class="section">
   <div class="container contact">
-    <form class="contact__form" data-contact-form novalidate data-reveal>
+    <form class="contact__form" data-contact-form data-mailto={data.site.email} novalidate data-reveal>
       <div class="field">
         <label for="name">{f.name}</label>
         <input id="name" name="name" type="text" autocomplete="name" required />
@@ -102,6 +102,19 @@ const sectors = locale === 'fr'
     form.addEventListener('submit', (e) => {
       e.preventDefault();
       if (!form.checkValidity()) { form.reportValidity(); return; }
+      const to = form.getAttribute('data-mailto') || '';
+      const fd = new FormData(form);
+      const val = (k: string) => String(fd.get(k) || '').trim();
+      const subject = `Demande de contact — ${val('name')}${val('company') ? ' · ' + val('company') : ''}`;
+      const body = [
+        `Nom : ${val('name')}`,
+        `Société : ${val('company')}`,
+        `Email : ${val('email')}`,
+        `Secteur : ${val('sector')}`,
+        '',
+        val('message'),
+      ].join('\r\n');
+      window.location.href = `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
       success.hidden = false;
       form.querySelectorAll('input, textarea, select, button').forEach((el) => {
         (el as HTMLInputElement).disabled = true;

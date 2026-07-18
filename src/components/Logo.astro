@@ -1,8 +1,8 @@
 ---
 /**
- * Logo Meridian Architecture — wordmark « MERIDIAN. »
- * variant 'full' = wordmark complet ; 'mark' = « M. » compact (entêtes de documents).
- * Adaptatif : les lettres héritent de `currentColor` (encre / blanc selon le fond) ;
+ * Logo Meridian Architecture — wordmark « MERIDIAN. » + descripteur « ARCHITECTURE ».
+ * variant 'full' = lockup complet (wordmark + descripteur) ; 'mark' = « M. » compact.
+ * Adaptatif : lettres & descripteur héritent de `currentColor` (encre / blanc selon le fond) ;
  * le point garde la signature pastel `#9db8dd`.
  */
 interface Props {
@@ -29,14 +29,26 @@ const { variant = 'full', class: className = '' } = Astro.props;
           d="M75.0 0V697H225.0L432.0 161H414.0L621.0 697H770.0V0H668.0V579L677.0 577L472.0 60H373.0L168.0 577L177.0 579V0ZM1160.0 0V697H1621.0V606H1262.0V402H1591.0V311H1262.0V91H1621.0V0ZM1983.0 0V697H2198.0Q2280.0 697 2331.5 673.0Q2383.0 649 2407.5 604.5Q2432.0 560 2432.0 499Q2432.0 409 2380.5 358.0Q2329.0 307 2232.0 299Q2215.0 298 2193.0 298.0Q2171.0 298 2152.0 298H2085.0V0ZM2369.0 0 2190.0 310 2294.0 323 2486.0 0ZM2085.0 388H2188.0Q2230.0 388 2261.5 398.5Q2293.0 409 2312.0 433.0Q2331.0 457 2331.0 498Q2331.0 539 2312.0 562.5Q2293.0 586 2261.0 596.0Q2229.0 606 2188.0 606H2085.0ZM2826.0 0V697H2928.0V0ZM3318.0 0V697H3514.0Q3686.0 697 3780.5 604.5Q3875.0 512 3875.0 343Q3875.0 177 3781.5 88.5Q3688.0 0 3513.0 0ZM3420.0 94H3504.0Q3589.0 94 3649.0 118.0Q3709.0 142 3740.5 198.0Q3772.0 254 3772.0 347Q3772.0 439 3741.0 495.5Q3710.0 552 3652.0 577.5Q3594.0 603 3513.0 603H3420.0ZM4237.0 0V697H4339.0V0ZM4668.0 0 4939.0 697H5018.0L5288.0 0H5177.0L4979.0 549L4780.0 0ZM4828.0 155 4859.0 246H5097.0L5131.0 155ZM5618.0 0V697H5724.0L6071.0 132H6047.0V697H6148.0V0H6040.0L5696.0 566H5720.0V0Z"
           fill="currentColor"
         />
-        <circle cx="6385" cy="52" r="52" fill="#9db8dd" />
+        <circle cx="6392" cy="66" r="82" fill="#9db8dd" />
       </g>
     </svg>
+    <span class="logo__sub" aria-hidden="true">Architecture</span>
   </span>
 )}
 
 <style>
   .logo { display: inline-flex; align-items: center; color: currentColor; line-height: 1; }
-  .logo__word-svg { height: 1.05rem; width: auto; display: block; overflow: visible; }
+  .logo--full { flex-direction: column; align-items: flex-start; gap: 0.34rem; }
+  .logo__word-svg { height: 1.4rem; width: auto; display: block; overflow: visible; }
+  .logo__sub {
+    font-family: var(--font-sans);
+    font-size: 0.56rem;
+    font-weight: 600;
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, currentColor 55%, transparent);
+    padding-left: 0.16rem;
+    white-space: nowrap;
+  }
   .logo__mark { width: 1.6rem; height: 1.6rem; flex: none; overflow: visible; }
 </style>

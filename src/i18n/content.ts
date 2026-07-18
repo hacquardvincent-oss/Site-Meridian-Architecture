@@ -30,7 +30,7 @@ const fr = {
       'Un écosystème logiciel unique, sur-mesure, propulsé par l’IA — taillé exactement à votre réalité métier.',
     metaDescription:
       'Meridian Architecture remplace la multitude de logiciels rigides des entreprises par un écosystème unique, sur-mesure et propulsé par l’IA : BI, ERP, PLM, PIM, sites — interconnectés.',
-    email: 'contact@meridian-architecture.com',
+    email: 'vincent@meridian-architecture.com',
     location: 'France · à distance',
   },
 
@@ -307,7 +307,7 @@ const en = {
     tagline: 'A single, custom-built software ecosystem powered by AI — shaped exactly to your business reality.',
     metaDescription:
       'Meridian Architecture replaces the clutter of rigid business software with a single, custom-built ecosystem powered by AI: BI, ERP, PLM, PIM, websites — all interconnected.',
-    email: 'contact@meridian-architecture.com',
+    email: 'vincent@meridian-architecture.com',
     location: 'France · remote',
   },
 
