@@ -23,208 +23,304 @@ const aboutHref = pathFor('about', locale);
 const replace = (file: string) => (isFr ? `À remplacer · public/images/${file}` : `Replace · public/images/${file}`);
 ---
 
-<!-- ============ HERO (vidéo plein écran + géométrie) ============ -->
-<section class="hero" data-hero>
-  <div class="hero__media">
-    <img class="hero__img" src={withBase('/images/hero.jpg')} alt="" fetchpriority="high" />
-    <div class="hero__scrim"></div>
-    <svg class="hero__geo" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-      <path d="M64 64 H128 M64 64 V128" stroke="#ffffff" stroke-width="1.2" opacity="0.45" />
-      <path d="M1136 736 H1072 M1136 736 V672" stroke="#ffffff" stroke-width="1.2" opacity="0.45" />
-      <circle cx="1090" cy="112" r="5" fill="#9db8dd" />
-    </svg>
-  </div>
+{/* =====================================================================
+    HOME — séquence de panneaux plein écran qui s'empilent au scroll
+    (« sticky stacking » façon ysl.com / Miu Miu).
+    · Empilement natif : chaque .panel est sticky top:0, min-height 100vh,
+      fond opaque → recouvre le précédent.
+    · Mouvement « beurré » : la carte interne se rétracte (scale) + s'assombrit
+      quand elle est recouverte, via CSS scroll-driven animations (view()).
+    · Replis : mobile (<60em) et prefers-reduced-motion = flux normal.
+   ===================================================================== */}
+<div class="stack" data-stack>
 
-  <div class="container hero__inner">
-    <span class="eyebrow hero__eyebrow" data-reveal>{h.hero.eyebrow}</span>
-    <h1 class="hero__title" data-reveal style="--reveal-delay:80ms">{h.hero.titleA} {h.hero.titleB}</h1>
-    <p class="hero__subtitle" data-reveal style="--reveal-delay:160ms">{h.hero.subtitle}</p>
-    <div class="hero__actions" data-reveal style="--reveal-delay:240ms">
-      <a class="btn hero__btn" href={contactHref}>{c.common.ctaPrimary} <Arrow class="arrow" /></a>
-      <a class="arrow-link hero__link" href={conceptHref}>{c.common.ctaSecondary} <Arrow class="arrow" size={15} /></a>
+  {/* ============ 01 · HERO (image plein écran + géométrie) — sombre ============ */}
+  <section class="panel panel--hero" style="--i:1" data-hero>
+    <div class="panel__card hero">
+      <div class="hero__media">
+        <img class="hero__img" src={withBase('/images/hero.jpg')} alt="" fetchpriority="high" />
+        <div class="hero__scrim"></div>
+        <svg class="hero__geo" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+          <path d="M64 64 H128 M64 64 V128" stroke="#ffffff" stroke-width="1.2" opacity="0.45" />
+          <path d="M1136 736 H1072 M1136 736 V672" stroke="#ffffff" stroke-width="1.2" opacity="0.45" />
+          <circle cx="1090" cy="112" r="5" fill="#9db8dd" />
+        </svg>
+      </div>
+
+      <div class="container hero__inner">
+        <span class="eyebrow hero__eyebrow" data-reveal>{h.hero.eyebrow}</span>
+        <h1 class="hero__title" data-reveal style="--reveal-delay:80ms">{h.hero.titleA} {h.hero.titleB}</h1>
+        <p class="hero__subtitle" data-reveal style="--reveal-delay:160ms">{h.hero.subtitle}</p>
+        <div class="hero__actions" data-reveal style="--reveal-delay:240ms">
+          <a class="btn hero__btn" href={contactHref}>{c.common.ctaPrimary} <Arrow class="arrow" /></a>
+          <a class="arrow-link hero__link" href={conceptHref}>{c.common.ctaSecondary} <Arrow class="arrow" size={15} /></a>
+        </div>
+      </div>
+
+      <div class="hero__foot">
+        <div class="container hero__foot-row">
+          <span class="hero__coord">40.71°N 74.00°W</span>
+          <span class="hero__cue">{isFr ? 'Défiler' : 'Scroll'} ↓</span>
+        </div>
+      </div>
     </div>
-  </div>
+  </section>
 
-  <div class="hero__foot">
-    <div class="container hero__foot-row">
-      <span class="hero__coord">40.71°N 74.00°W</span>
-      <span class="hero__cue">{isFr ? 'Défiler' : 'Scroll'} ↓</span>
+  {/* ============ 02 · CHIFFRES — clair (blanc) ============ */}
+  <section class="panel panel--paper" style="--i:2">
+    <div class="panel__card panel__card--pad">
+      <div class="container">
+        <ul class="figures">
+          {h.figures.map((f, i) => (
+            <li class="figures__item" data-reveal style={`--reveal-delay:${i * 70}ms`}>
+              <span class="figures__value">{f.value}</span>
+              <span class="figures__label">{f.label}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ============ CHIFFRES ============ -->
-<section class="section--tight figures-band">
-  <div class="container">
-    <ul class="figures">
-      {h.figures.map((f, i) => (
-        <li class="figures__item" data-reveal style={`--reveal-delay:${i * 70}ms`}>
-          <span class="figures__value">{f.value}</span>
-          <span class="figures__label">{f.label}</span>
-        </li>
-      ))}
-    </ul>
-  </div>
-</section>
-
-<!-- ============ PROBLÈME ============ -->
-<section class="section section--alt">
-  <div class="container">
-    <SectionHeading num="01" eyebrow={h.problem.eyebrow} title={h.problem.title} intro={h.problem.intro} />
-    <ul class="cards cards--4">
-      {h.problem.items.map((item, i) => (
-        <li class="card" data-reveal style={`--reveal-delay:${i * 70}ms`}>
-          <Picto variant={i} class="card__picto" />
-          <span class="card__index">{String(i + 1).padStart(2, '0')}</span>
-          <h3 class="card__title">{item.title}</h3>
-          <p class="muted">{item.text}</p>
-        </li>
-      ))}
-    </ul>
-  </div>
-</section>
-
-<!-- ============ VISION ============ -->
-<section class="section">
-  <div class="container vision">
-    <div class="vision__media" data-reveal>
-      <IsoStructure />
+  {/* ============ 03 · PROBLÈME — clair (alt) ============ */}
+  <section class="panel panel--alt" style="--i:3">
+    <div class="panel__card panel__card--pad">
+      <div class="container">
+        <SectionHeading num="01" eyebrow={h.problem.eyebrow} title={h.problem.title} intro={h.problem.intro} />
+        <ul class="cards cards--4">
+          {h.problem.items.map((item, i) => (
+            <li class="card" data-reveal style={`--reveal-delay:${i * 70}ms`}>
+              <Picto variant={i} class="card__picto" />
+              <span class="card__index">{String(i + 1).padStart(2, '0')}</span>
+              <h3 class="card__title">{item.title}</h3>
+              <p class="muted">{item.text}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
-    <div class="vision__text" data-reveal style="--reveal-delay:120ms">
-      <span class="eyebrow">{h.vision.eyebrow}</span>
-      <h2 class="vision__title">{h.vision.title}</h2>
-      <p class="lead">{h.vision.lead}</p>
-      <p class="vision__body muted">{h.vision.body}</p>
-      <ul class="ticks">
-        {h.vision.points.map((p) => (
-          <li class="tick"><span class="tick__mark" aria-hidden="true"></span>{p}</li>
-        ))}
-      </ul>
+  </section>
+
+  {/* ============ 04 · VISION — clair (blanc) ============ */}
+  <section class="panel panel--paper" style="--i:4">
+    <div class="panel__card panel__card--pad">
+      <div class="container vision">
+        <div class="vision__media" data-reveal>
+          <IsoStructure />
+        </div>
+        <div class="vision__text" data-reveal style="--reveal-delay:120ms">
+          <span class="eyebrow">{h.vision.eyebrow}</span>
+          <h2 class="vision__title">{h.vision.title}</h2>
+          <p class="lead">{h.vision.lead}</p>
+          <p class="vision__body muted">{h.vision.body}</p>
+          <ul class="ticks">
+            {h.vision.points.map((p) => (
+              <li class="tick"><span class="tick__mark" aria-hidden="true"></span>{p}</li>
+            ))}
+          </ul>
+        </div>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ============ BANDEAU PHOTO (manifeste) ============ -->
-<section class="photoband" aria-label="Manifeste">
-  <img class="photoband__img" src={withBase('/images/band.jpg')} alt="" loading="lazy" />
-  <div class="photoband__scrim"></div>
-  <div class="container photoband__inner" data-reveal>
-    <span class="photoband__eyebrow">{isFr ? 'Notre conviction' : 'Our conviction'}</span>
-    <p class="photoband__quote">{isFr ? 'Le logiciel se conçoit comme un édifice — une structure, des fondations, un plan.' : 'Software, built like a building — a structure, foundations, a plan.'}</p>
-    <span class="photoband__coord">40.71°N 74.00°W</span>
-  </div>
-</section>
-
-<!-- ============ SOLUTIONS (index singulier) ============ -->
-<section class="section section--alt">
-  <div class="container">
-    <SectionHeading num="02" eyebrow={h.pillars.eyebrow} title={h.pillars.title} intro={h.pillars.intro} />
-    <ol class="index">
-      {c.modules.map((m, i) => (
-        <li class="index__row" data-reveal style={`--reveal-delay:${i * 50}ms`}>
-          <div class="index__head">
-            <span class="index__no">{String(i + 1).padStart(2, '0')}</span>
-            <ModuleGlyph abbr={m.abbr} class="index__glyph" />
-            <h3 class="index__name">{m.name}</h3>
-          </div>
-          <p class="index__text muted">{m.text}</p>
-        </li>
-      ))}
-    </ol>
-    <a class="arrow-link index__link" href={solutionsHref}>{c.common.ctaSecondary} <Arrow class="arrow" size={15} /></a>
-  </div>
-</section>
-
-<!-- ============ ÉCOSYSTÈME ============ -->
-<section class="section">
-  <div class="container">
-    <SectionHeading num="03" eyebrow={h.ecosystem.eyebrow} title={h.ecosystem.title} intro={h.ecosystem.caption} align="center" />
-    <div class="eco-wrap" data-reveal>
-      <EcosystemDiagram modules={c.modules} centerLabel={isFr ? 'Socle' : 'Core'} centerSub={isFr ? 'données + IA' : 'data + AI'} />
+  {/* ============ 05 · BANDEAU PHOTO (manifeste) — sombre ============ */}
+  <section class="panel panel--band" style="--i:5" aria-label="Manifeste">
+    <div class="panel__card photoband">
+      <img class="photoband__img" src={withBase('/images/band.jpg')} alt="" loading="lazy" />
+      <div class="photoband__scrim"></div>
+      <div class="container photoband__inner" data-reveal>
+        <span class="photoband__eyebrow">{isFr ? 'Notre conviction' : 'Our conviction'}</span>
+        <p class="photoband__quote">{isFr ? 'Le logiciel se conçoit comme un édifice — une structure, des fondations, un plan.' : 'Software, built like a building — a structure, foundations, a plan.'}</p>
+        <span class="photoband__coord">40.71°N 74.00°W</span>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ============ MÉTHODE ============ -->
-<section class="section section--alt">
-  <div class="container">
-    <SectionHeading num="04" eyebrow={h.method.eyebrow} title={h.method.title} intro={h.method.intro} />
-    <ol class="steps">
-      {h.method.steps.map((s, i) => (
-        <li class="step" data-reveal style={`--reveal-delay:${i * 60}ms`}>
-          <span class="step__n">{s.n}</span>
-          <h3 class="step__title">{s.title}</h3>
-          <p class="muted step__text">{s.text}</p>
-        </li>
-      ))}
-    </ol>
-    <a class="arrow-link steps__link" href={methodeHref}>{isFr ? 'La méthode en détail' : 'The method in detail'} <Arrow class="arrow" size={15} /></a>
-  </div>
-</section>
-
-<!-- ============ POURQUOI ============ -->
-<section class="section">
-  <div class="container">
-    <SectionHeading num="05" eyebrow={h.why.eyebrow} title={h.why.title} />
-    <ul class="cards cards--3">
-      {h.why.items.map((item, i) => (
-        <li class="card" data-reveal style={`--reveal-delay:${i * 70}ms`}>
-          <Picto variant={i + 2} class="card__picto" />
-          <h3 class="card__title">{item.title}</h3>
-          <p class="muted">{item.text}</p>
-        </li>
-      ))}
-    </ul>
-  </div>
-</section>
-
-<!-- ============ CAS D'USAGE ============ -->
-<section class="section section--alt">
-  <div class="container">
-    <SectionHeading num="06" eyebrow={h.useCases.eyebrow} title={h.useCases.title} />
-    <ul class="cards cards--3">
-      {h.useCases.items.map((item, i) => (
-        <li class="card card--use" data-reveal style={`--reveal-delay:${i * 70}ms`}>
-          <Picto variant={i + 4} class="card__picto" />
-          <span class="use__tag">{item.tag}</span>
-          <h3 class="card__title">{item.title}</h3>
-          <p class="muted">{item.text}</p>
-        </li>
-      ))}
-    </ul>
-  </div>
-</section>
-
-<!-- ============ À PROPOS ============ -->
-<section class="section">
-  <div class="container about">
-    <div class="about__text" data-reveal>
-      <span class="eyebrow">{h.about.eyebrow}</span>
-      <h2 class="about__title">{h.about.title}</h2>
-      <p class="lead">{h.about.text}</p>
-      <a class="arrow-link" href={aboutHref}>{h.about.cta} <Arrow class="arrow" size={15} /></a>
+  {/* ============ 06 · SOLUTIONS (index singulier) — clair (alt) ============ */}
+  <section class="panel panel--alt" style="--i:6">
+    <div class="panel__card panel__card--pad">
+      <div class="container">
+        <SectionHeading num="02" eyebrow={h.pillars.eyebrow} title={h.pillars.title} intro={h.pillars.intro} />
+        <ol class="index">
+          {c.modules.map((m, i) => (
+            <li class="index__row" data-reveal style={`--reveal-delay:${i * 50}ms`}>
+              <div class="index__head">
+                <span class="index__no">{String(i + 1).padStart(2, '0')}</span>
+                <ModuleGlyph abbr={m.abbr} class="index__glyph" />
+                <h3 class="index__name">{m.name}</h3>
+              </div>
+              <p class="index__text muted">{m.text}</p>
+            </li>
+          ))}
+        </ol>
+        <a class="arrow-link index__link" href={solutionsHref}>{c.common.ctaSecondary} <Arrow class="arrow" size={15} /></a>
+      </div>
     </div>
-    <div class="about__media" data-reveal style="--reveal-delay:120ms">
-      <GeoComposition variant="arc" />
-    </div>
-  </div>
-</section>
+  </section>
 
-<!-- ============ CTA FINAL ============ -->
-<section class="section">
-  <div class="container">
-    <div class="cta" data-reveal>
-      <span class="eyebrow eyebrow--plain cta__eyebrow">{h.finalCta.eyebrow}</span>
-      <h2 class="cta__title">{h.finalCta.title}</h2>
-      <p class="cta__text measure">{h.finalCta.text}</p>
-      <a class="btn cta__btn" href={contactHref}>{h.finalCta.button} <Arrow class="arrow" /></a>
-      <p class="cta__micro">{h.finalCta.micro}</p>
+  {/* ============ 07 · ÉCOSYSTÈME — clair (blanc) ============ */}
+  <section class="panel panel--paper" style="--i:7">
+    <div class="panel__card panel__card--pad">
+      <div class="container">
+        <SectionHeading num="03" eyebrow={h.ecosystem.eyebrow} title={h.ecosystem.title} intro={h.ecosystem.caption} align="center" />
+        <div class="eco-wrap" data-reveal>
+          <EcosystemDiagram modules={c.modules} centerLabel={isFr ? 'Socle' : 'Core'} centerSub={isFr ? 'données + IA' : 'data + AI'} />
+        </div>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
+
+  {/* ============ 08 · MÉTHODE — sombre (encre + texte blanc) ============ */}
+  <section class="panel panel--ink" style="--i:8">
+    <div class="panel__card panel__card--pad">
+      <div class="container">
+        <SectionHeading num="04" eyebrow={h.method.eyebrow} title={h.method.title} intro={h.method.intro} />
+        <ol class="steps">
+          {h.method.steps.map((s, i) => (
+            <li class="step" data-reveal style={`--reveal-delay:${i * 60}ms`}>
+              <span class="step__n">{s.n}</span>
+              <h3 class="step__title">{s.title}</h3>
+              <p class="muted step__text">{s.text}</p>
+            </li>
+          ))}
+        </ol>
+        <a class="arrow-link steps__link" href={methodeHref}>{isFr ? 'La méthode en détail' : 'The method in detail'} <Arrow class="arrow" size={15} /></a>
+      </div>
+    </div>
+  </section>
+
+  {/* ============ 09 · POURQUOI — clair (blanc) ============ */}
+  <section class="panel panel--paper" style="--i:9">
+    <div class="panel__card panel__card--pad">
+      <div class="container">
+        <SectionHeading num="05" eyebrow={h.why.eyebrow} title={h.why.title} />
+        <ul class="cards cards--3">
+          {h.why.items.map((item, i) => (
+            <li class="card" data-reveal style={`--reveal-delay:${i * 70}ms`}>
+              <Picto variant={i + 2} class="card__picto" />
+              <h3 class="card__title">{item.title}</h3>
+              <p class="muted">{item.text}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  {/* ============ 10 · CAS D'USAGE — clair (alt) ============ */}
+  <section class="panel panel--alt" style="--i:10">
+    <div class="panel__card panel__card--pad">
+      <div class="container">
+        <SectionHeading num="06" eyebrow={h.useCases.eyebrow} title={h.useCases.title} />
+        <ul class="cards cards--3">
+          {h.useCases.items.map((item, i) => (
+            <li class="card card--use" data-reveal style={`--reveal-delay:${i * 70}ms`}>
+              <Picto variant={i + 4} class="card__picto" />
+              <span class="use__tag">{item.tag}</span>
+              <h3 class="card__title">{item.title}</h3>
+              <p class="muted">{item.text}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  {/* ============ 11 · À PROPOS — clair (blanc) ============ */}
+  <section class="panel panel--paper" style="--i:11">
+    <div class="panel__card panel__card--pad">
+      <div class="container about">
+        <div class="about__text" data-reveal>
+          <span class="eyebrow">{h.about.eyebrow}</span>
+          <h2 class="about__title">{h.about.title}</h2>
+          <p class="lead">{h.about.text}</p>
+          <a class="arrow-link" href={aboutHref}>{h.about.cta} <Arrow class="arrow" size={15} /></a>
+        </div>
+        <div class="about__media" data-reveal style="--reveal-delay:120ms">
+          <GeoComposition variant="arc" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ============ 12 · CTA FINAL — sombre ============ */}
+  <section class="panel panel--cta" style="--i:12">
+    <div class="panel__card panel__card--pad">
+      <div class="container">
+        <div class="cta" data-reveal>
+          <span class="eyebrow eyebrow--plain cta__eyebrow">{h.finalCta.eyebrow}</span>
+          <h2 class="cta__title">{h.finalCta.title}</h2>
+          <p class="cta__text measure">{h.finalCta.text}</p>
+          <a class="btn cta__btn" href={contactHref}>{h.finalCta.button} <Arrow class="arrow" /></a>
+          <p class="cta__micro">{h.finalCta.micro}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
 
 <style>
-  /* ---- HERO (vidéo plein écran + géométrie) ---- */
+  /* =====================================================================
+     SYSTÈME DE PANNEAUX EMPILÉS
+     Par défaut (mobile < 60em et prefers-reduced-motion) : FLUX NORMAL.
+     L'empilement sticky + le mouvement « beurré » ne s'activent qu'en
+     desktop, hors reduced-motion, et le recede uniquement si le
+     navigateur supporte les scroll-driven animations.
+     ===================================================================== */
+
+  /* Propriété animable pour l'assombrissement du panneau recouvert */
+  @property --dim {
+    syntax: '<number>';
+    inherits: true;
+    initial-value: 0;
+  }
+
+  .stack { position: relative; }
+
+  .panel { position: relative; }
+
+  .panel__card { position: relative; --dim: 0; }
+
+  /* Voile d'assombrissement — ne s'affiche que lorsque --dim monte (recede) */
+  .panel__card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    background: #08080a;
+    opacity: var(--dim, 0);
+    pointer-events: none;
+  }
+
+  /* ---- Fonds opaques par tonalité (indispensable pour recouvrir) ---- */
+  .panel--paper > .panel__card { background: var(--plaster); }
+  .panel--alt > .panel__card { background: var(--plaster-deep); }
+  .panel--cta > .panel__card { background: var(--ink); color: var(--plaster); }
+  /* hero & band : fond porté par .hero / .photoband (image + encre) */
+
+  /* ---- Panneau éditorial SOMBRE (encre + texte blanc), pour la cadence maison ---- */
+  .panel--ink > .panel__card { background: var(--ink); color: var(--plaster); }
+  .panel--ink :global(.sh__title) { color: var(--plaster); }
+  .panel--ink :global(.sh__num) { color: color-mix(in srgb, var(--plaster) 22%, transparent); }
+  .panel--ink :global(.eyebrow) { color: color-mix(in srgb, var(--plaster) 66%, transparent); }
+  .panel--ink :global(.eyebrow)::before { background: color-mix(in srgb, var(--plaster) 42%, transparent); }
+  .panel--ink :global(.sh__intro) { color: color-mix(in srgb, var(--plaster) 78%, transparent); }
+  .panel--ink h3 { color: var(--plaster); }
+  .panel--ink .muted { color: color-mix(in srgb, var(--plaster) 74%, transparent); }
+  .panel--ink .step { border-top-color: color-mix(in srgb, var(--plaster) 24%, transparent); }
+  .panel--ink .step__n { color: color-mix(in srgb, var(--plaster) 55%, transparent); }
+  .panel--ink .arrow-link { color: var(--plaster); border-bottom-color: color-mix(in srgb, var(--plaster) 35%, transparent); }
+  .panel--ink .arrow-link:hover { border-bottom-color: var(--plaster); }
+
+  /* ---- Contenu des panneaux « éditoriaux » (flux normal par défaut) ---- */
+  .panel__card--pad { padding-block: var(--space-2xl); }
+
+  /* =====================================================================
+     COMPOSANTS DE SECTION (repris de la charte, inchangés sur le fond)
+     ===================================================================== */
+
+  /* ---- HERO (image plein écran + géométrie) ---- */
   .hero { position: relative; min-height: 100vh; min-height: 100svh; display: grid; background: var(--ink); color: #fff; overflow: hidden; }
   .hero__media { position: absolute; inset: 0; z-index: 0; }
   .hero__img { width: 100%; height: 100%; object-fit: cover; display: block; }
@@ -254,7 +350,7 @@ const replace = (file: string) => (isFr ? `À remplacer · public/images/${file}
   .hero__coord { color: var(--accent); }
 
   /* ---- BANDEAU PHOTO (manifeste) ---- */
-  .photoband { position: relative; min-height: 76vh; display: grid; place-items: center; overflow: hidden; background: var(--ink); color: #fff; }
+  .photoband { position: relative; min-height: 100vh; display: grid; place-items: center; overflow: hidden; background: var(--ink); color: #fff; }
   .photoband__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
   .photoband__scrim { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(12,12,15,0.52) 0%, rgba(12,12,15,0.34) 45%, rgba(12,12,15,0.62) 100%); }
   .photoband__inner { position: relative; z-index: 2; text-align: center; padding-block: var(--space-2xl); }
@@ -263,7 +359,6 @@ const replace = (file: string) => (isFr ? `À remplacer · public/images/${file}
   .photoband__coord { display: block; margin-top: var(--space-l); font-size: var(--step--1); letter-spacing: var(--tracking-wide); color: rgba(255,255,255,0.6); }
 
   /* ---- CHIFFRES ---- */
-  .figures-band { border-bottom: 1px solid var(--line); }
   .figures { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-l) var(--space-m); }
   .figures__item { display: flex; flex-direction: column; gap: var(--space-2xs); }
   .figures__value { font-family: var(--font-display); font-size: var(--step-4); font-weight: 300; line-height: 1; }
@@ -345,4 +440,119 @@ const replace = (file: string) => (isFr ? `À remplacer · public/images/${file}
   .cta__btn { background: var(--plaster); color: var(--ink); border-color: var(--plaster); margin-top: var(--space-s); }
   .cta__btn:hover { background: transparent; color: var(--plaster); }
   .cta__micro { color: color-mix(in srgb, var(--plaster) 50%, transparent); font-size: var(--step--1); }
+
+  /* =====================================================================
+     EMPILEMENT « STICKY STACKING » — activé en desktop, hors reduced-motion
+     ===================================================================== */
+  @media (min-width: 60em) and (prefers-reduced-motion: no-preference) {
+    /* fond « vide » sombre derrière les panneaux qui se rétractent */
+    .stack { background: var(--ink); }
+
+    .panel {
+      position: sticky;
+      top: 0;
+      min-height: 100vh;
+    }
+
+    .panel__card {
+      min-height: 100vh;
+    }
+
+    /* panneaux éditoriaux : centrage vertical + garde sous le header fixe */
+    .panel__card--pad {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-block: clamp(4.75rem, 7.5vh, 6.5rem) var(--space-l);
+    }
+
+    /* Titres de section resserrés (« peu par écran » — tient dans 100vh) */
+    .panel__card--pad :global(.sh) { gap: var(--space-s); }
+    .panel__card--pad :global(.sh__num) { font-size: var(--step-2); margin-bottom: 0; }
+    .panel__card--pad :global(.sh__title) { font-size: var(--step-3); }
+    .panel__card--pad .cards,
+    .panel__card--pad .steps { margin-top: var(--space-l); }
+    .panel__card--pad .index { margin-top: var(--space-s); }
+
+    /* CHIFFRES : présence éditoriale plein écran */
+    .figures { gap: var(--space-xl) var(--space-l); }
+    .figures__value { font-size: var(--step-5); }
+
+    /* CARTES (problème / pourquoi / cas d'usage) : padding resserré */
+    .panel__card--pad .card { padding: var(--space-m); }
+
+    /* SOLUTIONS : 5 rangées condensées pour tenir dans 100vh */
+    .index__row { padding-block: var(--space-3xs); }
+    .index__name { font-size: var(--step-2); }
+    .index__text { font-size: var(--step--1); }
+    .index__link { margin-top: var(--space-s); }
+
+    /* ÉCOSYSTÈME : diagramme resserré pour cohabiter avec le titre */
+    .eco-wrap { margin-top: var(--space-s); }
+    .eco-wrap :global(.eco) { gap: var(--space-l); }
+    .eco-wrap :global(.eco__svg) { max-width: 21rem; }
+
+    /* MÉTHODE / lien : respiration réduite */
+    .steps__link { margin-top: var(--space-l); }
+
+    /* CTA : padding resserré */
+    .panel--cta .cta { padding: clamp(2rem, 5vw, 3.5rem); }
+
+    /* ---- Mouvement « beurré » : le panneau recouvert se rétracte + s'assombrit.
+       Piloté par la progression de scroll racine — scroll(root) — insensible au
+       sticky (view() se fige dès que l'élément est épinglé). Chaque panneau
+       anime sur sa tranche [i-1 .. i] / n de la hauteur de page. ---- */
+    @supports (animation-timeline: scroll()) {
+      .panel__card {
+        --n: 12;
+        --i0: calc(var(--i, 1) - 1);
+        transform-origin: 50% 50%;
+        animation: panelRecede linear both;
+        animation-timeline: scroll(root);
+        animation-range: calc(var(--i0) / var(--n) * 100%) calc(var(--i, 1) / var(--n) * 100%);
+        backface-visibility: hidden;
+      }
+      /* dernier panneau (CTA) : rien ne le recouvre → pas de recede */
+      .panel:last-child .panel__card { animation: none; }
+    }
+  }
+
+  @keyframes panelRecede {
+    from { transform: scale(1); --dim: 0; }
+    to   { transform: scale(0.92); --dim: 0.5; }
+  }
 </style>
+
+<script>
+  // ---- Smooth-scroll « inertie » (Lenis), désactivé sous reduced-motion ----
+  import Lenis from 'lenis';
+  import 'lenis/dist/lenis.css';
+
+  const reduceMQ = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  if (!reduceMQ.matches) {
+    const lenis = new Lenis({
+      duration: 1.15,
+      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+      wheelMultiplier: 1,
+      touchMultiplier: 1.2,
+    });
+
+    // Exposé pour le harnais de prévisualisation (scroll programmatique fidèle).
+    (window as any).lenis = lenis;
+
+    const raf = (time: number) => {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    };
+    requestAnimationFrame(raf);
+
+    // NB : Lenis pilote le VRAI scroll du document (il appelle window.scrollTo),
+    // donc l'event « scroll » natif se déclenche normalement et window.scrollY
+    // reste exact → le header transparent (data-solid, dans Header.astro) et les
+    // scroll-driven animations restent synchronisés SANS relais manuel.
+    // (Ne PAS redispatcher un event « scroll » : Lenis l'écouterait et le
+    // réémettrait, provoquant une récursion infinie.)
+  }
+</script>
