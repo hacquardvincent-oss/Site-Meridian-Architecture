@@ -1,12 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" role="img" aria-label="Meridian">
+  <title>Meridian</title>
   <rect width="48" height="48" rx="9" fill="#0e0e10" />
-  <g transform="translate(0 -2.5)">
-    <g fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <line x1="14" y1="38" x2="14" y2="15" />
-      <line x1="34" y1="38" x2="34" y2="15" />
-      <line x1="14" y1="15" x2="22.3" y2="24" />
-      <line x1="34" y1="15" x2="25.7" y2="24" />
-    </g>
-    <circle cx="24" cy="25" r="2.9" fill="#9db8dd" />
+  <g transform="translate(4.81 36) scale(0.03443 -0.03443)">
+    <path d="M71 0V697H241L436 176H415L611 697H780V0H664V562L674 560L482 61H369L176 560L187 562V0Z" fill="#ffffff" />
   </g>
+  <circle cx="39.73" cy="32.54" r="3.46" fill="#9db8dd" />
 </svg>

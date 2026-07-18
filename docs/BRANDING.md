@@ -12,19 +12,20 @@ propulsés par l'IA. L'univers visuel dit **architecture / luxe / précision** �
 
 ## 2. Logo
 
-**Aujourd'hui :** un **monogramme « M » réductif** — deux montants + deux diagonales qui ne se
-touchent pas, le **point bleu pastel** comblant le nœud du vertex (le point *est* la structure, pas
-un ornement). Bâti sur l'axe central « méridien » (x = 24), viewBox 48, trait `currentColor` 1,6.
-Lisible du favicon 16 px au grand format, increvable en inversion sur fond encre. Réf. `src/components/Logo.astro`.
-*(L'ancien mark — anneau + ticks de coordonnées — reste dans le langage graphique décoratif, mais n'est plus le logo.)*
+**Aujourd'hui :** un **wordmark « MERIDIAN. »** — capitales, **Hanken Grotesk 500**, interlettrage
+**0,24em**, dans la grammaire des maisons de luxe (Celine, Tom Ford). L'unique signe de couleur est
+le **point final pastel** `#9db8dd` : une ponctuation *ownable* qui **est** la signature. Adaptatif —
+les lettres héritent de `currentColor` (encre sur fond clair, blanc sur fond sombre) ; le point reste
+pastel. Réf. `src/components/Logo.astro`.
 
-**Recommandations**
-- En faire un **système** : (a) lockup complet *mark + « Meridian Architecture »*, (b) compact
-  *mark + « Meridian »*, (c) **mark seul** (favicon, avatar, app), (d) **monogramme « M »** géométrique.
-- Définir **zone de protection** (= hauteur du mark autour) et **taille minimale** (mark ≥ 20 px).
-- Le **point bleu pastel** = la « signature couleur » : un seul point de couleur, à garder partout
-  (favicon, curseur d'accent, puce de liste, état actif…). C'est le détail qui rend la marque reconnaissable.
-- Exports propres en **SVG** (je peux générer `/public/brand/` : logo, mark, monogramme, versions noir/blanc).
+**Système**
+- **Wordmark primaire** « MERIDIAN. » — héros, header, documents. Interlettrage 0,24em, jamais resserré.
+- **Lockup** « MERIDIAN » / « ARCHITECTURE » (descripteur gris `#8a8d93`, très lettré) quand le contexte l'exige.
+- **Icône « M. »** — favicon, avatar, app : la capitale du wordmark + le point pastel, sur tuile encre.
+  Nette dès 32 px ; en 16 px non-retina le point s'efface (repli « M » sans point disponible).
+- Le **point pastel** reste la **signature couleur unique**, partout (favicon, puce, état actif…).
+- Zone de protection = hauteur de capitale autour du mot. Exports SVG/PNG dans `/public/brand/`.
+- *Variante éditoriale* : wordmark + filet fin (esprit Tom Ford) réservé aux couvertures grand format.
 
 ## 3. Couleur
 
