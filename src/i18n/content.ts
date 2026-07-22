@@ -148,33 +148,38 @@ const fr = {
   concept: {
     meta: {
       title: 'Le concept — Meridian Architecture',
-      description: 'Le logiciel comme architecture : un édifice unique, sur-mesure et interconnecté, à la place d’un patchwork d’outils rigides.',
+      description: 'Le prototype comme point de départ : un outil fonctionnel qui confronte l’idée au réel, à la place d’un cahier des charges et de mois de développement à l’aveugle.',
     },
     hero: {
       eyebrow: 'Le concept',
-      title: 'Le logiciel comme architecture.',
-      lead: 'On ne meuble pas un appartement en empilant des cabanes. On le conçoit. Pourquoi en irait-il autrement de vos logiciels ?',
+      title: 'Le prototype comme point de départ.',
+      lead: 'On ne conçoit plus un logiciel sur plan. On le prototype — un outil réel, cliquable, qui confronte l’idée au réel avant tout engagement.',
     },
     sections: [
       {
         eyebrow: 'Le point de départ',
-        title: 'Le patchwork a atteint ses limites',
-        body: 'À force d’ajouter un outil par besoin, les entreprises se retrouvent avec un empilement ingérable : des données en silos, des process tordus pour entrer dans des cases génériques, des ressaisies, et une facture de licences qui ne cesse de grimper. La complexité n’est pas dans votre métier — elle est dans vos outils.',
+        title: 'Le cahier des charges est un pari',
+        body: 'Spécifier un outil sur le papier, c’est parier des mois de développement sur des hypothèses jamais confrontées au réel. Les vrais besoins se révèlent trop tard — quand le budget est déjà engagé et l’outil déjà rigide. La complexité n’est pas dans votre métier : elle est dans cette façon de faire.',
       },
       {
         eyebrow: 'Le déplacement',
-        title: 'D’un assemblage subi à un édifice conçu',
-        body: 'Meridian renverse la logique. Au lieu de choisir des logiciels et d’y plier votre entreprise, nous partons de votre métier et nous concevons l’écosystème qui lui correspond exactement. Un plan d’ensemble, des fondations communes, des espaces ouverts les uns sur les autres — comme un grand loft où tout circule et rien ne cloisonne.',
+        title: 'Du plan figé au prototype vivant',
+        body: 'Meridian renverse la logique. Au lieu de spécifier puis construire, on prototype d’abord. L’IA permet de matérialiser un prototype fonctionnel en quelques jours — un objet réel qu’on manipule, teste et corrige. Le prototype devient le vrai plan : il révèle le besoin, réduit le risque, et sert de socle à l’outil final.',
+      },
+      {
+        eyebrow: 'La nuance',
+        title: 'Un prototype, pas une maquette',
+        body: 'Une maquette illustre ; un prototype fonctionne. Le nôtre embarque la vraie logique métier, les vrais parcours, des données de test réalistes — assez abouti pour trancher une décision, assez léger pour être jeté sans regret. C’est cette différence qui transforme une intuition en certitude.',
       },
     ],
     principles: {
       eyebrow: 'Les principes',
       title: 'Quatre partis pris',
       items: [
-        { title: 'Sur-mesure', text: 'L’outil épouse votre métier, votre vocabulaire, vos process. Zéro compromis générique.' },
-        { title: 'Interconnecté', text: 'Un socle de données commun. Une information saisie une fois, disponible partout.' },
-        { title: 'Propulsé par l’IA', text: 'L’IA accélère la conception et le développement — le sur-mesure devient rapide et abordable.' },
-        { title: 'Évolutif', text: 'Votre écosystème vit et grandit avec vous. On l’ajuste en continu, sans tout reconstruire.' },
+        { title: 'Prototyper, pas spécifier', text: 'On conçoit en construisant : un prototype fonctionnel plutôt qu’un document d’hypothèses.' },
+        { title: 'Confronter au réel', text: 'Le prototype se teste sur votre vrai workflow, entre de vraies mains — la décision s’appuie sur des faits.' },
+        { title: 'Propulsé par l’IA', text: 'L’IA matérialise le prototype en jours, pas en mois. Itérer devient presque gratuit.' },
+        { title: 'Du prototype à l’écosystème', text: 'Le prototype éprouvé devient l’outil de référence, puis une brique de votre écosystème.' },
       ],
     },
   },
@@ -274,28 +279,28 @@ const fr = {
   about: {
     meta: {
       title: 'À propos — Meridian Architecture',
-      description: 'La vision derrière Meridian Architecture : redonner aux entreprises des outils qui ressemblent à leur métier.',
+      description: 'La conviction derrière Meridian Architecture : le meilleur cahier des charges est un prototype qui fonctionne.',
     },
     hero: {
       eyebrow: 'À propos',
-      title: 'Des outils qui ressemblent enfin à votre métier.',
-      lead: 'Meridian Architecture est né d’une conviction simple : les entreprises méritent mieux qu’un assemblage de logiciels qui les contraignent.',
+      title: 'Concevoir en prototypant.',
+      lead: 'Meridian Architecture est né d’une conviction : le meilleur cahier des charges est un prototype qui fonctionne.',
     },
     story: {
       eyebrow: 'Pourquoi Meridian',
-      title: 'La complexité doit être dans l’outil, pas chez vous',
-      body: 'Pendant des années, le sur-mesure est resté un luxe — long, cher, réservé aux grands groupes. Tout le monde s’est donc rabattu sur des logiciels génériques, en pliant son métier pour y entrer. L’IA rebat les cartes : concevoir et développer du sur-mesure devient rapide et abordable. Meridian Architecture est né pour saisir ce basculement et le mettre au service des entreprises qui veulent des outils à leur exacte mesure.',
+      title: 'Le prototype change tout',
+      body: 'Pendant des années, tester une idée logicielle imposait des mois de spécifications et de développement — un luxe réservé aux grands groupes. L’IA rebat les cartes : on matérialise un prototype fonctionnel en quelques jours, on le confronte au réel, on l’affine jusqu’à une version de référence. Meridian Architecture est né pour saisir ce basculement — réunir product, design et développement dans une seule main, et transformer vos intuitions en outils éprouvés.',
     },
     values: {
       eyebrow: 'Ce qui nous guide',
       title: 'Nos repères',
       items: [
-        { title: 'Le métier d’abord', text: 'On part de votre réalité, jamais d’un produit à caser.' },
-        { title: 'La cohérence', text: 'Un écosystème, pas une collection d’outils. Tout doit tenir ensemble.' },
-        { title: 'La durée', text: 'On construit pour évoluer, pas pour refaire dans deux ans.' },
+        { title: 'Le prototype d’abord', text: 'On tranche sur un objet qui marche, jamais sur un document.' },
+        { title: 'Le métier avant l’outil', text: 'On part de votre réalité, votre vocabulaire, vos parcours — jamais d’un produit à caser.' },
+        { title: 'La durée', text: 'Un prototype éprouvé devient une version de référence qui évolue, pas un chantier à refaire.' },
       ],
     },
-    founderNote: 'Note : cette page sera personnalisée avec votre parcours et votre photo.',
+    founderNote: 'Note : cette page sera personnalisée avec le parcours et la photo du fondateur.',
   },
 
   contact: {
@@ -471,33 +476,38 @@ const en = {
   concept: {
     meta: {
       title: 'The concept — Meridian Architecture',
-      description: 'Software as architecture: a single, bespoke, interconnected edifice instead of a patchwork of rigid tools.',
+      description: 'The prototype as starting point: a working tool that confronts the idea with reality, instead of a spec sheet and months of blind development.',
     },
     hero: {
       eyebrow: 'The concept',
-      title: 'Software as architecture.',
-      lead: 'You don’t furnish an apartment by stacking sheds. You design it. Why should your software be any different?',
+      title: 'The prototype as starting point.',
+      lead: 'We no longer design software on paper. We prototype it — a real, clickable tool that confronts the idea with reality before any commitment.',
     },
     sections: [
       {
         eyebrow: 'The starting point',
-        title: 'The patchwork has hit its limits',
-        body: 'By adding one tool per need, companies end up with an unmanageable stack: siloed data, processes twisted to fit generic boxes, re-keying, and a licence bill that keeps climbing. The complexity isn’t in your business — it’s in your tools.',
+        title: 'A spec sheet is a bet',
+        body: 'Specifying a tool on paper means betting months of development on assumptions never confronted with reality. The real needs surface too late — once the budget is committed and the tool is already rigid. The complexity isn’t in your business: it’s in that way of working.',
       },
       {
         eyebrow: 'The shift',
-        title: 'From an assembly endured to an edifice designed',
-        body: 'Meridian flips the logic. Instead of picking software and bending your company to it, we start from your business and design the ecosystem that fits it exactly. A master plan, shared foundations, spaces that open onto one another — like a large loft where everything flows and nothing is walled off.',
+        title: 'From a frozen plan to a living prototype',
+        body: 'Meridian flips the logic. Instead of specifying then building, we prototype first. AI lets us materialise a working prototype in days — a real object you handle, test and correct. The prototype becomes the true plan: it reveals the need, cuts the risk, and grounds the final tool.',
+      },
+      {
+        eyebrow: 'The nuance',
+        title: 'A prototype, not a mock-up',
+        body: 'A mock-up illustrates; a prototype works. Ours carries the real business logic, the real journeys, realistic test data — polished enough to settle a decision, light enough to be thrown away without regret. That difference is what turns a hunch into a certainty.',
       },
     ],
     principles: {
       eyebrow: 'The principles',
       title: 'Four commitments',
       items: [
-        { title: 'Bespoke', text: 'The tool fits your business, your vocabulary, your processes. Zero generic compromise.' },
-        { title: 'Interconnected', text: 'A shared data core. Information entered once, available everywhere.' },
-        { title: 'AI-powered', text: 'AI accelerates design and development — bespoke becomes fast and affordable.' },
-        { title: 'Evolving', text: 'Your ecosystem lives and grows with you. We adjust it continuously, without rebuilding everything.' },
+        { title: 'Prototype, don’t spec', text: 'We design by building: a working prototype rather than a document of assumptions.' },
+        { title: 'Confront with reality', text: 'The prototype is tested on your real workflow, in real hands — decisions rest on facts.' },
+        { title: 'AI-powered', text: 'AI materialises the prototype in days, not months. Iterating becomes almost free.' },
+        { title: 'From prototype to ecosystem', text: 'The proven prototype becomes the reference tool, then a brick of your ecosystem.' },
       ],
     },
   },
@@ -597,28 +607,28 @@ const en = {
   about: {
     meta: {
       title: 'About — Meridian Architecture',
-      description: 'The vision behind Meridian Architecture: giving companies tools that look like their business again.',
+      description: 'The conviction behind Meridian Architecture: the best spec sheet is a prototype that works.',
     },
     hero: {
       eyebrow: 'About',
-      title: 'Tools that finally look like your business.',
-      lead: 'Meridian Architecture grew from a simple conviction: companies deserve better than a pile of software that constrains them.',
+      title: 'Designing by prototyping.',
+      lead: 'Meridian Architecture grew from one conviction: the best spec sheet is a prototype that works.',
     },
     story: {
       eyebrow: 'Why Meridian',
-      title: 'Complexity belongs in the tool, not in you',
-      body: 'For years, bespoke stayed a luxury — slow, expensive, reserved for large groups. So everyone fell back on generic software, bending their business to fit. AI reshuffles the deck: designing and developing bespoke becomes fast and affordable. Meridian Architecture was born to seize that shift and put it to work for companies that want tools cut exactly to their size.',
+      title: 'The prototype changes everything',
+      body: 'For years, testing a software idea meant months of specs and development — a luxury reserved for large groups. AI reshuffles the deck: we materialise a working prototype in days, confront it with reality, and refine it to a reference version. Meridian Architecture was born to seize that shift — bringing product, design and development into a single pair of hands, and turning your hunches into proven tools.',
     },
     values: {
       eyebrow: 'What guides us',
       title: 'Our compass',
       items: [
-        { title: 'Business first', text: 'We start from your reality, never from a product to place.' },
-        { title: 'Coherence', text: 'An ecosystem, not a collection of tools. Everything must hold together.' },
-        { title: 'The long run', text: 'We build to evolve, not to redo in two years.' },
+        { title: 'Prototype first', text: 'We settle decisions on an object that works, never on a document.' },
+        { title: 'Business before tool', text: 'We start from your reality, your vocabulary, your journeys — never a product to place.' },
+        { title: 'The long run', text: 'A proven prototype becomes a reference version that evolves, not a build to redo.' },
       ],
     },
-    founderNote: 'Note: this page will be personalised with your background and photo.',
+    founderNote: 'Note: this page will be personalised with the founder’s background and photo.',
   },
 
   contact: {
