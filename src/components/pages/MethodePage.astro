@@ -6,9 +6,8 @@ import CtaPanel from '../CtaPanel.astro';
 
 interface Props { locale: Locale }
 const { locale } = Astro.props;
-const data = getContent(locale);
-const c = data.methode;
-const steps = data.home.method.steps;
+const c = getContent(locale).methode;
+const steps = c.steps;
 ---
 <PageHero eyebrow={c.hero.eyebrow} title={c.hero.title} lead={c.hero.lead} index="03 — 05" image="/images/method.jpg" theme="dark" />
 
@@ -21,9 +20,13 @@ const steps = data.home.method.steps;
             <span class="flow__n mono">{s.n}</span>
             {i < steps.length - 1 && <span class="flow__line" aria-hidden="true"></span>}
           </div>
-          <div class="flow__content">
+          <div class="flow__content" class:list={[{ 'flow__content--last': i === steps.length - 1 }]}>
             <h2 class="flow__title">{s.title}</h2>
             <p class="muted flow__text">{s.text}</p>
+            <p class="flow__deliverable">
+              <span class="flow__deliverable-label mono">{c.deliverableLabel}</span>
+              <span class="flow__deliverable-text">{s.deliverable}</span>
+            </p>
           </div>
         </li>
       ))}
@@ -61,8 +64,16 @@ const steps = data.home.method.steps;
   }
   .flow__line { flex: 1; width: 1px; background: var(--line-strong); margin-block: var(--space-2xs); }
   .flow__content { padding-bottom: var(--space-xl); }
+  .flow__content--last { padding-bottom: 0; }
   .flow__title { font-size: var(--step-2); }
   .flow__text { margin-top: var(--space-2xs); max-width: 54ch; font-size: var(--step-0); }
+  .flow__deliverable {
+    display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--space-2xs) var(--space-s);
+    margin-top: var(--space-s); padding: var(--space-xs) var(--space-m);
+    border-left: 2px solid var(--brass); background: var(--brass-wash); max-width: 54ch;
+  }
+  .flow__deliverable-label { font-size: var(--step--1); letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--accent-deep); }
+  .flow__deliverable-text { font-size: var(--step-0); color: var(--text); }
 
   .commit__title { margin-top: var(--space-s); }
   .commit { list-style: none; padding: 0; margin: var(--space-xl) 0 0; display: grid; gap: var(--space-l); }
