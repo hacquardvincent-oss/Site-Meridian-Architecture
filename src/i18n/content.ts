@@ -181,25 +181,64 @@ const fr = {
 
   solutions: {
     meta: {
-      title: 'Solutions — Meridian Architecture',
-      description: 'BI, ERP, PLM, PIM, sites & portails : cinq domaines conçus sur-mesure et nativement interconnectés.',
+      title: 'L’offre — Meridian Architecture',
+      description: 'Un pilote fonctionnel construit à l’IA en quelques jours pour confronter votre idée au réel, l’éprouver, l’intégrer — puis l’assembler en écosystème.',
     },
     hero: {
-      eyebrow: 'Solutions',
-      title: 'Cinq domaines. Un seul édifice.',
-      lead: 'Des modules sur-mesure, pensés pour fonctionner ensemble dès le premier jour. Et tout ce que votre métier réclame en plus.',
+      eyebrow: 'L’offre',
+      title: 'Un pilote fonctionnel, pas un cahier des charges.',
+      lead: 'Là où l’ancien monde enchaînait spécifications, semaines de développement et cycles de validation, nous construisons — à l’IA — un outil réel et cliquable en quelques jours. Vous confrontez votre idée au concret avant d’engager quoi que ce soit.',
     },
-    detail: [
-      { abbr: 'BI', name: 'Business Intelligence', text: 'Vos données réunies, lisibles, pilotables.', more: 'Des tableaux de bord clairs, des indicateurs qui comptent vraiment, une lecture en temps réel de votre activité. La décision, enfin appuyée sur des faits — pas sur un export Excel d’il y a trois semaines.' },
-      { abbr: 'ERP', name: 'Gestion intégrée', text: 'Le cœur opérationnel de votre entreprise.', more: 'Ventes, achats, stocks, finance, production : orchestrés selon vos process réels, pas selon ceux d’un éditeur. L’ossature qui fait tenir tout le reste.' },
-      { abbr: 'PLM', name: 'Cycle de vie produit', text: 'De l’idée au référencement.', more: 'Concevez, versionnez et faites évoluer vos produits sans perdre le fil. Chaque évolution tracée, chaque version maîtrisée, du premier croquis à la mise sur le marché.' },
-      { abbr: 'PIM', name: 'Information produit', text: 'Une source unique et fiable.', more: 'Toutes vos fiches produit centralisées, enrichies une fois et diffusées partout — site, marketplaces, catalogues. Fini les ressaisies et les fiches qui se contredisent d’un canal à l’autre.' },
-      { abbr: 'WEB', name: 'Sites & portails', text: 'Votre vitrine et vos espaces connectés.', more: 'Sites, espaces clients, portails partenaires — branchés en direct sur vos données. Ce que voit le client est toujours à jour, parce que c’est la même source.' },
-    ],
+    builder: {
+      eyebrow: 'Le métier',
+      title: 'Builder Product : concevoir en construisant.',
+      body: 'Un seul interlocuteur réunit ce qui demandait hier trois métiers — product owner, product designer, UX researcher — et s’appuie sur l’IA pour matérialiser l’outil, pas seulement le spécifier. La décision se prend sur une maquette qui fonctionne, jamais sur un document.',
+      points: [
+        'Votre besoin métier se confronte au réel, tout de suite.',
+        'Ce qui coûtait des mois se teste en quelques jours.',
+        'L’outil épouse vos process — jamais l’inverse.',
+      ],
+    },
+    method: {
+      eyebrow: 'La méthode',
+      title: 'Cinq temps, du croquis à l’écosystème.',
+      steps: [
+        { n: '01', title: 'Cadrage éclair', text: 'On confronte votre besoin métier à un artefact réel, pas à un cahier des charges. Quelques jours, pas des semaines.' },
+        { n: '02', title: 'Pilote fonctionnel', text: 'Un outil cliquable, construit à l’IA, qui affronte votre vrai workflow. Assez léger pour être jeté — donc chaque décision est dé-risquée.' },
+        { n: '03', title: 'Éprouvé & itéré', text: 'Mis entre les mains de vos utilisateurs, affiné jusqu’à une version de référence. Un onboarding plus rapide qu’un chantier classique.' },
+        { n: '04', title: 'Intégration', text: 'Une fois l’outil validé, on le branche à vos systèmes et on le déploie pour vos équipes.' },
+        { n: '05', title: 'Écosystème', text: 'Éprouvées chez un ou plusieurs clients, vos briques s’assemblent en un ensemble cohérent. L’aboutissement, pas le point de départ.' },
+      ],
+    },
+    profiles: {
+      eyebrow: 'À qui ça s’adresse',
+      title: 'Deux portes d’entrée, un même savoir-faire.',
+      items: [
+        {
+          tag: 'PME · ETI · grands comptes',
+          kicker: 'Porte d’entrée',
+          title: 'Testez une idée avant d’engager un chantier lourd.',
+          text: 'Un besoin métier que les logiciels du marché servent mal — trop lourds, trop lents à faire évoluer. On construit le pilote qui le confronte au réel, on l’affine avec vos équipes, puis on l’intègre. Vous livrez la fonctionnalité que votre éditeur ne priorisera jamais.',
+          example: 'Cas concret : un PLM leader trop lourd à déployer. Un pilote éprouve le besoin, évolue jusqu’à une version de référence et embarque un générateur de descriptifs qu’aucun éditeur ne sort assez vite.',
+        },
+        {
+          tag: 'TPE · cabinets · indépendants premium',
+          kicker: 'Moteur récurrent',
+          title: 'Des fonctionnalités de grand groupe, à votre échelle.',
+          text: 'Un site vitrine à l’animation ultra-fluide, un écosystème SEO embarqué, un CRM sur-mesure : les briques d’habitude réservées aux grandes structures, taillées pour la vôtre. Le pilote est proche du produit final, la mise en œuvre est rapide.',
+          example: 'Cas concret : une maîtrise d’œuvre en copropriété gagne un site premium, un moteur de contenu SEO et un back-office sur-mesure — là où ses concurrents s’arrêtent à un site vitrine générique.',
+        },
+      ],
+    },
+    endgame: {
+      eyebrow: 'L’aboutissement',
+      title: 'Quand les pilotes tiennent, l’écosystème émerge.',
+      text: 'Rien n’est imposé d’emblée. À mesure que vos outils s’éprouvent, ils s’interconnectent autour d’un socle de données commun — jusqu’à remplacer le patchwork de logiciels rigides par un ensemble unique, taillé à votre métier.',
+    },
     interconnect: {
       eyebrow: 'Le liant',
-      title: 'L’interconnexion n’est pas une option. C’est le projet.',
-      text: 'Chaque module partage le même socle de données. Une commande saisie met à jour le stock, déclenche la facturation, alimente vos tableaux de bord et informe le portail client — sans aucune ressaisie. C’est là que se gagne le temps, et la sérénité.',
+      title: 'L’interconnexion n’est pas une option. C’est l’aboutissement.',
+      text: 'Une fois éprouvés, vos modules partagent le même socle de données. Une commande saisie met à jour le stock, déclenche la facturation, alimente vos tableaux de bord et informe le portail client — sans aucune ressaisie. C’est là que se gagne le temps, et la sérénité.',
     },
   },
 
@@ -457,25 +496,64 @@ const en = {
 
   solutions: {
     meta: {
-      title: 'Solutions — Meridian Architecture',
-      description: 'BI, ERP, PLM, PIM, sites & portals: five domains built bespoke and natively interconnected.',
+      title: 'The offer — Meridian Architecture',
+      description: 'A working pilot built with AI in days to confront your idea with reality, prove it, integrate it — then assemble it into an ecosystem.',
     },
     hero: {
-      eyebrow: 'Solutions',
-      title: 'Five domains. One edifice.',
-      lead: 'Bespoke modules designed to work together from day one. And whatever else your business calls for.',
+      eyebrow: 'The offer',
+      title: 'A working pilot, not a spec sheet.',
+      lead: 'Where the old world chained specifications, weeks of development and validation cycles, we build — with AI — a real, clickable tool in a matter of days. You confront your idea with reality before committing to anything.',
     },
-    detail: [
-      { abbr: 'BI', name: 'Business Intelligence', text: 'Your data, unified and readable.', more: 'Clear dashboards, indicators that actually matter, a real-time read on your activity. Decisions finally grounded in facts — not in an Excel export from three weeks ago.' },
-      { abbr: 'ERP', name: 'Integrated operations', text: 'The operational core of your company.', more: 'Sales, purchasing, inventory, finance, production: orchestrated around your real processes, not a vendor’s. The frame that holds everything else together.' },
-      { abbr: 'PLM', name: 'Product lifecycle', text: 'From idea to listing.', more: 'Design, version and evolve your products without losing the thread. Every change traced, every version controlled, from first sketch to market.' },
-      { abbr: 'PIM', name: 'Product information', text: 'One reliable source.', more: 'All your product sheets centralised, enriched once and distributed everywhere — website, marketplaces, catalogues. No more re-keying, no more sheets that contradict each other across channels.' },
-      { abbr: 'WEB', name: 'Sites & portals', text: 'Your storefront and connected spaces.', more: 'Websites, client areas, partner portals — wired straight to your data. What the client sees is always up to date, because it’s the same source.' },
-    ],
+    builder: {
+      eyebrow: 'The craft',
+      title: 'Product Builder: designing by building.',
+      body: 'A single partner combines what used to take three roles — product owner, product designer, UX researcher — and leans on AI to materialise the tool, not just specify it. The decision is made on a mock-up that works, never on a document.',
+      points: [
+        'Your business need meets reality, right away.',
+        'What used to take months is tested in days.',
+        'The tool fits your processes — never the reverse.',
+      ],
+    },
+    method: {
+      eyebrow: 'The method',
+      title: 'Five acts, from sketch to ecosystem.',
+      steps: [
+        { n: '01', title: 'Rapid framing', text: 'We confront your business need with a real artefact, not a spec sheet. Days, not weeks.' },
+        { n: '02', title: 'Working pilot', text: 'A clickable tool, built with AI, that faces your real workflow. Light enough to throw away — so every decision is de-risked.' },
+        { n: '03', title: 'Proven & iterated', text: 'Put in your users’ hands, refined to a reference version. Onboarding faster than a traditional build.' },
+        { n: '04', title: 'Integration', text: 'Once the tool is validated, we wire it into your systems and deploy it for your teams.' },
+        { n: '05', title: 'Ecosystem', text: 'Proven across one or several clients, your bricks assemble into a coherent whole. The outcome, not the starting point.' },
+      ],
+    },
+    profiles: {
+      eyebrow: 'Who it’s for',
+      title: 'Two front doors, one craft.',
+      items: [
+        {
+          tag: 'SMEs · mid-market · large accounts',
+          kicker: 'Front door',
+          title: 'Test an idea before committing to a heavy build.',
+          text: 'A business need that market software serves poorly — too heavy, too slow to evolve. We build the pilot that confronts it with reality, refine it with your teams, then integrate it. You ship the feature your vendor will never prioritise.',
+          example: 'Real case: a leading PLM too heavy to roll out. A pilot proves the need, evolves to a reference version and ships a description generator no vendor releases fast enough.',
+        },
+        {
+          tag: 'Micro-businesses · firms · premium independents',
+          kicker: 'Recurring engine',
+          title: 'Large-group features, at your scale.',
+          text: 'A showcase site with ultra-smooth motion, an embedded SEO ecosystem, a bespoke CRM: the bricks usually reserved for large organisations, cut for yours. The pilot is close to the final product, delivery is fast.',
+          example: 'Real case: a property-management firm gains a premium site, an SEO content engine and a bespoke back-office — where its competitors stop at a generic showcase site.',
+        },
+      ],
+    },
+    endgame: {
+      eyebrow: 'The outcome',
+      title: 'When the pilots hold, the ecosystem emerges.',
+      text: 'Nothing is imposed upfront. As your tools prove themselves, they interconnect around a shared data core — until the patchwork of rigid software gives way to a single whole, cut to your business.',
+    },
     interconnect: {
       eyebrow: 'The connective tissue',
-      title: 'Interconnection isn’t an option. It’s the project.',
-      text: 'Every module shares the same data core. An order updates stock, triggers invoicing, feeds your dashboards and informs the client portal — with no re-keying. That’s where the time, and the peace of mind, is won.',
+      title: 'Interconnection isn’t an option. It’s the outcome.',
+      text: 'Once proven, your modules share the same data core. An order updates stock, triggers invoicing, feeds your dashboards and informs the client portal — with no re-keying. That’s where the time, and the peace of mind, is won.',
     },
   },
 

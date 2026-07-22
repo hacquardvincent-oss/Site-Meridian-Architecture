@@ -7,65 +7,161 @@ import ModuleGlyph from '../graphics/ModuleGlyph.astro';
 
 interface Props { locale: Locale }
 const { locale } = Astro.props;
-const c = getContent(locale).solutions;
+const data = getContent(locale);
+const c = data.solutions;
+const modules = data.modules;
 ---
 <PageHero eyebrow={c.hero.eyebrow} title={c.hero.title} lead={c.hero.lead} index="02 — 05" image="/images/solutions.jpg" theme="light" />
 
+<!-- Le métier : Builder Product -->
 <section class="section">
-  <div class="container">
-    <ul class="modules">
-      {c.detail.map((m, i) => (
-        <li class="module" data-reveal style={`--reveal-delay:${i * 50}ms`}>
-          <div class="module__id">
-            <ModuleGlyph abbr={m.abbr} class="module__glyph" />
-            <span class="module__abbr">{m.abbr}</span>
-            <span class="module__no">{String(i + 1).padStart(2, '0')}</span>
-          </div>
-          <div class="module__body">
-            <h2 class="module__name">{m.name}</h2>
-            <p class="module__lead lead">{m.text}</p>
-            <p class="module__more muted">{m.more}</p>
-          </div>
-        </li>
-      ))}
-    </ul>
+  <div class="container builder" data-reveal>
+    <div class="builder__head">
+      <span class="eyebrow">{c.builder.eyebrow}</span>
+      <h2 class="builder__title">{c.builder.title}</h2>
+    </div>
+    <div class="builder__body">
+      <p class="lead">{c.builder.body}</p>
+      <ul class="builder__points">
+        {c.builder.points.map((p) => (
+          <li class="builder__point"><span class="builder__tick" aria-hidden="true"></span>{p}</li>
+        ))}
+      </ul>
+    </div>
   </div>
 </section>
 
+<!-- La méthode : 5 temps -->
 <section class="section section--alt">
-  <div class="container interconnect" data-reveal>
-    <div class="interconnect__head">
-      <span class="eyebrow">{c.interconnect.eyebrow}</span>
-      <h2 class="interconnect__title">{c.interconnect.title}</h2>
+  <div class="container">
+    <span class="eyebrow" data-reveal>{c.method.eyebrow}</span>
+    <h2 class="method__title" data-reveal style="--reveal-delay:80ms">{c.method.title}</h2>
+    <ol class="flow">
+      {c.method.steps.map((s, i) => (
+        <li class="flow__step" data-reveal style={`--reveal-delay:${i * 60}ms`}>
+          <div class="flow__marker">
+            <span class="flow__n mono">{s.n}</span>
+            {i < c.method.steps.length - 1 && <span class="flow__line" aria-hidden="true"></span>}
+          </div>
+          <div class="flow__content" class:list={[{ 'flow__content--last': s.n === '05' }]}>
+            <h3 class="flow__step-title">{s.title}</h3>
+            <p class="muted flow__text">{s.text}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<!-- Deux portes d'entrée -->
+<section class="section">
+  <div class="container">
+    <span class="eyebrow" data-reveal>{c.profiles.eyebrow}</span>
+    <h2 class="profiles__title" data-reveal style="--reveal-delay:80ms">{c.profiles.title}</h2>
+    <div class="profiles">
+      {c.profiles.items.map((p, i) => (
+        <article class="profile" data-reveal style={`--reveal-delay:${i * 90}ms`}>
+          <div class="profile__meta">
+            <span class="profile__kicker mono">{p.kicker}</span>
+            <span class="profile__tag">{p.tag}</span>
+          </div>
+          <h3 class="profile__title">{p.title}</h3>
+          <p class="profile__text">{p.text}</p>
+          <p class="profile__example muted">{p.example}</p>
+        </article>
+      ))}
     </div>
-    <p class="interconnect__text lead">{c.interconnect.text}</p>
+  </div>
+</section>
+
+<!-- L'aboutissement : l'écosystème émerge -->
+<section class="section section--alt">
+  <div class="container endgame" data-reveal>
+    <div class="endgame__head">
+      <span class="eyebrow">{c.endgame.eyebrow}</span>
+      <h2 class="endgame__title">{c.endgame.title}</h2>
+      <p class="lead endgame__text">{c.endgame.text}</p>
+    </div>
+    <ul class="mods">
+      {modules.map((m, i) => (
+        <li class="mod" data-reveal style={`--reveal-delay:${i * 50}ms`}>
+          <ModuleGlyph abbr={m.abbr} class="mod__glyph" />
+          <span class="mod__abbr">{m.abbr}</span>
+          <span class="mod__name">{m.name}</span>
+        </li>
+      ))}
+    </ul>
+    <div class="interconnect">
+      <div class="interconnect__head">
+        <span class="eyebrow">{c.interconnect.eyebrow}</span>
+        <h3 class="interconnect__title">{c.interconnect.title}</h3>
+      </div>
+      <p class="interconnect__text lead">{c.interconnect.text}</p>
+    </div>
   </div>
 </section>
 
 <CtaPanel locale={locale} />
 
 <style>
-  .modules { list-style: none; padding: 0; margin: 0; display: grid; gap: 0; }
-  .module {
-    display: grid; gap: var(--space-m);
-    padding-block: var(--space-xl);
-    border-top: 1px solid var(--line);
-  }
-  .module:last-child { border-bottom: 1px solid var(--line); }
-  .module__id { display: flex; align-items: center; gap: var(--space-m); }
-  .module__glyph { width: 2.75rem; height: 2.75rem; flex: none; color: var(--ink); }
-  .module__abbr { font-family: var(--font-display); font-size: var(--step-3); font-weight: 500; color: var(--ink); letter-spacing: 0.01em; }
-  .module__no { color: var(--text-subtle); font-size: var(--step--1); }
-  .module__name { font-size: var(--step-2); }
-  .module__lead { margin-top: var(--space-xs); max-width: none; }
-  .module__more { margin-top: var(--space-s); max-width: 62ch; }
+  /* Builder Product */
+  .builder { display: grid; gap: var(--space-l); }
+  .builder__title { margin-top: var(--space-s); font-size: var(--step-3); }
+  .builder__points { list-style: none; padding: 0; margin: var(--space-l) 0 0; display: grid; gap: var(--space-m); }
+  .builder__point { display: flex; align-items: baseline; gap: var(--space-s); font-size: var(--step-1); color: var(--ink); }
+  .builder__tick { flex: none; width: 1.5rem; height: 1px; background: var(--brass); transform: translateY(-0.4em); }
   @media (min-width: 56em) {
-    .module { grid-template-columns: 0.32fr 0.68fr; gap: var(--space-2xl); align-items: start; }
-    .module__id { flex-direction: column; align-items: flex-start; gap: var(--space-s); }
+    .builder { grid-template-columns: 0.9fr 1.1fr; gap: var(--space-2xl); align-items: start; }
+    .builder__points { margin-top: 0; }
   }
 
-  .interconnect { display: grid; gap: var(--space-l); }
-  .interconnect__title { margin-top: var(--space-s); }
+  /* Méthode — flow (aligné sur MethodePage) */
+  .method__title { margin-top: var(--space-s); margin-bottom: var(--space-xl); }
+  .flow { list-style: none; padding: 0; margin: 0; display: grid; gap: 0; }
+  .flow__step { display: grid; grid-template-columns: auto 1fr; gap: var(--space-l); }
+  .flow__marker { display: flex; flex-direction: column; align-items: center; }
+  .flow__n {
+    display: grid; place-items: center;
+    width: 3rem; height: 3rem; flex: none;
+    border: 1px solid var(--line-strong); border-radius: 50%;
+    font-size: var(--step--1); color: var(--accent-text); background: var(--surface);
+  }
+  .flow__line { flex: 1; width: 1px; background: var(--line-strong); margin-block: var(--space-2xs); }
+  .flow__content { padding-bottom: var(--space-xl); }
+  .flow__content--last { padding-bottom: 0; }
+  .flow__step-title { font-size: var(--step-2); }
+  .flow__text { margin-top: var(--space-2xs); max-width: 54ch; font-size: var(--step-0); }
+
+  /* Profils — deux portes d'entrée */
+  .profiles__title { margin-top: var(--space-s); margin-bottom: var(--space-xl); }
+  .profiles { display: grid; gap: var(--space-l); }
+  @media (min-width: 56em) { .profiles { grid-template-columns: 1fr 1fr; gap: var(--space-xl); } }
+  .profile { display: flex; flex-direction: column; gap: var(--space-s); padding-top: var(--space-m); border-top: 1px solid var(--line-strong); }
+  .profile__meta { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--space-s); }
+  .profile__kicker { font-size: var(--step--1); letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--accent-deep); }
+  .profile__tag { font-size: var(--step--1); color: var(--text-subtle); }
+  .profile__title { font-size: var(--step-2); }
+  .profile__text { font-size: var(--step-0); color: var(--text); max-width: 46ch; }
+  .profile__example {
+    font-size: var(--step--1); line-height: var(--leading-normal); max-width: 46ch;
+    padding: var(--space-s) var(--space-m); border-left: 2px solid var(--brass);
+    background: var(--brass-wash); margin-top: auto;
+  }
+
+  /* Aboutissement */
+  .endgame { display: grid; gap: var(--space-xl); }
+  .endgame__head { display: grid; gap: var(--space-s); max-width: 60ch; }
+  .endgame__title { margin-top: var(--space-2xs); }
+  .endgame__text { max-width: 56ch; }
+  .mods { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-m); }
+  @media (min-width: 44em) { .mods { grid-template-columns: repeat(5, 1fr); } }
+  .mod { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-2xs); padding-top: var(--space-m); border-top: 1px solid var(--line); }
+  .mod__glyph { width: 2.25rem; height: 2.25rem; color: var(--ink); }
+  .mod__abbr { font-family: var(--font-display); font-size: var(--step-1); font-weight: 500; color: var(--ink); margin-top: var(--space-2xs); }
+  .mod__name { font-size: var(--step--1); color: var(--text-muted); }
+
+  .interconnect { display: grid; gap: var(--space-l); padding-top: var(--space-l); border-top: 1px solid var(--line); }
+  .interconnect__title { margin-top: var(--space-s); font-size: var(--step-2); }
   .interconnect__text { max-width: 52ch; }
   @media (min-width: 56em) { .interconnect { grid-template-columns: 0.9fr 1.1fr; gap: var(--space-2xl); align-items: start; } }
 </style>
