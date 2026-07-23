@@ -281,25 +281,25 @@ const fr = {
   about: {
     meta: {
       title: 'À propos — Meridian Architecture',
-      description: 'La conviction derrière Meridian Architecture : le meilleur cahier des charges est un prototype qui fonctionne.',
+      description: 'La conviction derrière Meridian Architecture : remettre l’humain au cœur du besoin et transformer les idées des équipes en outils déjà adoptés.',
     },
     hero: {
       eyebrow: 'À propos',
-      title: 'Concevoir en prototypant.',
-      lead: 'Meridian Architecture est né d’une conviction : le meilleur cahier des charges est un prototype qui fonctionne.',
+      title: 'L’humain au cœur, l’IA en soutien.',
+      lead: 'Meridian Architecture est né d’une conviction : le meilleur cahier des charges est un prototype qui fonctionne — construit avec celles et ceux qui l’utiliseront.',
     },
     story: {
       eyebrow: 'Pourquoi Meridian',
-      title: 'Le prototype change tout',
-      body: 'Pendant des années, tester une idée logicielle imposait des mois de spécifications et de développement — un luxe réservé aux grands groupes. L’IA rebat les cartes : on matérialise un prototype fonctionnel en quelques jours, on le confronte au réel, on l’affine jusqu’à une version de référence. Meridian Architecture est né pour saisir ce basculement — réunir product, design et développement dans une seule main, et transformer vos intuitions en outils éprouvés.',
+      title: 'Remettre l’humain au cœur du besoin',
+      body: 'Pendant des années, sortir un outil imposait des mois de spécifications, de développement et de conduite du changement — pour finir souvent subi par les équipes. L’IA rebat les cartes : on prototype les idées en quelques jours, on les fait tester et adapter en temps réel par celles et ceux qui s’en serviront. Meridian Architecture est né pour ça — partir de vos équipes, sous deux angles (vendre plus, produire mieux), et transformer leurs idées en outils déjà adoptés.',
     },
     values: {
       eyebrow: 'Ce qui nous guide',
       title: 'Nos repères',
       items: [
-        { title: 'Le prototype d’abord', text: 'On tranche sur un objet qui marche, jamais sur un document.' },
-        { title: 'Le métier avant l’outil', text: 'On part de votre réalité, votre vocabulaire, vos parcours — jamais d’un produit à caser.' },
-        { title: 'La durée', text: 'Un prototype éprouvé devient une version de référence qui évolue, pas un chantier à refaire.' },
+        { title: 'L’humain au centre', text: 'On construit avec vos équipes, jamais à leur place. L’outil leur ressemble, l’adoption est intégrée.' },
+        { title: 'Deux angles', text: 'On part du concret : quels outils pour booster le chiffre d’affaires, quels outils pour gagner en productivité.' },
+        { title: 'Zéro conduite du changement', text: 'Quand les équipes co-construisent, l’outil est adopté avant même la mise en production.' },
       ],
     },
     founderNote: 'Note : cette page sera personnalisée avec le parcours et la photo du fondateur.',
@@ -611,25 +611,25 @@ const en = {
   about: {
     meta: {
       title: 'About — Meridian Architecture',
-      description: 'The conviction behind Meridian Architecture: the best spec sheet is a prototype that works.',
+      description: 'The conviction behind Meridian Architecture: put people back at the heart of the need, and turn teams’ ideas into tools that are already adopted.',
     },
     hero: {
       eyebrow: 'About',
-      title: 'Designing by prototyping.',
-      lead: 'Meridian Architecture grew from one conviction: the best spec sheet is a prototype that works.',
+      title: 'People at the heart, AI in support.',
+      lead: 'Meridian Architecture grew from one conviction: the best spec sheet is a prototype that works — built with the very people who’ll use it.',
     },
     story: {
       eyebrow: 'Why Meridian',
-      title: 'The prototype changes everything',
-      body: 'For years, testing a software idea meant months of specs and development — a luxury reserved for large groups. AI reshuffles the deck: we materialise a working prototype in days, confront it with reality, and refine it to a reference version. Meridian Architecture was born to seize that shift — bringing product, design and development into a single pair of hands, and turning your hunches into proven tools.',
+      title: 'Putting people back at the heart of the need',
+      body: 'For years, shipping a tool meant months of specs, development and change management — only to end up endured by the teams. AI reshuffles the deck: we prototype ideas in days, then have them tested and adapted in real time by the very people who’ll use them. Meridian Architecture was born for this — start from your teams, under two angles (sell more, work better), and turn their ideas into tools that are already adopted.',
     },
     values: {
       eyebrow: 'What guides us',
       title: 'Our compass',
       items: [
-        { title: 'Prototype first', text: 'We settle decisions on an object that works, never on a document.' },
-        { title: 'Business before tool', text: 'We start from your reality, your vocabulary, your journeys — never a product to place.' },
-        { title: 'The long run', text: 'A proven prototype becomes a reference version that evolves, not a build to redo.' },
+        { title: 'People at the centre', text: 'We build with your teams, never in their place. The tool looks like them, adoption is built in.' },
+        { title: 'Two angles', text: 'We start from the concrete: which tools to boost revenue, which tools to gain productivity.' },
+        { title: 'Zero change management', text: 'When teams co-build, the tool is adopted before it even ships.' },
       ],
     },
     founderNote: 'Note: this page will be personalised with the founder’s background and photo.',
