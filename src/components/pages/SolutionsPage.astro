@@ -43,7 +43,7 @@ const modules = data.modules;
             <span class="flow__n mono">{s.n}</span>
             {i < c.method.steps.length - 1 && <span class="flow__line" aria-hidden="true"></span>}
           </div>
-          <div class="flow__content" class:list={[{ 'flow__content--last': s.n === '05' }]}>
+          <div class="flow__content" class:list={[{ 'flow__content--last': i === c.method.steps.length - 1 }]}>
             <h3 class="flow__step-title">{s.title}</h3>
             <p class="muted flow__text">{s.text}</p>
           </div>
