@@ -130,7 +130,7 @@ const replace = (file: string) => (isFr ? `À remplacer · public/images/${file}
       <div class="photoband__scrim"></div>
       <div class="container photoband__inner" data-reveal>
         <span class="photoband__eyebrow">{isFr ? 'Notre conviction' : 'Our conviction'}</span>
-        <p class="photoband__quote">{isFr ? 'On ne spécifie pas un outil. On le construit — et on le confronte au réel.' : 'We don’t spec a tool. We build it — and confront it with reality.'}</p>
+        <p class="photoband__quote">{isFr ? 'On ne spécifie pas un outil. On le prototype — avec celles et ceux qui l’utiliseront.' : 'We don’t spec a tool. We prototype it — with the people who’ll use it.'}</p>
         <span class="photoband__coord">40.71°N 74.00°W</span>
       </div>
     </div>
@@ -416,7 +416,7 @@ const replace = (file: string) => (isFr ? `À remplacer · public/images/${file}
 
   /* ---- ÉTAPES ---- */
   .steps { list-style: none; padding: 0; margin: var(--space-xl) 0 0; display: grid; gap: var(--space-l); }
-  @media (min-width: 48em) { .steps { grid-template-columns: repeat(5, 1fr); gap: var(--space-m); } }
+  @media (min-width: 48em) { .steps { grid-template-columns: repeat(3, 1fr); gap: var(--space-l) var(--space-m); } }
   .step { padding-top: var(--space-m); border-top: 1px solid var(--line-strong); display: flex; flex-direction: column; gap: var(--space-2xs); }
   .step__n { font-size: var(--step--1); color: var(--text-subtle); letter-spacing: var(--tracking-wide); }
   .step__title { font-size: var(--step-1); font-weight: 500; }
