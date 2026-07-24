@@ -1,0 +1,62 @@
+---
+import type { Locale } from '../i18n/routes';
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const isFr = locale === 'fr';
+const t = isFr
+  ? { text: 'Nous utilisons des cookies de mesure d’audience (Google Analytics) pour améliorer le site. Vous pouvez accepter ou refuser — le site fonctionne dans les deux cas.', accept: 'Accepter', refuse: 'Refuser' }
+  : { text: 'We use audience-measurement cookies (Google Analytics) to improve the site. You can accept or decline — the site works either way.', accept: 'Accept', refuse: 'Decline' };
+---
+<div class="consent" data-consent hidden>
+  <div class="container consent__inner">
+    <p class="consent__text">{t.text}</p>
+    <div class="consent__actions">
+      <button class="consent__btn consent__btn--ghost" type="button" data-consent-refuse>{t.refuse}</button>
+      <button class="consent__btn" type="button" data-consent-accept>{t.accept}</button>
+    </div>
+  </div>
+</div>
+
+<style>
+  .consent {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 80;
+    background: var(--ink); color: var(--plaster);
+    border-top: 1px solid color-mix(in srgb, var(--plaster) 16%, transparent);
+  }
+  .consent__inner { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-m); padding-block: var(--space-s); }
+  .consent__text { font-size: var(--step--1); line-height: 1.5; color: color-mix(in srgb, var(--plaster) 80%, transparent); flex: 1 1 22rem; }
+  .consent__actions { display: flex; gap: var(--space-s); flex: none; }
+  .consent__btn {
+    font-size: var(--step--1); padding: 0.55rem 1.1rem; border: 1px solid var(--plaster);
+    background: var(--plaster); color: var(--ink); cursor: pointer;
+    transition: background var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
+  }
+  .consent__btn:hover { background: transparent; color: var(--plaster); }
+  .consent__btn--ghost { background: transparent; color: var(--plaster); border-color: color-mix(in srgb, var(--plaster) 45%, transparent); }
+  .consent__btn--ghost:hover { border-color: var(--plaster); background: transparent; color: var(--plaster); }
+</style>
+
+<script>
+  const KEY = 'meridian-consent';
+  const el = document.querySelector('[data-consent]') as HTMLElement | null;
+  const g = (...args: any[]) => { (window as any).dataLayer = (window as any).dataLayer || []; (window as any).dataLayer.push(args); };
+  const grant = () => g('consent', 'update', { analytics_storage: 'granted' });
+
+  if (el) {
+    const choice = localStorage.getItem(KEY);
+    if (choice === 'granted') {
+      grant();
+    } else if (!choice) {
+      el.hidden = false;
+    }
+    el.querySelector('[data-consent-accept]')?.addEventListener('click', () => {
+      localStorage.setItem(KEY, 'granted');
+      grant();
+      el.hidden = true;
+    });
+    el.querySelector('[data-consent-refuse]')?.addEventListener('click', () => {
+      localStorage.setItem(KEY, 'denied');
+      el.hidden = true;
+    });
+  }
+</script>
