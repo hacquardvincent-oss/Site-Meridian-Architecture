@@ -1,0 +1,45 @@
+---
+import PageHero from '../PageHero.astro';
+import { pathFor, labelFor, type Locale } from '../../i18n/routes';
+import type { LegalDoc } from '../../i18n/legal';
+
+interface Props { locale: Locale; doc: LegalDoc; index: string; other: 'mentions' | 'confidentialite' }
+const { locale, doc, index, other } = Astro.props;
+const isFr = locale === 'fr';
+const seeAlso = isFr ? 'Voir aussi' : 'See also';
+---
+<PageHero eyebrow={doc.hero.eyebrow} title={doc.hero.title} lead={doc.hero.lead} index={index} graphic="plan" />
+
+<section class="section">
+  <div class="container legal">
+    <p class="legal__updated mono" data-reveal>{doc.updated}</p>
+
+    {doc.sections.map((s, i) => (
+      <article class="legal__block" data-reveal style={`--reveal-delay:${Math.min(i, 6) * 50}ms`}>
+        <h2 class="legal__h">{s.title}</h2>
+        {s.paras?.map((p) => <p class="legal__p">{p}</p>)}
+        {s.bullets && (
+          <ul class="legal__list">
+            {s.bullets.map((b) => <li>{b}</li>)}
+          </ul>
+        )}
+      </article>
+    ))}
+
+    <div class="legal__also" data-reveal>
+      <span class="eyebrow">{seeAlso}</span>
+      <a class="arrow-link" href={pathFor(other, locale)}>{labelFor(other, locale)} →</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .legal { max-width: 56rem; display: grid; gap: var(--space-xl); }
+  .legal__updated { font-size: var(--step--1); color: var(--text-subtle); }
+  .legal__block { display: grid; gap: var(--space-xs); }
+  .legal__h { font-size: var(--step-1); font-weight: 500; padding-top: var(--space-s); border-top: 1px solid var(--line); }
+  .legal__p { line-height: 1.7; color: var(--text-muted); max-width: 68ch; }
+  .legal__list { margin: 0; padding-left: 1.1rem; display: grid; gap: var(--space-2xs); }
+  .legal__list li { line-height: 1.7; color: var(--text-muted); max-width: 68ch; }
+  .legal__also { display: grid; gap: var(--space-2xs); padding-top: var(--space-m); border-top: 1px solid var(--line-strong); }
+</style>

@@ -24,6 +24,8 @@ export const routes: RouteDef[] = [
   { id: 'about', en: '/about/', fr: '/fr/a-propos/', labelEn: 'About', labelFr: 'À propos' },
   { id: 'contact', en: '/contact/', fr: '/fr/contact/', labelEn: 'Contact', labelFr: 'Contact' },
   { id: 'prototyper', en: '/prototyping-an-idea/', fr: '/fr/prototyper-une-idee/', labelEn: 'Prototype an idea', labelFr: 'Prototyper une idée', hidden: true },
+  { id: 'mentions', en: '/legal-notice/', fr: '/fr/mentions-legales/', labelEn: 'Legal notice', labelFr: 'Mentions légales', hidden: true },
+  { id: 'confidentialite', en: '/privacy/', fr: '/fr/confidentialite/', labelEn: 'Privacy', labelFr: 'Confidentialité', hidden: true },
 ];
 
 export function getLocaleFromUrl(url: URL): Locale {

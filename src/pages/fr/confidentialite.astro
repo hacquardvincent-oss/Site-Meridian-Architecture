@@ -1,0 +1,11 @@
+---
+import Base from '../../layouts/Base.astro';
+import LegalPage from '../../components/pages/LegalPage.astro';
+import { getPrivacy } from '../../i18n/legal';
+
+const locale = 'fr' as const;
+const doc = getPrivacy(locale);
+---
+<Base title={doc.meta.title} description={doc.meta.description} pageId="confidentialite" locale={locale}>
+  <LegalPage locale={locale} doc={doc} index="Légal" other="mentions" />
+</Base>

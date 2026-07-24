@@ -1,7 +1,7 @@
 ---
 import Logo from './Logo.astro';
 import Arrow from './Arrow.astro';
-import { navItems, pathFor, type Locale } from '../i18n/routes';
+import { navItems, pathFor, labelFor, type Locale } from '../i18n/routes';
 import { getContent } from '../i18n/content';
 
 interface Props { locale: Locale }
@@ -48,7 +48,10 @@ const year = new Date().getFullYear();
 
     <div class="site-footer__bottom">
       <p class="mono">© {year} {c.site.name}. {t.rights}</p>
-      <p class="mono site-footer__note">{t.builtNote}</p>
+      <ul class="mono site-footer__legal">
+        <li><a href={pathFor('mentions', locale)}>{labelFor('mentions', locale)}</a></li>
+        <li><a href={pathFor('confidentialite', locale)}>{labelFor('confidentialite', locale)}</a></li>
+      </ul>
       <a class="mono site-footer__top-link" href="#top">{t.backToTop} ↑</a>
     </div>
   </div>
@@ -72,8 +75,10 @@ const year = new Date().getFullYear();
 
   .site-footer__rule { margin-block: var(--space-xl); background: color-mix(in srgb, var(--plaster) 18%, transparent); }
   .site-footer__bottom { display: flex; flex-wrap: wrap; gap: var(--space-s) var(--space-l); align-items: center; justify-content: space-between; }
-  .site-footer__bottom p, .site-footer__top-link { font-size: var(--step--1); color: color-mix(in srgb, var(--plaster) 55%, transparent); }
-  .site-footer__note { flex: 1; text-align: center; }
+  .site-footer__bottom p, .site-footer__top-link, .site-footer__legal { font-size: var(--step--1); color: color-mix(in srgb, var(--plaster) 55%, transparent); }
+  .site-footer__legal { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: var(--space-s) var(--space-m); }
+  .site-footer__legal a { color: inherit; transition: color var(--dur-fast) var(--ease); }
+  .site-footer__legal a:hover { color: var(--brass); }
   .site-footer__top-link:hover { color: var(--brass); }
 
   @media (min-width: 48em) {

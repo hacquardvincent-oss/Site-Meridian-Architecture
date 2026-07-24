@@ -1,15 +1,16 @@
 ---
-import type { Locale } from '../i18n/routes';
+import { pathFor, type Locale } from '../i18n/routes';
 interface Props { locale: Locale }
 const { locale } = Astro.props;
 const isFr = locale === 'fr';
 const t = isFr
-  ? { text: 'Nous utilisons des cookies de mesure d’audience (Google Analytics) pour améliorer le site. Vous pouvez accepter ou refuser — le site fonctionne dans les deux cas.', accept: 'Accepter', refuse: 'Refuser' }
-  : { text: 'We use audience-measurement cookies (Google Analytics) to improve the site. You can accept or decline — the site works either way.', accept: 'Accept', refuse: 'Decline' };
+  ? { text: 'Nous utilisons des cookies de mesure d’audience (Google Analytics) pour améliorer le site. Vous pouvez accepter ou refuser — le site fonctionne dans les deux cas.', accept: 'Accepter', refuse: 'Refuser', more: 'En savoir plus' }
+  : { text: 'We use audience-measurement cookies (Google Analytics) to improve the site. You can accept or decline — the site works either way.', accept: 'Accept', refuse: 'Decline', more: 'Learn more' };
+const privacyHref = pathFor('confidentialite', locale);
 ---
 <div class="consent" data-consent hidden>
   <div class="container consent__inner">
-    <p class="consent__text">{t.text}</p>
+    <p class="consent__text">{t.text} <a class="consent__link" href={privacyHref}>{t.more}</a></p>
     <div class="consent__actions">
       <button class="consent__btn consent__btn--ghost" type="button" data-consent-refuse>{t.refuse}</button>
       <button class="consent__btn" type="button" data-consent-accept>{t.accept}</button>
@@ -25,6 +26,8 @@ const t = isFr
   }
   .consent__inner { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-m); padding-block: var(--space-s); }
   .consent__text { font-size: var(--step--1); line-height: 1.5; color: color-mix(in srgb, var(--plaster) 80%, transparent); flex: 1 1 22rem; }
+  .consent__link { color: var(--plaster); text-decoration: underline; text-underline-offset: 3px; white-space: nowrap; }
+  .consent__link:hover { color: var(--brass); }
   .consent__actions { display: flex; gap: var(--space-s); flex: none; }
   .consent__btn {
     font-size: var(--step--1); padding: 0.55rem 1.1rem; border: 1px solid var(--plaster);
