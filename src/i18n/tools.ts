@@ -169,6 +169,54 @@ const fr: Tool[] = [
       { q: 'Peut-on relier le CRM à mon site et à mes ventes ?', a: 'Oui — c’est même le but : une donnée client unique, partagée entre le site, les ventes et les relances.' },
     ],
   },
+  {
+    slug: 'pos',
+    need: 'Encaissement',
+    angle: 'Chiffre d’affaires',
+    name: 'POS — Point de vente',
+    short: 'Encaisser, en boutique comme en ligne.',
+    meta: {
+      title: 'POS (point de vente) : qu’est-ce que c’est, à quoi ça sert ? — Meridian',
+      description: 'Le POS (point de vente) encaisse et relie boutique et en ligne. Définition, utilité, fonctionnement — et comment prototyper une caisse sur-mesure, connectée à vos stocks et à votre CRM.',
+    },
+    lead: 'Encaisser simplement — en boutique comme en ligne — et relier chaque vente à vos stocks et à vos clients.',
+    whatIs: 'Le POS (Point of Sale, ou point de vente) est le système qui enregistre et encaisse vos ventes : caisse, paiements, tickets. Moderne, il relie la vente physique et en ligne, et met à jour stock et fichier client à chaque transaction.',
+    whatFor: 'À vendre vite et sans friction, et à ne plus séparer boutique et web : le même stock, les mêmes clients, la même donnée. Chaque encaissement nourrit votre pilotage.',
+    steps: [
+      'On cartographie votre parcours d’encaissement réel : boutique, web, mobile.',
+      'On prototype une caisse simple, rapide, adaptée à vos produits.',
+      'On la connecte à vos stocks, votre CRM et vos tableaux de bord.',
+    ],
+    withMeridian: 'On prototype un POS taillé à votre façon de vendre — connecté à votre stock et à votre CRM — plutôt qu’une caisse générique déconnectée du reste de vos outils.',
+    faq: [
+      { q: 'POS et e-commerce, est-ce la même chose ?', a: 'Non : l’e-commerce vend en ligne, le POS encaisse (souvent en boutique). Reliés, ils partagent stock et clients — c’est l’omnicanal.' },
+      { q: 'Un POS peut-il se connecter à mon stock et à mon CRM ?', a: 'Oui, et c’est tout l’intérêt : chaque vente met à jour le stock et enrichit la fiche client, sans ressaisie.' },
+    ],
+  },
+  {
+    slug: 'erp',
+    need: 'Opérations',
+    angle: 'Productivité',
+    name: 'ERP — Gestion intégrée',
+    short: 'Le cœur opérationnel, orchestré.',
+    meta: {
+      title: 'ERP : qu’est-ce que c’est, à quoi ça sert ? — Meridian',
+      description: 'L’ERP orchestre le cœur opérationnel de l’entreprise : ventes, achats, stocks, finance, production. Définition, utilité, fonctionnement — et comment le prototyper à vos process, par briques.',
+    },
+    lead: 'Le cœur opérationnel de votre entreprise — ventes, achats, stocks, finance — orchestré selon vos process réels.',
+    whatIs: 'L’ERP (Enterprise Resource Planning, ou progiciel de gestion intégré) réunit dans un même système les fonctions clés de l’entreprise : ventes, achats, stocks, finance, production. Une donnée saisie une fois circule partout.',
+    whatFor: 'À faire tenir tout le reste : l’ERP est l’ossature qui relie les opérations, supprime les doubles saisies et donne une vue unique de l’activité. Moins d’erreurs, plus de temps.',
+    steps: [
+      'On part de vos process réels, pas de ceux d’un éditeur.',
+      'On prototype d’abord les modules qui vous font le plus mal.',
+      'On les relie progressivement, sans big-bang risqué.',
+    ],
+    withMeridian: 'Les ERP du marché imposent leurs process et coûtent cher. On prototype le vôtre par briques utiles, adopté au fur et à mesure — sans le chantier de plusieurs années.',
+    faq: [
+      { q: 'ERP ou logiciels séparés ?', a: 'Des logiciels séparés créent des silos et des ressaisies. L’ERP réunit les opérations autour d’une donnée commune — mais on peut y arriver par briques, sans tout remplacer d’un coup.' },
+      { q: 'Un ERP est-il réservé aux grandes entreprises ?', a: 'Non. Le prototypage rend le sur-mesure accessible aux PME, sans le budget ni les délais d’un ERP traditionnel.' },
+    ],
+  },
 ];
 
 const en: Tool[] = [
@@ -314,6 +362,54 @@ const en: Tool[] = [
     faq: [
       { q: 'Is a CRM useful for a small business?', a: 'Yes: as soon as you track more customers than memory allows, a CRM prevents lost opportunities.' },
       { q: 'Can the CRM connect to my site and sales?', a: 'Yes — that’s the point: a single customer record, shared between the site, sales and follow-ups.' },
+    ],
+  },
+  {
+    slug: 'pos',
+    need: 'Checkout',
+    angle: 'Revenue',
+    name: 'POS — Point of sale',
+    short: 'Take payment, in store and online.',
+    meta: {
+      title: 'POS (point of sale): what it is, what it’s for — Meridian',
+      description: 'A POS (point of sale) takes payment and links store and online. Definition, purpose, how it works — and how to prototype a bespoke till connected to your stock and CRM.',
+    },
+    lead: 'Take payment simply — in store and online — and link every sale to your stock and your customers.',
+    whatIs: 'The POS (Point of Sale) is the system that records and takes payment for your sales: till, payments, receipts. Modern POS links physical and online sales, and updates stock and customer records on every transaction.',
+    whatFor: 'To sell fast and friction-free, and stop separating store and web: same stock, same customers, same data. Every payment feeds your steering.',
+    steps: [
+      'We map your real checkout journey: store, web, mobile.',
+      'We prototype a simple, fast till suited to your products.',
+      'We connect it to your stock, CRM and dashboards.',
+    ],
+    withMeridian: 'We prototype a POS cut to the way you sell — connected to your stock and CRM — rather than a generic till cut off from your other tools.',
+    faq: [
+      { q: 'Are POS and e-commerce the same thing?', a: 'No: e-commerce sells online, the POS takes payment (often in store). Linked, they share stock and customers — that’s omnichannel.' },
+      { q: 'Can a POS connect to my stock and CRM?', a: 'Yes, and that’s the point: each sale updates stock and enriches the customer record, with no re-keying.' },
+    ],
+  },
+  {
+    slug: 'erp',
+    need: 'Operations',
+    angle: 'Productivity',
+    name: 'ERP — Integrated operations',
+    short: 'The operational core, orchestrated.',
+    meta: {
+      title: 'ERP: what it is, what it’s for — Meridian',
+      description: 'An ERP orchestrates the operational core of the company: sales, purchasing, stock, finance, production. Definition, purpose, how it works — and how to prototype it to your processes, brick by brick.',
+    },
+    lead: 'The operational core of your company — sales, purchasing, stock, finance — orchestrated around your real processes.',
+    whatIs: 'An ERP (Enterprise Resource Planning) brings the company’s key functions into one system: sales, purchasing, stock, finance, production. Data entered once flows everywhere.',
+    whatFor: 'To hold everything together: the ERP is the frame that links operations, removes double entry and gives a single view of the business. Fewer errors, more time.',
+    steps: [
+      'We start from your real processes, not a vendor’s.',
+      'We prototype first the modules that hurt most.',
+      'We connect them progressively, with no risky big bang.',
+    ],
+    withMeridian: 'Market ERPs impose their processes and cost a lot. We prototype yours in useful bricks, adopted step by step — without the multi-year project.',
+    faq: [
+      { q: 'ERP or separate tools?', a: 'Separate tools create silos and re-keying. An ERP unites operations around shared data — but you can get there brick by brick, without replacing everything at once.' },
+      { q: 'Is an ERP only for large companies?', a: 'No. Prototyping makes bespoke accessible to SMEs, without the budget or timeline of a traditional ERP.' },
     ],
   },
 ];
