@@ -1,0 +1,11 @@
+---
+import Base from '../../../layouts/Base.astro';
+import ToolsIndexPage from '../../../components/pages/ToolsIndexPage.astro';
+
+const locale = 'fr' as const;
+const title = 'Outils sur-mesure : Data/BI, PLM, PIM, e-commerce, SEO/GEO, CRM — Meridian';
+const description = 'Les outils que nous prototypons à l’IA pour booster votre chiffre d’affaires et votre productivité : Data & BI, PLM, PIM, site & e-commerce, SEO/GEO, CRM & fidélisation.';
+---
+<Base title={title} description={description} pageId="outils" locale={locale}>
+  <ToolsIndexPage locale={locale} />
+</Base>

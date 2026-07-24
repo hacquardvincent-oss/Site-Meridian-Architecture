@@ -1,5 +1,6 @@
 ---
 import { getContent } from '../../i18n/content';
+import { getTools } from '../../i18n/tools';
 import { pathFor, withBase, type Locale } from '../../i18n/routes';
 import SectionHeading from '../SectionHeading.astro';
 import EcosystemDiagram from '../EcosystemDiagram.astro';
@@ -15,6 +16,8 @@ const { locale } = Astro.props;
 const c = getContent(locale);
 const h = c.home;
 const isFr = locale === 'fr';
+const tools = getTools(locale);
+const toolsBase = isFr ? '/fr/outils/' : '/tools/';
 const contactHref = pathFor('contact', locale);
 const conceptHref = pathFor('concept', locale);
 const solutionsHref = pathFor('solutions', locale);
@@ -66,18 +69,25 @@ const replace = (file: string) => (isFr ? `À remplacer · public/images/${file}
     </div>
   </section>
 
-  {/* ============ 02 · CHIFFRES — clair (blanc) ============ */}
+  {/* ============ 02 · OUTILS — clair (blanc) ============ */}
   <section class="panel panel--paper" style="--i:2">
     <div class="panel__card panel__card--pad">
       <div class="container">
-        <ul class="figures">
-          {h.figures.map((f, i) => (
-            <li class="figures__item" data-reveal style={`--reveal-delay:${i * 70}ms`}>
-              <span class="figures__value">{f.value}</span>
-              <span class="figures__label">{f.label}</span>
+        <span class="eyebrow" data-reveal>{isFr ? 'Les outils' : 'The tools'}</span>
+        <h2 class="toolhead" data-reveal style="--reveal-delay:80ms">{isFr ? 'Ce que nous prototypons.' : 'What we prototype.'}</h2>
+        <p class="toolhead__intro muted" data-reveal style="--reveal-delay:120ms">{isFr ? 'Les outils qui boostent votre chiffre d’affaires et ceux qui vous font gagner en productivité.' : 'The tools that boost your revenue and those that make you more productive.'}</p>
+        <ul class="toolgrid">
+          {tools.map((t, i) => (
+            <li class="toolcell" data-reveal style={`--reveal-delay:${i * 40}ms`}>
+              <a class="toolcell__link" href={withBase(`${toolsBase}${t.slug}/`)}>
+                <span class="toolcell__need mono">{t.need}</span>
+                <span class="toolcell__name">{t.name}</span>
+                <span class="toolcell__short muted">{t.short}</span>
+              </a>
             </li>
           ))}
         </ul>
+        <a class="arrow-link toolgrid__link" href={withBase(toolsBase)}>{isFr ? 'Voir tous les outils' : 'See all tools'} <Arrow class="arrow" size={15} /></a>
       </div>
     </div>
   </section>
@@ -365,6 +375,19 @@ const replace = (file: string) => (isFr ? `À remplacer · public/images/${file}
   .figures__label { font-size: var(--step--1); color: var(--text-subtle); }
   @media (min-width: 52em) { .figures { grid-template-columns: repeat(4, 1fr); } }
 
+  /* ---- OUTILS (grille) ---- */
+  .toolhead { margin-top: var(--space-s); }
+  .toolhead__intro { margin-top: var(--space-s); max-width: 52ch; }
+  .toolgrid { list-style: none; padding: 0; margin: var(--space-xl) 0 0; display: grid; gap: var(--space-s); }
+  @media (min-width: 44em) { .toolgrid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 64em) { .toolgrid { grid-template-columns: repeat(3, 1fr); } }
+  .toolcell__link { display: flex; flex-direction: column; gap: var(--space-3xs); height: 100%; padding: var(--space-m); border: 1px solid var(--line); transition: border-color var(--dur) var(--ease), transform var(--dur) var(--ease); }
+  .toolcell__link:hover { border-color: var(--line-strong); transform: translateY(-3px); }
+  .toolcell__need { font-size: var(--step--1); letter-spacing: var(--tracking-wide); text-transform: uppercase; color: var(--accent-deep); }
+  .toolcell__name { font-size: var(--step-1); font-weight: 500; color: var(--ink); margin-top: var(--space-2xs); }
+  .toolcell__short { font-size: var(--step--1); }
+  .toolgrid__link { margin-top: var(--space-l); }
+
   /* ---- CARTES ---- */
   .cards { list-style: none; padding: 0; margin: var(--space-xl) 0 0; display: grid; gap: var(--space-m); }
   @media (min-width: 40em) { .cards--3, .cards--4 { grid-template-columns: repeat(2, 1fr); } }
@@ -477,6 +500,11 @@ const replace = (file: string) => (isFr ? `À remplacer · public/images/${file}
     /* CHIFFRES : présence éditoriale plein écran */
     .figures { gap: var(--space-xl) var(--space-l); }
     .figures__value { font-size: var(--step-5); }
+
+    /* OUTILS : grille resserrée pour tenir dans 100vh */
+    .toolgrid { margin-top: var(--space-l); gap: var(--space-s); }
+    .toolcell__link { padding: var(--space-s) var(--space-m); }
+    .toolgrid__link { margin-top: var(--space-m); }
 
     /* CARTES (problème / pourquoi / cas d'usage) : padding resserré */
     .panel__card--pad .card { padding: var(--space-m); }

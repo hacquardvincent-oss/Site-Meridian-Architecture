@@ -1,0 +1,54 @@
+---
+import { getTools } from '../../i18n/tools';
+import { withBase, type Locale } from '../../i18n/routes';
+import PageHero from '../PageHero.astro';
+import CtaPanel from '../CtaPanel.astro';
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const isFr = locale === 'fr';
+const tools = getTools(locale);
+const toolsBase = isFr ? '/fr/outils/' : '/tools/';
+
+const hero = isFr
+  ? { eyebrow: 'Les outils', title: 'Ce que nous prototypons.', lead: 'Les outils qui boostent votre chiffre d’affaires et ceux qui vous font gagner en productivité — prototypés à l’IA, testés par vos équipes. Chacun a sa page : ce que c’est, à quoi ça sert, comment ça marche.' }
+  : { eyebrow: 'The tools', title: 'What we prototype.', lead: 'The tools that boost your revenue and those that make you more productive — prototyped with AI, tested by your teams. Each has its page: what it is, what it’s for, how it works.' };
+---
+<PageHero eyebrow={hero.eyebrow} title={hero.title} lead={hero.lead} index="Outils" graphic="iso" />
+
+<section class="section">
+  <div class="container">
+    <ul class="grid">
+      {tools.map((t, i) => (
+        <li class="cell" data-reveal style={`--reveal-delay:${i * 50}ms`}>
+          <a class="cell__link" href={withBase(`${toolsBase}${t.slug}/`)}>
+            <div class="cell__top">
+              <span class="cell__need mono">{t.need}</span>
+              <span class="cell__angle">{t.angle}</span>
+            </div>
+            <h2 class="cell__name">{t.name}</h2>
+            <p class="cell__short muted">{t.short}</p>
+            <span class="cell__cue" aria-hidden="true">→</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<CtaPanel locale={locale} />
+
+<style>
+  .grid { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--space-m); }
+  @media (min-width: 44em) { .grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 68em) { .grid { grid-template-columns: repeat(3, 1fr); } }
+  .cell__link { display: flex; flex-direction: column; gap: var(--space-2xs); height: 100%; padding: var(--space-l); border: 1px solid var(--line); position: relative; transition: border-color var(--dur) var(--ease), transform var(--dur) var(--ease); }
+  .cell__link:hover { border-color: var(--line-strong); transform: translateY(-3px); }
+  .cell__top { display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-s); margin-bottom: var(--space-xs); }
+  .cell__need { font-size: var(--step--1); letter-spacing: var(--tracking-wide); text-transform: uppercase; color: var(--accent-deep); }
+  .cell__angle { font-size: var(--step--1); color: var(--text-subtle); }
+  .cell__name { font-size: var(--step-2); font-weight: 400; letter-spacing: var(--tracking-tight); }
+  .cell__short { font-size: var(--step-0); margin-top: var(--space-2xs); }
+  .cell__cue { margin-top: var(--space-m); color: var(--text-subtle); transition: transform var(--dur) var(--ease), color var(--dur) var(--ease); }
+  .cell__link:hover .cell__cue { color: var(--accent-deep); transform: translateX(4px); }
+</style>

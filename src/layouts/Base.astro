@@ -13,13 +13,19 @@ interface Props {
   ogImage?: string;
   /** Si la page ouvre sur un hero plein écran : header transparent + texte adapté ('dark' = texte blanc, 'light' = encre). */
   heroTheme?: 'dark' | 'light';
+  /** Chemins explicites FR/EN pour les pages dynamiques (canonical, hreflang, switch de langue). */
+  altPaths?: { fr: string; en: string };
+  /** JSON-LD additionnel (ex. FAQPage) — injecté en plus du schéma Organization. */
+  jsonLd?: unknown;
 }
-const { title, description, pageId, locale, ogImage, heroTheme } = Astro.props;
+const { title, description, pageId, locale, ogImage, heroTheme, altPaths, jsonLd } = Astro.props;
 
 const c = getContent(locale);
-const canonical = new URL(pathFor(pageId, locale), Astro.site);
-const altFr = new URL(pathFor(pageId, 'fr'), Astro.site);
-const altEn = new URL(pathFor(pageId, 'en'), Astro.site);
+const otherLocale: Locale = locale === 'fr' ? 'en' : 'fr';
+const canonical = altPaths ? new URL(withBase(altPaths[locale]), Astro.site) : new URL(pathFor(pageId, locale), Astro.site);
+const altFr = altPaths ? new URL(withBase(altPaths.fr), Astro.site) : new URL(pathFor(pageId, 'fr'), Astro.site);
+const altEn = altPaths ? new URL(withBase(altPaths.en), Astro.site) : new URL(pathFor(pageId, 'en'), Astro.site);
+const switchHref = altPaths ? withBase(altPaths[otherLocale]) : undefined;
 const ogImagePath = ogImage ?? withBase('/brand/og.png');
 const ogUrl = new URL(ogImagePath, Astro.site);
 
@@ -90,6 +96,7 @@ const orgSchema = {
     <meta name="theme-color" content="#0e0e10" />
     {GOOGLE_SITE_VERIFICATION && <meta name="google-site-verification" content={GOOGLE_SITE_VERIFICATION} />}
     <script type="application/ld+json" is:inline set:html={JSON.stringify(orgSchema)} />
+    {jsonLd && <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />}
 
     <link rel="icon" href={withBase('/favicon.svg')} type="image/svg+xml" />
 
@@ -103,7 +110,7 @@ const orgSchema = {
   <body>
     <a id="top"></a>
     <a class="skip-link" href="#main">{c.common.skip}</a>
-    <Header locale={locale} pageId={pageId} heroTheme={heroTheme} />
+    <Header locale={locale} pageId={pageId} heroTheme={heroTheme} switchHref={switchHref} />
     <main id="main">
       <slot />
     </main>

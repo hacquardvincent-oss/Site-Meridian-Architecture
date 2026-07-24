@@ -1,0 +1,26 @@
+---
+import Base from '../../../layouts/Base.astro';
+import ToolPage from '../../../components/pages/ToolPage.astro';
+import { getTools } from '../../../i18n/tools';
+
+const locale = 'fr' as const;
+
+export function getStaticPaths() {
+  return getTools('fr').map((tool) => ({ params: { slug: tool.slug }, props: { tool } }));
+}
+
+const { tool } = Astro.props;
+const altPaths = { fr: `/fr/outils/${tool.slug}/`, en: `/tools/${tool.slug}/` };
+const faqLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: tool.faq.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+---
+<Base title={tool.meta.title} description={tool.meta.description} pageId="outils" locale={locale} altPaths={altPaths} jsonLd={faqLd}>
+  <ToolPage locale={locale} tool={tool} />
+</Base>

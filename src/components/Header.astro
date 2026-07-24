@@ -3,14 +3,14 @@ import Logo from './Logo.astro';
 import { navItems, pathFor, type Locale } from '../i18n/routes';
 import { getContent } from '../i18n/content';
 
-interface Props { locale: Locale; pageId: string; heroTheme?: 'dark' | 'light' }
-const { locale, pageId, heroTheme } = Astro.props;
+interface Props { locale: Locale; pageId: string; heroTheme?: 'dark' | 'light'; switchHref?: string }
+const { locale, pageId, heroTheme, switchHref: switchHrefOverride } = Astro.props;
 
 const t = getContent(locale).common;
 const items = navItems(locale);
 const homeHref = pathFor('home', locale);
 const otherLocale: Locale = locale === 'fr' ? 'en' : 'fr';
-const switchHref = pathFor(pageId, otherLocale);
+const switchHref = switchHrefOverride ?? pathFor(pageId, otherLocale);
 ---
 
 <header class="site-header" data-header data-transparent={heroTheme ? '' : undefined} data-hero-theme={heroTheme}>

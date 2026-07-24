@@ -1,0 +1,106 @@
+---
+import { getTools, type Tool } from '../../i18n/tools';
+import { pathFor, withBase, type Locale } from '../../i18n/routes';
+import PageHero from '../PageHero.astro';
+import CtaPanel from '../CtaPanel.astro';
+
+interface Props { locale: Locale; tool: Tool }
+const { locale, tool } = Astro.props;
+const isFr = locale === 'fr';
+
+const L = isFr
+  ? { what: 'Qu’est-ce que c’est ?', use: 'À quoi ça sert ?', how: 'Comment ça fonctionne ?', meridian: 'Avec Meridian', faq: 'Questions fréquentes', others: 'Autres outils', back: 'Tous les outils' }
+  : { what: 'What is it?', use: 'What is it for?', how: 'How it works', meridian: 'With Meridian', faq: 'Frequently asked questions', others: 'Other tools', back: 'All tools' };
+
+const toolsBase = isFr ? '/fr/outils/' : '/tools/';
+const others = getTools(locale).filter((t) => t.slug !== tool.slug);
+---
+<PageHero eyebrow={`${tool.need} · ${tool.angle}`} title={tool.name} lead={tool.lead} index="Outils" graphic="arc" />
+
+<section class="section">
+  <div class="container tool">
+    <div class="tool__block" data-reveal>
+      <h2 class="tool__h">{L.what}</h2>
+      <p class="tool__p">{tool.whatIs}</p>
+    </div>
+    <div class="tool__block" data-reveal>
+      <h2 class="tool__h">{L.use}</h2>
+      <p class="tool__p">{tool.whatFor}</p>
+    </div>
+    <div class="tool__block" data-reveal>
+      <h2 class="tool__h">{L.how}</h2>
+      <ol class="tool__steps">
+        {tool.steps.map((s, i) => (
+          <li class="tool__step"><span class="tool__step-n mono">{String(i + 1).padStart(2, '0')}</span>{s}</li>
+        ))}
+      </ol>
+    </div>
+    <div class="tool__meridian" data-reveal>
+      <span class="eyebrow">{L.meridian}</span>
+      <p class="lead">{tool.withMeridian}</p>
+    </div>
+  </div>
+</section>
+
+<section class="section section--alt">
+  <div class="container">
+    <span class="eyebrow" data-reveal>{L.faq}</span>
+    <h2 class="faq__title" data-reveal style="--reveal-delay:80ms">{tool.name}</h2>
+    <ul class="faq">
+      {tool.faq.map((f, i) => (
+        <li class="faq__item" data-reveal style={`--reveal-delay:${i * 70}ms`}>
+          <h3 class="faq__q">{f.q}</h3>
+          <p class="faq__a muted">{f.a}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="others__head" data-reveal>
+      <span class="eyebrow">{L.others}</span>
+      <a class="arrow-link" href={withBase(toolsBase)}>{L.back} →</a>
+    </div>
+    <ul class="others">
+      {others.map((t, i) => (
+        <li class="other" data-reveal style={`--reveal-delay:${i * 50}ms`}>
+          <a class="other__link" href={withBase(`${toolsBase}${t.slug}/`)}>
+            <span class="other__need mono">{t.need}</span>
+            <span class="other__name">{t.name}</span>
+            <span class="other__short muted">{t.short}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<CtaPanel locale={locale} />
+
+<style>
+  .tool { display: grid; gap: var(--space-2xl); max-width: 62rem; }
+  .tool__h { font-size: var(--step-2); margin-bottom: var(--space-s); }
+  .tool__p { font-size: var(--step-1); line-height: 1.6; color: var(--text-muted); max-width: 60ch; }
+  .tool__steps { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--space-m); }
+  .tool__step { display: flex; gap: var(--space-m); align-items: baseline; font-size: var(--step-1); color: var(--ink); max-width: 60ch; }
+  .tool__step-n { color: var(--text-subtle); font-size: var(--step--1); flex: none; }
+  .tool__meridian { border-left: 2px solid var(--brass); background: var(--brass-wash); padding: var(--space-l) var(--space-l); display: grid; gap: var(--space-s); }
+  .tool__meridian .lead { max-width: 58ch; }
+
+  .faq__title { margin-top: var(--space-s); margin-bottom: var(--space-xl); }
+  .faq { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--space-l); }
+  .faq__item { padding-top: var(--space-m); border-top: 1px solid var(--line-strong); max-width: 68ch; }
+  .faq__q { font-size: var(--step-1); font-weight: 500; margin-bottom: var(--space-2xs); }
+  .faq__a { line-height: 1.6; }
+
+  .others__head { display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-m); margin-bottom: var(--space-l); }
+  .others { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--space-s); }
+  @media (min-width: 48em) { .others { grid-template-columns: repeat(3, 1fr); gap: var(--space-m); } }
+  .other__link { display: flex; flex-direction: column; gap: var(--space-2xs); padding: var(--space-m); border: 1px solid var(--line); height: 100%; transition: border-color var(--dur) var(--ease), transform var(--dur) var(--ease); }
+  .other__link:hover { border-color: var(--line-strong); transform: translateY(-3px); }
+  .other__need { font-size: var(--step--1); letter-spacing: var(--tracking-wide); text-transform: uppercase; color: var(--accent-deep); }
+  .other__name { font-size: var(--step-1); font-weight: 500; color: var(--ink); }
+  .other__short { font-size: var(--step--1); }
+</style>

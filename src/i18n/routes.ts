@@ -17,6 +17,7 @@ export const routes: RouteDef[] = [
   { id: 'home', en: '/', fr: '/fr/', labelEn: 'Home', labelFr: 'Accueil' },
   { id: 'concept', en: '/concept/', fr: '/fr/concept/', labelEn: 'Concept', labelFr: 'Le concept' },
   { id: 'solutions', en: '/solutions/', fr: '/fr/solutions/', labelEn: 'The offer', labelFr: 'L’offre' },
+  { id: 'outils', en: '/tools/', fr: '/fr/outils/', labelEn: 'Tools', labelFr: 'Outils' },
   { id: 'methode', en: '/method/', fr: '/fr/methode/', labelEn: 'Method', labelFr: 'La méthode' },
   { id: 'about', en: '/about/', fr: '/fr/a-propos/', labelEn: 'About', labelFr: 'À propos' },
   { id: 'contact', en: '/contact/', fr: '/fr/contact/', labelEn: 'Contact', labelFr: 'Contact' },
