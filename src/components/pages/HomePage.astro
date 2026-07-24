@@ -22,6 +22,7 @@ const contactHref = pathFor('contact', locale);
 const conceptHref = pathFor('concept', locale);
 const solutionsHref = pathFor('solutions', locale);
 const methodeHref = pathFor('methode', locale);
+const pillarHref = pathFor('prototyper', locale);
 const aboutHref = pathFor('about', locale);
 const replace = (file: string) => (isFr ? `À remplacer · public/images/${file}` : `Replace · public/images/${file}`);
 ---
@@ -194,7 +195,10 @@ const replace = (file: string) => (isFr ? `À remplacer · public/images/${file}
             </li>
           ))}
         </ol>
-        <a class="arrow-link steps__link" href={methodeHref}>{isFr ? 'La méthode en détail' : 'The method in detail'} <Arrow class="arrow" size={15} /></a>
+        <div class="steps__links">
+          <a class="arrow-link" href={pillarHref}>{isFr ? 'Prototyper une idée' : 'Prototype an idea'} <Arrow class="arrow" size={15} /></a>
+          <a class="arrow-link" href={methodeHref}>{isFr ? 'La méthode en détail' : 'The method in detail'} <Arrow class="arrow" size={15} /></a>
+        </div>
       </div>
     </div>
   </section>
@@ -445,6 +449,7 @@ const replace = (file: string) => (isFr ? `À remplacer · public/images/${file}
   .step__title { font-size: var(--step-1); font-weight: 500; }
   .step__text { font-size: var(--step--1); }
   .steps__link { margin-top: var(--space-xl); }
+  .steps__links { display: flex; flex-wrap: wrap; gap: var(--space-l); margin-top: var(--space-xl); }
 
   /* ---- À PROPOS ---- */
   .about { display: grid; gap: var(--space-xl); }
@@ -522,6 +527,7 @@ const replace = (file: string) => (isFr ? `À remplacer · public/images/${file}
 
     /* MÉTHODE / lien : respiration réduite */
     .steps__link { margin-top: var(--space-l); }
+    .steps__links { margin-top: var(--space-l); }
 
     /* CTA : padding resserré */
     .panel--cta .cta { padding: clamp(2rem, 5vw, 3.5rem); }

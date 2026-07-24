@@ -1,0 +1,114 @@
+---
+import { getPillar } from '../../i18n/pillar';
+import { getTools } from '../../i18n/tools';
+import { withBase, type Locale } from '../../i18n/routes';
+import PageHero from '../PageHero.astro';
+import CtaPanel from '../CtaPanel.astro';
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const isFr = locale === 'fr';
+const c = getPillar(locale);
+const toolsBase = isFr ? '/fr/outils/' : '/tools/';
+const tools = getTools(locale);
+const toolsLabel = isFr ? 'Voir tous les outils' : 'See all tools';
+---
+<PageHero eyebrow={c.hero.eyebrow} title={c.hero.title} lead={c.hero.lead} index="Prototyper" graphic="fragments" />
+
+<section class="section">
+  <div class="container narrative">
+    <div class="narrative__block" data-reveal>
+      <h2 class="narrative__h">{c.problem.title}</h2>
+      <p class="narrative__p">{c.problem.body}</p>
+    </div>
+    <div class="narrative__block" data-reveal>
+      <h2 class="narrative__h">{c.what.title}</h2>
+      <p class="narrative__p">{c.what.body}</p>
+    </div>
+  </div>
+</section>
+
+<section class="section section--alt">
+  <div class="container">
+    <span class="eyebrow" data-reveal>{c.how.intro}</span>
+    <h2 class="how__title" data-reveal style="--reveal-delay:80ms">{c.how.title}</h2>
+    <ol class="steps">
+      {c.how.steps.map((s, i) => (
+        <li class="step" data-reveal style={`--reveal-delay:${i * 60}ms`}>
+          <span class="step__n mono">{s.n}</span>
+          <h3 class="step__title">{s.title}</h3>
+          <p class="muted step__text">{s.text}</p>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <span class="eyebrow" data-reveal>{c.angles.intro}</span>
+    <h2 class="angles__title" data-reveal style="--reveal-delay:80ms">{c.angles.title}</h2>
+    <div class="angles">
+      {c.angles.items.map((a, i) => (
+        <div class="angle" data-reveal style={`--reveal-delay:${i * 80}ms`}>
+          <h3 class="angle__tag">{a.tag}</h3>
+          <p class="angle__text muted">{a.text}</p>
+        </div>
+      ))}
+    </div>
+    <ul class="pill-tools" data-reveal>
+      {tools.map((t) => (
+        <li><a class="pill-tool" href={withBase(`${toolsBase}${t.slug}/`)}>{t.name}</a></li>
+      ))}
+    </ul>
+    <a class="arrow-link pill-tools__link" href={withBase(toolsBase)}>{toolsLabel} →</a>
+  </div>
+</section>
+
+<section class="section section--alt">
+  <div class="container">
+    <span class="eyebrow" data-reveal>{c.faqTitle}</span>
+    <h2 class="faq__title" data-reveal style="--reveal-delay:80ms">{c.hero.title}</h2>
+    <ul class="faq">
+      {c.faq.map((f, i) => (
+        <li class="faq__item" data-reveal style={`--reveal-delay:${i * 70}ms`}>
+          <h3 class="faq__q">{f.q}</h3>
+          <p class="faq__a muted">{f.a}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<CtaPanel locale={locale} />
+
+<style>
+  .narrative { display: grid; gap: var(--space-2xl); max-width: 60rem; }
+  .narrative__h { font-size: var(--step-2); margin-bottom: var(--space-s); }
+  .narrative__p { font-size: var(--step-1); line-height: 1.6; color: var(--text-muted); max-width: 60ch; }
+
+  .how__title { margin-top: var(--space-s); margin-bottom: var(--space-xl); }
+  .steps { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--space-l); }
+  @media (min-width: 48em) { .steps { grid-template-columns: repeat(4, 1fr); gap: var(--space-m); } }
+  .step { padding-top: var(--space-m); border-top: 1px solid var(--line-strong); display: flex; flex-direction: column; gap: var(--space-2xs); }
+  .step__n { font-size: var(--step--1); color: var(--text-subtle); letter-spacing: var(--tracking-wide); }
+  .step__title { font-size: var(--step-1); font-weight: 500; }
+  .step__text { font-size: var(--step--1); }
+
+  .angles__title { margin-top: var(--space-s); margin-bottom: var(--space-xl); }
+  .angles { display: grid; gap: var(--space-l); }
+  @media (min-width: 48em) { .angles { grid-template-columns: repeat(2, 1fr); gap: var(--space-xl); } }
+  .angle { padding-top: var(--space-m); border-top: 1px solid var(--line-strong); }
+  .angle__tag { font-size: var(--step-2); font-weight: 400; letter-spacing: var(--tracking-tight); }
+  .angle__text { margin-top: var(--space-xs); font-size: var(--step-0); }
+  .pill-tools { list-style: none; padding: 0; margin: var(--space-xl) 0 0; display: flex; flex-wrap: wrap; gap: var(--space-s); }
+  .pill-tool { display: inline-block; padding: var(--space-2xs) var(--space-s); border: 1px solid var(--line); font-size: var(--step--1); color: var(--text-muted); transition: border-color var(--dur) var(--ease), color var(--dur) var(--ease); }
+  .pill-tool:hover { border-color: var(--line-strong); color: var(--ink); }
+  .pill-tools__link { margin-top: var(--space-l); }
+
+  .faq__title { margin-top: var(--space-s); margin-bottom: var(--space-xl); font-size: var(--step-2); }
+  .faq { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--space-l); }
+  .faq__item { padding-top: var(--space-m); border-top: 1px solid var(--line-strong); max-width: 68ch; }
+  .faq__q { font-size: var(--step-1); font-weight: 500; margin-bottom: var(--space-2xs); }
+  .faq__a { line-height: 1.6; }
+</style>

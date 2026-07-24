@@ -1,0 +1,16 @@
+---
+import Base from '../layouts/Base.astro';
+import PrototyperPage from '../components/pages/PrototyperPage.astro';
+import { getPillar } from '../i18n/pillar';
+
+const locale = 'en' as const;
+const c = getPillar(locale);
+const faqLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: c.faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+};
+---
+<Base title={c.meta.title} description={c.meta.description} pageId="prototyper" locale={locale} jsonLd={faqLd}>
+  <PrototyperPage locale={locale} />
+</Base>

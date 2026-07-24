@@ -10,6 +10,8 @@ export interface RouteDef {
   en: string;
   labelFr: string;
   labelEn: string;
+  /** Masqué de la navigation (mais crawlable : canonical, hreflang, sitemap). */
+  hidden?: boolean;
 }
 
 /** Pages du site, dans l'ordre de la navigation. */
@@ -21,6 +23,7 @@ export const routes: RouteDef[] = [
   { id: 'methode', en: '/method/', fr: '/fr/methode/', labelEn: 'Method', labelFr: 'La méthode' },
   { id: 'about', en: '/about/', fr: '/fr/a-propos/', labelEn: 'About', labelFr: 'À propos' },
   { id: 'contact', en: '/contact/', fr: '/fr/contact/', labelEn: 'Contact', labelFr: 'Contact' },
+  { id: 'prototyper', en: '/prototyping-an-idea/', fr: '/fr/prototyper-une-idee/', labelEn: 'Prototype an idea', labelFr: 'Prototyper une idée', hidden: true },
 ];
 
 export function getLocaleFromUrl(url: URL): Locale {
@@ -56,6 +59,6 @@ export function labelFor(id: string, locale: Locale): string {
 
 export function navItems(locale: Locale) {
   return routes
-    .filter((r) => r.id !== 'home')
+    .filter((r) => r.id !== 'home' && !r.hidden)
     .map((r) => ({ href: withBase(locale === 'en' ? r.en : r.fr), label: locale === 'en' ? r.labelEn : r.labelFr, id: r.id }));
 }

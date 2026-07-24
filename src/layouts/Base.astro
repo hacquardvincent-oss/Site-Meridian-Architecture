@@ -36,6 +36,16 @@ const logoUrl = new URL(withBase('/brand/meridian-mark.png'), Astro.site).href;
 // (Sinon, vérification recommandée par enregistrement DNS TXT chez Gandi — couvre tout le domaine.)
 const GOOGLE_SITE_VERIFICATION = '';
 
+// Google Analytics 4 : colle l'ID de mesure (ex. 'G-XXXXXXXXXX') pour activer.
+// Laissé vide = aucun tag chargé. Consentement RGPD par défaut « refusé » (voir <head>).
+const GA4_MEASUREMENT_ID = '';
+
+// Profils publics — renforce la reconnaissance de l'entité par Google et les IA (GEO).
+const SAME_AS: string[] = [
+  // 'https://www.linkedin.com/company/VOTRE-PAGE',
+  // 'https://github.com/VOTRE-COMPTE',
+];
+
 // Désambiguïsation d'entité (SEO + GEO) : on déclare explicitement le secteur LOGICIEL,
 // pour ne pas être confondu avec un cabinet d'architecture du bâtiment.
 const orgSchema = {
@@ -61,7 +71,7 @@ const orgSchema = {
     'Intelligence artificielle',
   ],
   areaServed: 'FR',
-  // sameAs: ['https://www.linkedin.com/company/…'], // ← à compléter (LinkedIn, GitHub…)
+  ...(SAME_AS.length ? { sameAs: SAME_AS } : {}),
 };
 ---
 
@@ -95,6 +105,18 @@ const orgSchema = {
     <meta name="twitter:image" content={ogUrl} />
     <meta name="theme-color" content="#0e0e10" />
     {GOOGLE_SITE_VERIFICATION && <meta name="google-site-verification" content={GOOGLE_SITE_VERIFICATION} />}
+    {GA4_MEASUREMENT_ID && (
+      <Fragment>
+        <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${GA4_MEASUREMENT_ID}`}></script>
+        <script is:inline set:html={`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('consent', 'default', { ad_storage: 'denied', analytics_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied' });
+          gtag('js', new Date());
+          gtag('config', '${GA4_MEASUREMENT_ID}');
+        `} />
+      </Fragment>
+    )}
     <script type="application/ld+json" is:inline set:html={JSON.stringify(orgSchema)} />
     {jsonLd && <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />}
 

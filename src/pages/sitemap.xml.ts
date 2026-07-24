@@ -1,5 +1,6 @@
 import type { APIRoute } from 'astro';
-import { routes, pathFor } from '../i18n/routes';
+import { routes, pathFor, withBase } from '../i18n/routes';
+import { getTools } from '../i18n/tools';
 
 const FALLBACK = new URL('https://meridian-architecture.com');
 
@@ -7,12 +8,17 @@ export const GET: APIRoute = ({ site }) => {
   const base = site ?? FALLBACK;
   const abs = (path: string) => new URL(path, base).href;
 
-  const entries = routes
-    .flatMap((r) => {
-      const fr = abs(pathFor(r.id, 'fr'));
-      const en = abs(pathFor(r.id, 'en'));
-      return [fr, en].map((loc) => ({ loc, fr, en }));
-    })
+  // Pages statiques (issues des routes déclarées).
+  const routePairs = routes.map((r) => ({ fr: abs(pathFor(r.id, 'fr')), en: abs(pathFor(r.id, 'en')) }));
+
+  // Pages dynamiques : une page de contexte par outil (FR + EN).
+  const toolPairs = getTools('fr').map((t) => ({
+    fr: abs(withBase(`/fr/outils/${t.slug}/`)),
+    en: abs(withBase(`/tools/${t.slug}/`)),
+  }));
+
+  const entries = [...routePairs, ...toolPairs]
+    .flatMap(({ fr, en }) => [fr, en].map((loc) => ({ loc, fr, en })))
     .map(
       ({ loc, fr, en }) => `  <url>
     <loc>${loc}</loc>
