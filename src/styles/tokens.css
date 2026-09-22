@@ -5,6 +5,10 @@
    (Noms de variables conservés ; seules les valeurs changent.)
    ============================================================= */
 
+/* Hanken Grotesk est auto-hébergé : les @font-face sont émis dans <head>
+   (Base.astro) avec le préfixe de base, pour rester justes même servis
+   sous un sous-dossier. La police ne dépend plus d'aucun CDN tiers. */
+
 :root {
   /* ---- Blanc & noir (charte principale) ---- */
   --plaster: #ffffff;        /* fond principal — blanc */
