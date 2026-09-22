@@ -1,44 +1,26 @@
 ---
 import { getContent } from '../../i18n/content';
-import { getTools } from '../../i18n/tools';
 import { pathFor, withBase, type Locale } from '../../i18n/routes';
-import SectionHeading from '../SectionHeading.astro';
-import EcosystemDiagram from '../EcosystemDiagram.astro';
-import Figure from '../Figure.astro';
-import IsoStructure from '../graphics/IsoStructure.astro';
-import ModuleGlyph from '../graphics/ModuleGlyph.astro';
-import GeoComposition from '../graphics/GeoComposition.astro';
-import Picto from '../graphics/Picto.astro';
 import Arrow from '../Arrow.astro';
 
 interface Props { locale: Locale }
 const { locale } = Astro.props;
 const c = getContent(locale);
 const h = c.home;
-const isFr = locale === 'fr';
-const tools = getTools(locale);
-const toolsBase = isFr ? '/fr/outils/' : '/tools/';
 const contactHref = pathFor('contact', locale);
-const conceptHref = pathFor('concept', locale);
-const solutionsHref = pathFor('solutions', locale);
-const methodeHref = pathFor('methode', locale);
-const pillarHref = pathFor('prototyper', locale);
-const aboutHref = pathFor('about', locale);
-const replace = (file: string) => (isFr ? `À remplacer · public/images/${file}` : `Replace · public/images/${file}`);
+const realisationsHref = pathFor('outils', locale); // route « Outils » relabellisée « Réalisations »
 ---
 
 {/* =====================================================================
-    HOME — séquence de panneaux plein écran qui s'empilent au scroll
-    (« sticky stacking » façon ysl.com / Miu Miu).
-    · Empilement natif : chaque .panel est sticky top:0, min-height 100vh,
-      fond opaque → recouvre le précédent.
-    · Mouvement « beurré » : la carte interne se rétracte (scale) + s'assombrit
-      quand elle est recouverte, via CSS scroll-driven animations (view()).
-    · Replis : mobile (<60em) et prefers-reduced-motion = flux normal.
+    ACCUEIL — cinq temps (POSITIONNEMENT.md § 5) :
+    1 · la frontière · 2 · les trois marches · 3 · une preuve par marche
+    4 · la règle de la maison · 5 · une seule action.
+    Système visuel inchangé (panneaux empilés, hero photo, DA). Le style
+    ne change pas ; la structure et le discours, oui.
    ===================================================================== */}
 <div class="stack" data-stack>
 
-  {/* ============ 01 · HERO (image plein écran + géométrie) — sombre ============ */}
+  {/* ============ 01 · LA FRONTIÈRE — hero photo, sombre ============ */}
   <section class="panel panel--hero" style="--i:1" data-hero>
     <div class="panel__card hero">
       <div class="hero__media">
@@ -52,221 +34,93 @@ const replace = (file: string) => (isFr ? `À remplacer · public/images/${file}
       </div>
 
       <div class="container hero__inner">
-        <span class="eyebrow hero__eyebrow" data-reveal>{h.hero.eyebrow}</span>
-        <h1 class="hero__title" data-reveal style="--reveal-delay:80ms">{h.hero.titleA} {h.hero.titleB}</h1>
-        <p class="hero__subtitle" data-reveal style="--reveal-delay:160ms">{h.hero.subtitle}</p>
-        <div class="hero__actions" data-reveal style="--reveal-delay:240ms">
-          <a class="btn hero__btn" href={contactHref}>{c.common.ctaPrimary} <Arrow class="arrow" /></a>
-          <a class="arrow-link hero__link" href={conceptHref}>{c.common.ctaSecondary} <Arrow class="arrow" size={15} /></a>
-        </div>
+        <span class="eyebrow hero__eyebrow" data-reveal>{h.frontiere.eyebrow}</span>
+        <h1 class="frontier" data-reveal style="--reveal-delay:80ms">
+          <span class="frontier__a">{h.frontiere.lineA}</span>
+          <span class="frontier__b">{h.frontiere.lineB}</span>
+        </h1>
       </div>
 
       <div class="hero__foot">
         <div class="container hero__foot-row">
           <span class="hero__coord">40.71°N 74.00°W</span>
-          <span class="hero__cue">{isFr ? 'Défiler' : 'Scroll'} ↓</span>
+          <span class="hero__cue">{h.frontiere.cue} ↓</span>
         </div>
       </div>
     </div>
   </section>
 
-  {/* ============ 02 · OUTILS — clair (blanc) ============ */}
+  {/* ============ 02 · LES TROIS MARCHES — clair ============ */}
   <section class="panel panel--paper" style="--i:2">
     <div class="panel__card panel__card--pad">
       <div class="container">
-        <span class="eyebrow" data-reveal>{isFr ? 'Les outils' : 'The tools'}</span>
-        <h2 class="toolhead" data-reveal style="--reveal-delay:80ms">{isFr ? 'Ce que nous prototypons.' : 'What we prototype.'}</h2>
-        <p class="toolhead__intro muted" data-reveal style="--reveal-delay:120ms">{isFr ? 'Les outils qui boostent votre chiffre d’affaires et ceux qui vous font gagner en productivité.' : 'The tools that boost your revenue and those that make you more productive.'}</p>
-        <ul class="toolgrid">
-          {tools.map((t, i) => (
-            <li class="toolcell" data-reveal style={`--reveal-delay:${i * 40}ms`}>
-              <a class="toolcell__link" href={withBase(`${toolsBase}${t.slug}/`)}>
-                <span class="toolcell__need mono">{t.need}</span>
-                <span class="toolcell__name">{t.name}</span>
-                <span class="toolcell__short muted">{t.short}</span>
-              </a>
+        <span class="eyebrow" data-reveal>{h.marches.eyebrow}</span>
+        <h2 class="secttl" data-reveal style="--reveal-delay:80ms">{h.marches.title}</h2>
+        <p class="sectintro muted" data-reveal style="--reveal-delay:120ms">{h.marches.intro}</p>
+        <ol class="marches">
+          {h.marches.items.map((m, i) => (
+            <li class="marche" style={`--step:${i}; --reveal-delay:${i * 90}ms`} data-reveal>
+              <div class="marche__head">
+                <span class="marche__n mono">{m.n}</span>
+                <h3 class="marche__name">{m.name}</h3>
+              </div>
+              <dl class="marche__grid">
+                <div class="marche__cell"><dt>{h.marches.col.automatise}</dt><dd>{m.automatise}</dd></div>
+                <div class="marche__cell"><dt>{h.marches.col.decide}</dt><dd>{m.decide}</dd></div>
+                <div class="marche__cell"><dt>{h.marches.col.ampleur}</dt><dd>{m.ampleur}</dd></div>
+              </dl>
             </li>
           ))}
-        </ul>
-        <a class="arrow-link toolgrid__link" href={withBase(toolsBase)}>{isFr ? 'Voir tous les outils' : 'See all tools'} <Arrow class="arrow" size={15} /></a>
+        </ol>
       </div>
     </div>
   </section>
 
-  {/* ============ 03 · PROBLÈME — clair (alt) ============ */}
+  {/* ============ 03 · UNE PREUVE PAR MARCHE — clair (alt) ============ */}
   <section class="panel panel--alt" style="--i:3">
     <div class="panel__card panel__card--pad">
       <div class="container">
-        <SectionHeading num="01" eyebrow={h.problem.eyebrow} title={h.problem.title} intro={h.problem.intro} />
-        <ul class="cards cards--4">
-          {h.problem.items.map((item, i) => (
-            <li class="card" data-reveal style={`--reveal-delay:${i * 70}ms`}>
-              <Picto variant={i} class="card__picto" />
-              <span class="card__index">{String(i + 1).padStart(2, '0')}</span>
-              <h3 class="card__title">{item.title}</h3>
-              <p class="muted">{item.text}</p>
+        <span class="eyebrow" data-reveal>{h.preuves.eyebrow}</span>
+        <h2 class="secttl" data-reveal style="--reveal-delay:80ms">{h.preuves.title}</h2>
+        <p class="sectintro muted" data-reveal style="--reveal-delay:120ms">{h.preuves.intro}</p>
+        <ul class="proofs">
+          {h.preuves.items.map((p, i) => (
+            <li class="proof" data-reveal style={`--reveal-delay:${i * 80}ms`}>
+              <span class="proof__marche mono">{p.marche}</span>
+              <span class:list={['proof__value', { 'proof__value--pending': p.pending }]}>{p.value}</span>
+              <p class="proof__label muted">{p.label}</p>
+              <span class="proof__source">{p.source}</span>
             </li>
           ))}
         </ul>
+        <a class="arrow-link proofs__link" href={realisationsHref}>{h.preuves.link} <Arrow class="arrow" size={15} /></a>
       </div>
     </div>
   </section>
 
-  {/* ============ 04 · VISION — clair (blanc) ============ */}
-  <section class="panel panel--paper" style="--i:4">
-    <div class="panel__card panel__card--pad">
-      <div class="container vision">
-        <div class="vision__media" data-reveal>
-          <IsoStructure />
-        </div>
-        <div class="vision__text" data-reveal style="--reveal-delay:120ms">
-          <span class="eyebrow">{h.vision.eyebrow}</span>
-          <h2 class="vision__title">{h.vision.title}</h2>
-          <p class="lead">{h.vision.lead}</p>
-          <p class="vision__body muted">{h.vision.body}</p>
-          <ul class="ticks">
-            {h.vision.points.map((p) => (
-              <li class="tick"><span class="tick__mark" aria-hidden="true"></span>{p}</li>
-            ))}
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  {/* ============ 05 · BANDEAU PHOTO (manifeste) — sombre ============ */}
-  <section class="panel panel--band" style="--i:5" aria-label="Manifeste">
+  {/* ============ 04 · LA RÈGLE DE LA MAISON — bandeau photo, sombre ============ */}
+  <section class="panel panel--band" style="--i:4" aria-label={h.regle.eyebrow}>
     <div class="panel__card photoband">
       <img class="photoband__img" src={withBase('/images/band.jpg')} alt="" loading="lazy" />
       <div class="photoband__scrim"></div>
-      <div class="container photoband__inner" data-reveal>
-        <span class="photoband__eyebrow">{isFr ? 'Notre conviction' : 'Our conviction'}</span>
-        <p class="photoband__quote">{isFr ? 'On ne spécifie pas un outil. On le prototype — avec celles et ceux qui l’utiliseront.' : 'We don’t spec a tool. We prototype it — with the people who’ll use it.'}</p>
-        <span class="photoband__coord">40.71°N 74.00°W</span>
+      <div class="container photoband__inner regle" data-reveal>
+        <span class="photoband__eyebrow">{h.regle.eyebrow}</span>
+        <p class="regle__quote">{h.regle.quoteA} <span class="regle__quote-b">{h.regle.quoteB}</span></p>
+        <p class="regle__body">{h.regle.body}</p>
       </div>
     </div>
   </section>
 
-  {/* ============ 06 · SOLUTIONS (index singulier) — clair (alt) ============ */}
-  <section class="panel panel--alt" style="--i:6">
-    <div class="panel__card panel__card--pad">
-      <div class="container">
-        <SectionHeading num="02" eyebrow={h.pillars.eyebrow} title={h.pillars.title} intro={h.pillars.intro} />
-        <ol class="index">
-          {c.modules.map((m, i) => (
-            <li class="index__row" data-reveal style={`--reveal-delay:${i * 50}ms`}>
-              <div class="index__head">
-                <span class="index__no">{String(i + 1).padStart(2, '0')}</span>
-                <ModuleGlyph abbr={m.abbr} class="index__glyph" />
-                <h3 class="index__name">{m.name}</h3>
-              </div>
-              <p class="index__text muted">{m.text}</p>
-            </li>
-          ))}
-        </ol>
-        <a class="arrow-link index__link" href={solutionsHref}>{c.common.ctaSecondary} <Arrow class="arrow" size={15} /></a>
-      </div>
-    </div>
-  </section>
-
-  {/* ============ 07 · ÉCOSYSTÈME — clair (blanc) ============ */}
-  <section class="panel panel--paper" style="--i:7">
-    <div class="panel__card panel__card--pad">
-      <div class="container">
-        <SectionHeading num="03" eyebrow={h.ecosystem.eyebrow} title={h.ecosystem.title} intro={h.ecosystem.caption} align="center" />
-        <div class="eco-wrap" data-reveal>
-          <EcosystemDiagram modules={c.modules} centerLabel={isFr ? 'Socle' : 'Core'} centerSub={isFr ? 'données + IA' : 'data + AI'} />
-        </div>
-      </div>
-    </div>
-  </section>
-
-  {/* ============ 08 · MÉTHODE — sombre (encre + texte blanc) ============ */}
-  <section class="panel panel--ink" style="--i:8">
-    <div class="panel__card panel__card--pad">
-      <div class="container">
-        <SectionHeading num="04" eyebrow={h.method.eyebrow} title={h.method.title} intro={h.method.intro} />
-        <ol class="steps">
-          {h.method.steps.map((s, i) => (
-            <li class="step" data-reveal style={`--reveal-delay:${i * 60}ms`}>
-              <span class="step__n">{s.n}</span>
-              <h3 class="step__title">{s.title}</h3>
-              <p class="muted step__text">{s.text}</p>
-            </li>
-          ))}
-        </ol>
-        <div class="steps__links">
-          <a class="arrow-link" href={pillarHref}>{isFr ? 'Prototyper une idée' : 'Prototype an idea'} <Arrow class="arrow" size={15} /></a>
-          <a class="arrow-link" href={methodeHref}>{isFr ? 'La méthode en détail' : 'The method in detail'} <Arrow class="arrow" size={15} /></a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  {/* ============ 09 · POURQUOI — clair (blanc) ============ */}
-  <section class="panel panel--paper" style="--i:9">
-    <div class="panel__card panel__card--pad">
-      <div class="container">
-        <SectionHeading num="05" eyebrow={h.why.eyebrow} title={h.why.title} />
-        <ul class="cards cards--3">
-          {h.why.items.map((item, i) => (
-            <li class="card" data-reveal style={`--reveal-delay:${i * 70}ms`}>
-              <Picto variant={i + 2} class="card__picto" />
-              <h3 class="card__title">{item.title}</h3>
-              <p class="muted">{item.text}</p>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  {/* ============ 10 · CAS D'USAGE — clair (alt) ============ */}
-  <section class="panel panel--alt" style="--i:10">
-    <div class="panel__card panel__card--pad">
-      <div class="container">
-        <SectionHeading num="06" eyebrow={h.useCases.eyebrow} title={h.useCases.title} />
-        <ul class="cards cards--3">
-          {h.useCases.items.map((item, i) => (
-            <li class="card card--use" data-reveal style={`--reveal-delay:${i * 70}ms`}>
-              <Picto variant={i + 4} class="card__picto" />
-              <span class="use__tag">{item.tag}</span>
-              <h3 class="card__title">{item.title}</h3>
-              <p class="muted">{item.text}</p>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  {/* ============ 11 · À PROPOS — clair (blanc) ============ */}
-  <section class="panel panel--paper" style="--i:11">
-    <div class="panel__card panel__card--pad">
-      <div class="container about">
-        <div class="about__text" data-reveal>
-          <span class="eyebrow">{h.about.eyebrow}</span>
-          <h2 class="about__title">{h.about.title}</h2>
-          <p class="lead">{h.about.text}</p>
-          <a class="arrow-link" href={aboutHref}>{h.about.cta} <Arrow class="arrow" size={15} /></a>
-        </div>
-        <div class="about__media" data-reveal style="--reveal-delay:120ms">
-          <GeoComposition variant="arc" />
-        </div>
-      </div>
-    </div>
-  </section>
-
-  {/* ============ 12 · CTA FINAL — sombre ============ */}
-  <section class="panel panel--cta" style="--i:12">
+  {/* ============ 05 · UNE SEULE ACTION — sombre ============ */}
+  <section class="panel panel--cta" style="--i:5">
     <div class="panel__card panel__card--pad">
       <div class="container">
         <div class="cta" data-reveal>
-          <span class="eyebrow eyebrow--plain cta__eyebrow">{h.finalCta.eyebrow}</span>
-          <h2 class="cta__title">{h.finalCta.title}</h2>
-          <p class="cta__text measure">{h.finalCta.text}</p>
-          <a class="btn cta__btn" href={contactHref}>{h.finalCta.button} <Arrow class="arrow" /></a>
-          <p class="cta__micro">{h.finalCta.micro}</p>
+          <span class="eyebrow eyebrow--plain cta__eyebrow">{h.action.eyebrow}</span>
+          <h2 class="cta__title">{h.action.title}</h2>
+          <p class="cta__text measure">{h.action.text}</p>
+          <a class="btn cta__btn" href={contactHref}>{h.action.button} <Arrow class="arrow" /></a>
+          <p class="cta__micro">{h.action.micro}</p>
         </div>
       </div>
     </div>
@@ -276,192 +130,88 @@ const replace = (file: string) => (isFr ? `À remplacer · public/images/${file}
 
 <style>
   /* =====================================================================
-     SYSTÈME DE PANNEAUX EMPILÉS
+     SYSTÈME DE PANNEAUX EMPILÉS (repris tel quel de la charte)
      Par défaut (mobile < 60em et prefers-reduced-motion) : FLUX NORMAL.
-     L'empilement sticky + le mouvement « beurré » ne s'activent qu'en
-     desktop, hors reduced-motion, et le recede uniquement si le
-     navigateur supporte les scroll-driven animations.
      ===================================================================== */
-
-  /* Propriété animable pour l'assombrissement du panneau recouvert */
-  @property --dim {
-    syntax: '<number>';
-    inherits: true;
-    initial-value: 0;
-  }
+  @property --dim { syntax: '<number>'; inherits: true; initial-value: 0; }
 
   .stack { position: relative; }
-
   .panel { position: relative; }
-
   .panel__card { position: relative; --dim: 0; }
-
-  /* Voile d'assombrissement — ne s'affiche que lorsque --dim monte (recede) */
   .panel__card::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: 5;
-    background: #08080a;
-    opacity: var(--dim, 0);
-    pointer-events: none;
+    content: ''; position: absolute; inset: 0; z-index: 5;
+    background: #08080a; opacity: var(--dim, 0); pointer-events: none;
   }
 
-  /* ---- Fonds opaques par tonalité (indispensable pour recouvrir) ---- */
   .panel--paper > .panel__card { background: var(--plaster); }
   .panel--alt > .panel__card { background: var(--plaster-deep); }
   .panel--cta > .panel__card { background: var(--ink); color: var(--plaster); }
-  /* hero & band : fond porté par .hero / .photoband (image + encre) */
-
-  /* ---- Panneau éditorial SOMBRE (encre + texte blanc), pour la cadence maison ---- */
-  .panel--ink > .panel__card { background: var(--ink); color: var(--plaster); }
-  .panel--ink :global(.sh__title) { color: var(--plaster); }
-  .panel--ink :global(.sh__num) { color: color-mix(in srgb, var(--plaster) 22%, transparent); }
-  .panel--ink :global(.eyebrow) { color: color-mix(in srgb, var(--plaster) 66%, transparent); }
-  .panel--ink :global(.eyebrow)::before { background: color-mix(in srgb, var(--plaster) 42%, transparent); }
-  .panel--ink :global(.sh__intro) { color: color-mix(in srgb, var(--plaster) 78%, transparent); }
-  .panel--ink h3 { color: var(--plaster); }
-  .panel--ink .muted { color: color-mix(in srgb, var(--plaster) 74%, transparent); }
-  .panel--ink .step { border-top-color: color-mix(in srgb, var(--plaster) 24%, transparent); }
-  .panel--ink .step__n { color: color-mix(in srgb, var(--plaster) 55%, transparent); }
-  .panel--ink .arrow-link { color: var(--plaster); border-bottom-color: color-mix(in srgb, var(--plaster) 35%, transparent); }
-  .panel--ink .arrow-link:hover { border-bottom-color: var(--plaster); }
-
-  /* ---- Contenu des panneaux « éditoriaux » (flux normal par défaut) ---- */
   .panel__card--pad { padding-block: var(--space-2xl); }
 
-  /* =====================================================================
-     COMPOSANTS DE SECTION (repris de la charte, inchangés sur le fond)
-     ===================================================================== */
-
-  /* ---- HERO (image plein écran + géométrie) ---- */
+  /* ---- HERO (image plein écran) ---- */
   .hero { position: relative; min-height: 100vh; min-height: 100svh; display: grid; background: var(--ink); color: #fff; overflow: hidden; }
   .hero__media { position: absolute; inset: 0; z-index: 0; }
   .hero__img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .hero__scrim { position: absolute; inset: 0; background:
-    linear-gradient(90deg, rgba(12,12,15,0.80) 0%, rgba(12,12,15,0.44) 42%, rgba(12,12,15,0.06) 72%, rgba(12,12,15,0.30) 100%),
-    linear-gradient(180deg, rgba(12,12,15,0.22) 0%, rgba(12,12,15,0.05) 45%, rgba(12,12,15,0.60) 100%); }
+    linear-gradient(90deg, rgba(12,12,15,0.82) 0%, rgba(12,12,15,0.5) 44%, rgba(12,12,15,0.12) 74%, rgba(12,12,15,0.34) 100%),
+    linear-gradient(180deg, rgba(12,12,15,0.28) 0%, rgba(12,12,15,0.08) 45%, rgba(12,12,15,0.62) 100%); }
   .hero__geo { position: absolute; inset: 0; width: 100%; height: 100%; }
-  .hero__geo-line { stroke-dasharray: 660; stroke-dashoffset: 660; animation: hdraw 2s var(--ease) 0.3s forwards; }
-  .hero__geo-rot { transform-box: fill-box; transform-origin: center; animation: hrot 90s linear infinite; }
-  @keyframes hdraw { to { stroke-dashoffset: 0; } }
-  @keyframes hrot { to { transform: rotate(360deg); } }
-  @media (prefers-reduced-motion: reduce) { .hero__geo-line { stroke-dashoffset: 0; animation: none; } .hero__geo-rot { animation: none; } }
 
   .hero__inner { position: relative; z-index: 2; align-self: center; width: 100%; padding-block: var(--space-2xl); }
-  .hero .eyebrow { color: rgba(255,255,255,0.72); margin-bottom: var(--space-m); }
+  .hero .eyebrow { color: rgba(255,255,255,0.72); margin-bottom: var(--space-l); }
   .hero .eyebrow::before { background: rgba(255,255,255,0.45); }
-  .hero__title { color: #fff; font-size: var(--step-6); font-weight: 400; line-height: 1.0; letter-spacing: var(--tracking-tight); max-width: 16ch; }
-  .hero__subtitle { color: rgba(255,255,255,0.86); font-size: var(--step-1); line-height: 1.5; max-width: 46ch; margin-top: var(--space-l); }
-  .hero__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-m); margin-top: var(--space-xl); }
-  .hero__btn { background: #fff; color: var(--ink); border-color: #fff; }
-  .hero__btn:hover { background: transparent; color: #fff; }
-  .hero__link { color: #fff; border-bottom-color: rgba(255,255,255,0.4); }
-  .hero__link:hover { border-bottom-color: #fff; }
+
+  /* ---- LA FRONTIÈRE (la phrase, et rien d'autre) ---- */
+  .frontier { display: flex; flex-direction: column; gap: var(--space-m); max-width: 20ch; font-weight: 400; letter-spacing: var(--tracking-tight); }
+  .frontier__a { color: rgba(255,255,255,0.62); font-size: var(--step-3); line-height: 1.12; }
+  .frontier__b { color: #fff; font-size: var(--step-5); line-height: 1.04; max-width: 18ch; }
 
   .hero__foot { position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; padding-bottom: var(--space-l); }
   .hero__foot-row { display: flex; justify-content: space-between; align-items: center; font-size: var(--step--1); letter-spacing: var(--tracking-wide); color: rgba(255,255,255,0.6); }
   .hero__coord { color: var(--accent); }
 
-  /* ---- BANDEAU PHOTO (manifeste) ---- */
+  /* ---- Titres de section génériques ---- */
+  .secttl { margin-top: var(--space-s); }
+  .sectintro { margin-top: var(--space-m); max-width: 60ch; }
+
+  /* ---- LES TROIS MARCHES (l'escalier) ---- */
+  .marches { list-style: none; padding: 0; margin: var(--space-2xl) 0 0; display: grid; gap: var(--space-l); }
+  .marche { padding-top: var(--space-m); border-top: 1px solid var(--line-strong); }
+  .marche__head { display: flex; align-items: baseline; gap: var(--space-m); }
+  .marche__n { font-size: var(--step--1); color: var(--ink); letter-spacing: var(--tracking-wide); }
+  .marche__name { font-size: var(--step-3); font-weight: 400; letter-spacing: var(--tracking-tight); }
+  .marche__grid { display: grid; gap: var(--space-m) var(--space-l); margin: var(--space-m) 0 0; }
+  .marche__cell dt { font-size: var(--step--1); letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--text-subtle); }
+  .marche__cell dd { margin: var(--space-3xs) 0 0; font-size: var(--step-0); color: var(--text); }
+  @media (min-width: 52em) {
+    .marche__grid { grid-template-columns: 1.3fr 1fr 0.8fr; align-items: start; }
+    /* l'escalier : chaque marche s'avance un peu plus */
+    .marche { margin-left: calc(var(--step, 0) * clamp(0rem, 4vw, 3.5rem)); }
+  }
+
+  /* ---- LES PREUVES ---- */
+  .proofs { list-style: none; padding: 0; margin: var(--space-2xl) 0 0; display: grid; gap: var(--space-l); }
+  @media (min-width: 56em) { .proofs { grid-template-columns: repeat(3, 1fr); gap: var(--space-l); } }
+  .proof { display: flex; flex-direction: column; gap: var(--space-2xs); padding-top: var(--space-m); border-top: 1px solid var(--line-strong); }
+  .proof__marche { font-size: var(--step--1); letter-spacing: var(--tracking-wide); text-transform: uppercase; color: var(--text-subtle); }
+  .proof__value { font-family: var(--font-display); font-weight: 300; font-size: var(--step-5); line-height: 1; letter-spacing: var(--tracking-tight); color: var(--ink); margin-top: var(--space-2xs); }
+  .proof__value--pending { font-size: var(--step-1); font-weight: 500; color: var(--text-subtle); font-family: var(--font-sans); letter-spacing: var(--tracking-label); text-transform: uppercase; }
+  .proof__label { margin-top: var(--space-2xs); font-size: var(--step--1); max-width: 40ch; }
+  .proof__source { margin-top: auto; padding-top: var(--space-s); font-size: var(--step--1); color: var(--text); letter-spacing: var(--tracking-wide); }
+  .proofs__link { margin-top: var(--space-xl); }
+
+  /* ---- BANDEAU PHOTO / LA RÈGLE ---- */
   .photoband { position: relative; min-height: 100vh; display: grid; place-items: center; overflow: hidden; background: var(--ink); color: #fff; }
   .photoband__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-  .photoband__scrim { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(12,12,15,0.52) 0%, rgba(12,12,15,0.34) 45%, rgba(12,12,15,0.62) 100%); }
+  .photoband__scrim { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(12,12,15,0.58) 0%, rgba(12,12,15,0.4) 45%, rgba(12,12,15,0.66) 100%); }
   .photoband__inner { position: relative; z-index: 2; text-align: center; padding-block: var(--space-2xl); }
-  .photoband__eyebrow { display: inline-block; font-size: var(--step--1); letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--accent); margin-bottom: var(--space-m); }
-  .photoband__quote { font-family: var(--font-display); font-weight: 400; font-size: var(--step-4); line-height: 1.12; letter-spacing: var(--tracking-tight); max-width: 24ch; margin: 0 auto; color: #fff; }
-  .photoband__coord { display: block; margin-top: var(--space-l); font-size: var(--step--1); letter-spacing: var(--tracking-wide); color: rgba(255,255,255,0.6); }
+  .photoband__eyebrow { display: inline-block; font-size: var(--step--1); letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--accent); margin-bottom: var(--space-l); }
+  .regle__quote { font-family: var(--font-display); font-weight: 400; font-size: var(--step-4); line-height: 1.14; letter-spacing: var(--tracking-tight); max-width: 24ch; margin: 0 auto; color: #fff; }
+  .regle__quote-b { color: rgba(255,255,255,0.66); }
+  .regle__body { max-width: 46ch; margin: var(--space-l) auto 0; font-size: var(--step-0); line-height: var(--leading-normal); color: rgba(255,255,255,0.82); }
 
-  /* ---- CHIFFRES ---- */
-  .figures { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-l) var(--space-m); }
-  .figures__item { display: flex; flex-direction: column; gap: var(--space-2xs); }
-  .figures__value { font-family: var(--font-display); font-size: var(--step-4); font-weight: 300; line-height: 1; }
-  .figures__label { font-size: var(--step--1); color: var(--text-subtle); }
-  @media (min-width: 52em) { .figures { grid-template-columns: repeat(4, 1fr); } }
-
-  /* ---- OUTILS (grille) ---- */
-  .toolhead { margin-top: var(--space-s); }
-  .toolhead__intro { margin-top: var(--space-s); max-width: 52ch; }
-  .toolgrid { list-style: none; padding: 0; margin: var(--space-xl) 0 0; display: grid; gap: var(--space-s); }
-  @media (min-width: 44em) { .toolgrid { grid-template-columns: repeat(2, 1fr); } }
-  @media (min-width: 64em) { .toolgrid { grid-template-columns: repeat(3, 1fr); } }
-  .toolcell__link { display: flex; flex-direction: column; gap: var(--space-3xs); height: 100%; padding: var(--space-m); border: 1px solid var(--line); transition: border-color var(--dur) var(--ease), transform var(--dur) var(--ease); }
-  .toolcell__link:hover { border-color: var(--line-strong); transform: translateY(-3px); }
-  .toolcell__need { font-size: var(--step--1); letter-spacing: var(--tracking-wide); text-transform: uppercase; color: var(--accent-deep); }
-  .toolcell__name { font-size: var(--step-1); font-weight: 500; color: var(--ink); margin-top: var(--space-2xs); }
-  .toolcell__short { font-size: var(--step--1); }
-  .toolgrid__link { margin-top: var(--space-l); }
-
-  /* ---- CARTES ---- */
-  .cards { list-style: none; padding: 0; margin: var(--space-xl) 0 0; display: grid; gap: var(--space-m); }
-  @media (min-width: 40em) { .cards--3, .cards--4 { grid-template-columns: repeat(2, 1fr); } }
-  @media (min-width: 60em) { .cards--3 { grid-template-columns: repeat(3, 1fr); } .cards--4 { grid-template-columns: repeat(4, 1fr); } }
-  .card {
-    background: var(--surface); border: 1px solid var(--line); padding: var(--space-l);
-    display: flex; flex-direction: column; gap: var(--space-xs);
-    transition: border-color var(--dur) var(--ease), transform var(--dur) var(--ease);
-  }
-  .card:hover { border-color: var(--line-strong); transform: translateY(-3px); }
-  .card__picto { margin-bottom: var(--space-2xs); }
-  .card:hover .card__picto { color: var(--accent); }
-  .card__index { font-size: var(--step--1); color: var(--text-subtle); letter-spacing: var(--tracking-wide); }
-  .card__title { font-size: var(--step-1); font-weight: 500; }
-  .use__tag { font-size: var(--step--1); font-weight: 600; letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--text-subtle); }
-
-  /* ---- VISION ---- */
-  .vision { display: grid; gap: var(--space-xl); }
-  .vision__title { margin-top: var(--space-s); }
-  .vision__text .lead { margin-top: var(--space-m); }
-  .vision__body { margin-top: var(--space-m); max-width: 52ch; }
-  .ticks { list-style: none; padding: 0; margin: var(--space-l) 0 0; display: grid; gap: var(--space-s); }
-  .tick { display: flex; align-items: baseline; gap: var(--space-s); }
-  .tick__mark { flex: none; width: 1.2rem; height: 1px; background: var(--ink); transform: translateY(-0.35em); }
-  @media (min-width: 56em) { .vision { grid-template-columns: 0.9fr 1.1fr; gap: var(--space-2xl); align-items: center; } }
-
-  /* ---- INDEX (solutions, dispositif singulier) ---- */
-  .index { list-style: none; padding: 0; margin: var(--space-xl) 0 0; }
-  .index__row {
-    display: grid; gap: var(--space-s) var(--space-l);
-    padding-block: var(--space-l); border-top: 1px solid var(--line-strong);
-    transition: padding-left var(--dur) var(--ease);
-  }
-  .index__row:last-child { border-bottom: 1px solid var(--line-strong); }
-  .index__row:hover { padding-left: var(--space-s); }
-  .index__head { display: flex; align-items: center; gap: var(--space-m); }
-  .index__no { font-size: var(--step--1); color: var(--text-subtle); letter-spacing: var(--tracking-wide); }
-  .index__glyph { flex: none; }
-  .index__row:hover .index__glyph { color: var(--accent); }
-  .index__name { font-size: var(--step-3); font-weight: 400; letter-spacing: var(--tracking-tight); }
-  .index__text { color: var(--text-muted); max-width: 56ch; }
-  .index__link { margin-top: var(--space-xl); }
-  @media (min-width: 56em) {
-    .index__row { grid-template-columns: 0.95fr 1.05fr; align-items: center; }
-  }
-
-  /* ---- ÉCOSYSTÈME ---- */
-  .eco-wrap { margin-top: var(--space-2xl); }
-
-  /* ---- ÉTAPES ---- */
-  .steps { list-style: none; padding: 0; margin: var(--space-xl) 0 0; display: grid; gap: var(--space-l); }
-  @media (min-width: 48em) { .steps { grid-template-columns: repeat(3, 1fr); gap: var(--space-l) var(--space-m); } }
-  .step { padding-top: var(--space-m); border-top: 1px solid var(--line-strong); display: flex; flex-direction: column; gap: var(--space-2xs); }
-  .step__n { font-size: var(--step--1); color: var(--text-subtle); letter-spacing: var(--tracking-wide); }
-  .step__title { font-size: var(--step-1); font-weight: 500; }
-  .step__text { font-size: var(--step--1); }
-  .steps__link { margin-top: var(--space-xl); }
-  .steps__links { display: flex; flex-wrap: wrap; gap: var(--space-l); margin-top: var(--space-xl); }
-
-  /* ---- À PROPOS ---- */
-  .about { display: grid; gap: var(--space-xl); }
-  .about__title { margin-top: var(--space-s); margin-bottom: var(--space-m); }
-  @media (min-width: 56em) { .about { grid-template-columns: 1.1fr 0.9fr; gap: var(--space-2xl); align-items: center; } .about__media { order: 2; } }
-
-  /* ---- CTA FINAL ---- */
-  .cta {
-    background: var(--ink); color: var(--plaster);
-    padding: clamp(2.5rem, 7vw, 6rem);
-    display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-m);
-  }
+  /* ---- CTA / UNE SEULE ACTION ---- */
+  .cta { background: var(--ink); color: var(--plaster); padding: clamp(2.5rem, 7vw, 6rem); display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-m); }
   .cta__eyebrow { color: color-mix(in srgb, var(--plaster) 60%, transparent); }
   .cta__title { color: var(--plaster); font-size: var(--step-4); font-weight: 400; max-width: 20ch; }
   .cta__text { color: color-mix(in srgb, var(--plaster) 78%, transparent); }
@@ -470,75 +220,23 @@ const replace = (file: string) => (isFr ? `À remplacer · public/images/${file}
   .cta__micro { color: color-mix(in srgb, var(--plaster) 50%, transparent); font-size: var(--step--1); }
 
   /* =====================================================================
-     EMPILEMENT « STICKY STACKING » — activé en desktop, hors reduced-motion
+     EMPILEMENT « STICKY STACKING » — desktop, hors reduced-motion
      ===================================================================== */
   @media (min-width: 60em) and (prefers-reduced-motion: no-preference) {
-    /* fond « vide » sombre derrière les panneaux qui se rétractent */
     .stack { background: var(--ink); }
-
-    .panel {
-      position: sticky;
-      top: 0;
-      min-height: 100vh;
-    }
-
-    .panel__card {
-      min-height: 100vh;
-    }
-
-    /* panneaux éditoriaux : centrage vertical + garde sous le header fixe */
+    .panel { position: sticky; top: 0; min-height: 100vh; }
+    .panel__card { min-height: 100vh; }
     .panel__card--pad {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
+      display: flex; flex-direction: column; justify-content: center;
       padding-block: clamp(4.75rem, 7.5vh, 6.5rem) var(--space-l);
     }
+    .secttl { font-size: var(--step-3); }
+    .marches { margin-top: var(--space-xl); }
+    .proofs { margin-top: var(--space-xl); }
 
-    /* Titres de section resserrés (« peu par écran » — tient dans 100vh) */
-    .panel__card--pad :global(.sh) { gap: var(--space-s); }
-    .panel__card--pad :global(.sh__num) { font-size: var(--step-2); margin-bottom: 0; }
-    .panel__card--pad :global(.sh__title) { font-size: var(--step-3); }
-    .panel__card--pad .cards,
-    .panel__card--pad .steps { margin-top: var(--space-l); }
-    .panel__card--pad .index { margin-top: var(--space-s); }
-
-    /* CHIFFRES : présence éditoriale plein écran */
-    .figures { gap: var(--space-xl) var(--space-l); }
-    .figures__value { font-size: var(--step-5); }
-
-    /* OUTILS : grille resserrée pour tenir dans 100vh */
-    .toolgrid { margin-top: var(--space-l); gap: var(--space-s); }
-    .toolcell__link { padding: var(--space-s) var(--space-m); }
-    .toolgrid__link { margin-top: var(--space-m); }
-
-    /* CARTES (problème / pourquoi / cas d'usage) : padding resserré */
-    .panel__card--pad .card { padding: var(--space-m); }
-
-    /* SOLUTIONS : 5 rangées condensées pour tenir dans 100vh */
-    .index__row { padding-block: var(--space-3xs); }
-    .index__name { font-size: var(--step-2); }
-    .index__text { font-size: var(--step--1); }
-    .index__link { margin-top: var(--space-s); }
-
-    /* ÉCOSYSTÈME : diagramme resserré pour cohabiter avec le titre */
-    .eco-wrap { margin-top: var(--space-s); }
-    .eco-wrap :global(.eco) { gap: var(--space-l); }
-    .eco-wrap :global(.eco__svg) { max-width: 21rem; }
-
-    /* MÉTHODE / lien : respiration réduite */
-    .steps__link { margin-top: var(--space-l); }
-    .steps__links { margin-top: var(--space-l); }
-
-    /* CTA : padding resserré */
-    .panel--cta .cta { padding: clamp(2rem, 5vw, 3.5rem); }
-
-    /* ---- Mouvement « beurré » : le panneau recouvert se rétracte + s'assombrit.
-       Piloté par la progression de scroll racine — scroll(root) — insensible au
-       sticky (view() se fige dès que l'élément est épinglé). Chaque panneau
-       anime sur sa tranche [i-1 .. i] / n de la hauteur de page. ---- */
     @supports (animation-timeline: scroll()) {
       .panel__card {
-        --n: 12;
+        --n: 5;
         --i0: calc(var(--i, 1) - 1);
         transform-origin: 50% 50%;
         animation: panelRecede linear both;
@@ -546,7 +244,6 @@ const replace = (file: string) => (isFr ? `À remplacer · public/images/${file}
         animation-range: calc(var(--i0) / var(--n) * 100%) calc(var(--i, 1) / var(--n) * 100%);
         backface-visibility: hidden;
       }
-      /* dernier panneau (CTA) : rien ne le recouvre → pas de recede */
       .panel:last-child .panel__card { animation: none; }
     }
   }
@@ -558,35 +255,19 @@ const replace = (file: string) => (isFr ? `À remplacer · public/images/${file}
 </style>
 
 <script>
-  // ---- Smooth-scroll « inertie » (Lenis), désactivé sous reduced-motion ----
+  // Smooth-scroll « inertie » (Lenis), désactivé sous reduced-motion.
   import Lenis from 'lenis';
   import 'lenis/dist/lenis.css';
 
   const reduceMQ = window.matchMedia('(prefers-reduced-motion: reduce)');
-
   if (!reduceMQ.matches) {
     const lenis = new Lenis({
       duration: 1.15,
       easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothWheel: true,
-      wheelMultiplier: 1,
-      touchMultiplier: 1.2,
+      smoothWheel: true, wheelMultiplier: 1, touchMultiplier: 1.2,
     });
-
-    // Exposé pour le harnais de prévisualisation (scroll programmatique fidèle).
     (window as any).lenis = lenis;
-
-    const raf = (time: number) => {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    };
+    const raf = (time: number) => { lenis.raf(time); requestAnimationFrame(raf); };
     requestAnimationFrame(raf);
-
-    // NB : Lenis pilote le VRAI scroll du document (il appelle window.scrollTo),
-    // donc l'event « scroll » natif se déclenche normalement et window.scrollY
-    // reste exact → le header transparent (data-solid, dans Header.astro) et les
-    // scroll-driven animations restent synchronisés SANS relais manuel.
-    // (Ne PAS redispatcher un event « scroll » : Lenis l'écouterait et le
-    // réémettrait, provoquant une récursion infinie.)
   }
 </script>

@@ -44,103 +44,57 @@ const fr = {
 
   home: {
     meta: {
-      title: 'Meridian Architecture — de l’idée à l’outil, en temps réel',
+      title: 'Meridian Architecture — automatiser ce dont personne n’a su écrire les règles',
       description:
-        'Nous prototypons à l’IA les idées de vos équipes et les transformons en outils sur-mesure — testés et adoptés en temps réel, sans conduite du changement.',
+        'Une macro exécute des règles qu’on a su écrire. Meridian automatise ce dont personne n’a su écrire les règles — à trois échelles : une tâche, une capacité, un système. Chaque réalisation est mesurée.',
     },
-    hero: {
-      eyebrow: 'Prototypage sur-mesure · propulsé par l’IA',
-      titleA: 'De l’idée à l’outil,',
-      titleB: 'en temps réel.',
-      subtitle:
-        'Nous partons des idées de vos équipes et les rendons concrètes : prototypées à l’IA, testées et adaptées en temps réel par celles et ceux qui s’en serviront, jusqu’à la mise en production. L’humain reste au centre, l’adoption est intégrée — sans conduite du changement.',
-      scrollHint: 'Faites défiler',
+    // Temps 1 — la frontière
+    frontiere: {
+      eyebrow: 'Automatisation sur-mesure',
+      lineA: 'Une macro exécute des règles qu’on a su écrire.',
+      lineB: 'Ce qui change, c’est d’automatiser ce dont personne n’a su écrire les règles.',
+      cue: 'Faites défiler',
     },
-    figures: [
-      { value: 'Jours', label: 'pour prototyper une idée' },
-      { value: '2', label: 'angles : chiffre d’affaires · productivité' },
-      { value: '0', label: 'conduite du changement' },
-      { value: 'IA', label: 'au service de vos équipes' },
-    ],
-    problem: {
-      eyebrow: 'Le constat',
-      title: 'Vos meilleures idées restent dans un tiroir.',
+    // Temps 2 — les trois marches
+    marches: {
+      eyebrow: 'Trois marches',
+      title: 'La taille de ce qu’on automatise.',
       intro:
-        'Entre l’idée d’une équipe et l’outil qui la sert, il y a des mois de projet — et souvent un logiciel générique qu’il faut ensuite faire adopter de force. Trop long, trop lourd, trop risqué.',
+        'Pas trois domaines — un escalier. Chaque marche est une décision plus engageante que la précédente, et l’on ne monte au système qu’après avoir su tenir la tâche.',
+      col: { automatise: 'Ce qu’on automatise', decide: 'Qui décide', ampleur: 'Ordre de grandeur' },
       items: [
-        { title: 'Jamais testées', text: 'Faute de temps et de budget pour les prototyper, les idées ne voient pas le jour.' },
-        { title: 'Trop génériques', text: 'On plie son métier au logiciel, au lieu de l’inverse.' },
-        { title: 'Trop longues', text: 'Specs, développement, recette : des mois avant la moindre valeur.' },
-        { title: 'Mal adoptées', text: 'L’outil arrive d’en haut ; les équipes le subissent plus qu’elles ne l’utilisent.' },
+        { n: '01', name: 'Une tâche', automatise: 'un geste répété par une équipe', decide: 'un responsable d’équipe', ampleur: 'quelques jours' },
+        { n: '02', name: 'Une capacité', automatise: 'ce que votre outil ne sait pas faire', decide: 'un responsable digital', ampleur: 'quelques semaines' },
+        { n: '03', name: 'Un système', automatise: 'ce qui ne circule pas entre vos outils', decide: 'la direction générale', ampleur: 'quelques mois' },
       ],
     },
-    vision: {
-      eyebrow: 'La différence',
-      title: 'L’humain au centre. L’IA en soutien.',
-      lead:
-        'L’IA ne remplace pas vos équipes : elle rend leurs idées concrètes, plus vite que quiconque.',
+    // Temps 3 — une preuve par marche
+    preuves: {
+      eyebrow: 'La preuve, pas la promesse',
+      title: 'Un chiffre par marche. Daté. Rejouable.',
+      intro:
+        'Chaque réalisation porte des chiffres qu’on peut refaire — et le détail de ce qui n’est pas mesuré. Deux des trois attendent encore leur relevé ou l’accord du client : on le dit plutôt que de l’afficher en vert.',
+      items: [
+        { marche: 'Une tâche', value: '373 → 0', label: 'valeurs mal placées sur le classeur d’une collection, audité et retourné en 3,8 s.', source: 'Structure de l’offre · sept. 2026', pending: '' },
+        { marche: 'Une capacité', value: 'Mesure en cours', label: 'sites headless en production chez des clients de Meridian — relevé Lighthouse, poids, parcours en préparation.', source: 'Sites headless', pending: 'relevé en cours' },
+        { marche: 'Un système', value: 'Sous accord', label: 'un plan de collection accéléré, une saison traversée sur ses douze maillons. Mesuré, publication en attente d’accord.', source: 'PLM · PIM · DAM', pending: 'accord à obtenir' },
+      ],
+      link: 'Voir les réalisations',
+    },
+    // Temps 4 — la règle de la maison
+    regle: {
+      eyebrow: 'La règle de la maison',
+      quoteA: 'Un contrôle doit mesurer ce qu’il affirme.',
+      quoteB: 'Un vert qui ne mesure rien ment plus efficacement que l’absence de vert.',
       body:
-        'On prototype avec celles et ceux qui utiliseront l’outil, on teste en temps réel, on ajuste avec eux. Quand on met en production, l’outil est déjà adopté — parce qu’ils l’ont construit. Plus de conduite du changement, plus de projet qui échoue à l’usage.',
-      points: [
-        'On part des idées de vos équipes, jamais d’un cahier des charges.',
-        'L’IA fluidifie, accélère et gomme les frictions du quotidien.',
-        'L’adoption est intégrée : zéro conduite du changement.',
-      ],
+        'C’est pourquoi chaque réalisation dit aussi ce qu’elle ne mesure pas. C’est la seule chose de ce site qu’un concurrent ne peut pas recopier demain — il faudrait qu’il l’ait fait.',
     },
-    pillars: {
-      eyebrow: 'L’aboutissement',
-      title: 'Les outils qui finissent par s’assembler.',
-      intro:
-        'Rien n’est imposé d’emblée. À mesure que vos prototypes s’éprouvent, ils s’interconnectent autour d’un socle commun — jusqu’à un écosystème taillé à votre métier.',
-      note: 'Et tout ce dont vos équipes ont besoin, au-delà de ces cinq domaines.',
-    },
-    ecosystem: {
-      eyebrow: 'L’interconnexion',
-      title: 'À la fin, tout est relié.',
-      caption:
-        'Au centre, votre socle de données. Autour, vos outils éprouvés. Survolez une pièce pour voir ses liaisons s’éclairer.',
-    },
-    method: {
-      eyebrow: 'La méthode',
-      title: 'De l’idée à la prod, avec vos équipes.',
-      intro: 'Une boucle courte où vos équipes co-construisent à chaque étape — c’est ce qui rend la conduite du changement inutile.',
-      steps: [
-        { n: '01', title: 'Prototyper', text: 'L’idée d’une équipe devient un outil réel en quelques jours.' },
-        { n: '02', title: 'Tester en live', text: 'Vos équipes l’utilisent en conditions réelles, tout de suite.' },
-        { n: '03', title: 'Recetter', text: 'On vérifie que l’outil fait le job, sans angle mort.' },
-        { n: '04', title: 'Itérer', text: 'On ajuste en temps réel, avec celles et ceux qui s’en servent.' },
-        { n: '05', title: 'Valider', text: 'L’outil colle au besoin ; l’adoption est déjà là.' },
-        { n: '06', title: 'Mettre en prod', text: 'Déployé avec les équipes, sans conduite du changement.' },
-      ],
-    },
-    why: {
-      eyebrow: 'Pourquoi ça marche',
-      title: 'Rapide, sur-mesure, adopté.',
-      items: [
-        { title: 'Rapide', text: 'L’IA effondre les délais : un prototype en jours, pas en mois.' },
-        { title: 'Sur-mesure', text: 'L’outil épouse vos process, votre vocabulaire, votre réalité.' },
-        { title: 'Adopté d’emblée', text: 'Construit avec les équipes, donc utilisé dès le premier jour.' },
-      ],
-    },
-    useCases: {
-      eyebrow: 'Par où on commence',
-      title: 'Deux questions à poser à vos équipes.',
-      items: [
-        { tag: 'Booster le chiffre d’affaires', title: 'Quels outils vous manquent pour vendre plus ?', text: 'Data & BI pour décider, CRM pour convertir, sites vitrines et e-commerce pour vendre, POS pour encaisser — prototypés à votre métier.' },
-        { tag: 'Gagner en productivité', title: 'Quels outils vous manquent pour aller plus vite ?', text: 'PLM, PIM et vos outils métier : on prototype les facilitateurs qui suppriment les tâches à faible valeur et les frictions du quotidien.' },
-      ],
-    },
-    about: {
-      eyebrow: 'À propos',
-      title: 'Une conviction : vos outils doivent ressembler à votre métier.',
-      text: 'Meridian Architecture est né d’un constat simple — les entreprises méritent mieux qu’un assemblage de logiciels qui les contraignent. Nous bâtissons l’alternative, un prototype à la fois.',
-      cta: 'Notre vision',
-    },
-    finalCta: {
-      eyebrow: 'Parlons-en',
-      title: 'Décrivez une idée. On vous en fait un prototype.',
-      text: 'Un premier échange suffit pour repérer, avec vos équipes, l’outil qui vous manque — et en esquisser le prototype. Sans engagement.',
-      button: 'Échangeons sur votre cas',
+    // Temps 5 — une seule action
+    action: {
+      eyebrow: 'Une seule action',
+      title: 'Décrivez un geste que vous répétez.',
+      text: 'On vous dit si c’est une tâche, une capacité ou un système — et ce qu’il faudrait pour l’automatiser.',
+      button: 'Parler d’un cas précis',
       micro: 'Réponse sous 48 h ouvrées.',
     },
   },
@@ -375,102 +329,57 @@ const en = {
 
   home: {
     meta: {
-      title: 'Meridian Architecture — from idea to tool, in real time',
+      title: 'Meridian Architecture — automating what no one could write the rules for',
       description:
-        'We prototype your teams’ ideas with AI and turn them into bespoke tools — tested and adopted in real time, with no change management.',
+        'A macro runs rules someone knew how to write. Meridian automates what no one could write the rules for — at three scales: a task, a capability, a system. Every case study is measured.',
     },
-    hero: {
-      eyebrow: 'Bespoke prototyping · powered by AI',
-      titleA: 'From idea to tool,',
-      titleB: 'in real time.',
-      subtitle:
-        'We start from your teams’ ideas and make them real: prototyped with AI, tested and adapted in real time by the very people who’ll use them, all the way to production. People stay at the centre, adoption is built in — with no change management.',
-      scrollHint: 'Scroll',
+    // Temps 1 — the frontier
+    frontiere: {
+      eyebrow: 'Bespoke automation',
+      lineA: 'A macro runs rules someone knew how to write.',
+      lineB: 'What changes is automating what no one could write the rules for.',
+      cue: 'Scroll',
     },
-    figures: [
-      { value: 'Days', label: 'to prototype an idea' },
-      { value: '2', label: 'angles: revenue · productivity' },
-      { value: '0', label: 'change management' },
-      { value: 'AI', label: 'serving your teams' },
-    ],
-    problem: {
-      eyebrow: 'The reality',
-      title: 'Your best ideas stay in a drawer.',
+    // Temps 2 — the three steps
+    marches: {
+      eyebrow: 'Three steps',
+      title: 'The size of what you automate.',
       intro:
-        'Between a team’s idea and the tool that serves it lie months of project work — and often a generic piece of software that then has to be forced into use. Too long, too heavy, too risky.',
+        'Not three domains — a staircase. Each step is a bigger commitment than the last, and you only climb to the system once you can hold the task.',
+      col: { automatise: 'What you automate', decide: 'Who decides', ampleur: 'Order of magnitude' },
       items: [
-        { title: 'Never tested', text: 'For lack of time and budget to prototype them, ideas never see the light.' },
-        { title: 'Too generic', text: 'You bend your business to the software, instead of the reverse.' },
-        { title: 'Too long', text: 'Specs, development, testing: months before any value.' },
-        { title: 'Poorly adopted', text: 'The tool comes from the top; teams endure it more than they use it.' },
+        { n: '01', name: 'A task', automatise: 'a gesture a team repeats', decide: 'a team lead', ampleur: 'a few days' },
+        { n: '02', name: 'A capability', automatise: 'what your tool can’t do', decide: 'a digital lead', ampleur: 'a few weeks' },
+        { n: '03', name: 'A system', automatise: 'what won’t flow between your tools', decide: 'the executive team', ampleur: 'a few months' },
       ],
     },
-    vision: {
-      eyebrow: 'The difference',
-      title: 'People at the centre. AI in support.',
-      lead: 'AI doesn’t replace your teams: it makes their ideas real, faster than anyone.',
+    // Temps 3 — one proof per step
+    preuves: {
+      eyebrow: 'Proof, not promise',
+      title: 'One number per step. Dated. Replayable.',
+      intro:
+        'Every case study carries numbers you can re-run — and the detail of what isn’t measured. Two of the three still await their reading or the client’s consent: we say so, rather than showing it green.',
+      items: [
+        { marche: 'A task', value: '373 → 0', label: 'misplaced values in a collection’s workbook, audited and turned around in 3.8 s.', source: 'Offer structure · Sept. 2026', pending: '' },
+        { marche: 'A capability', value: 'Measuring', label: 'headless sites live for Meridian clients — Lighthouse, weight and journey readings in preparation.', source: 'Headless sites', pending: 'reading in progress' },
+        { marche: 'A system', value: 'Pending consent', label: 'a collection plan made faster, one season carried across its twelve links. Measured; publication awaiting consent.', source: 'PLM · PIM · DAM', pending: 'consent to obtain' },
+      ],
+      link: 'See the case studies',
+    },
+    // Temps 4 — the house rule
+    regle: {
+      eyebrow: 'The house rule',
+      quoteA: 'A control must measure what it claims.',
+      quoteB: 'A green that measures nothing lies more effectively than no green at all.',
       body:
-        'We prototype with the very people who’ll use the tool, test in real time, and adjust with them. By the time we go to production, the tool is already adopted — because they built it. No more change management, no more project that fails on contact with real use.',
-      points: [
-        'We start from your teams’ ideas, never from a spec sheet.',
-        'AI smooths, accelerates and removes everyday friction.',
-        'Adoption is built in: zero change management.',
-      ],
+        'That’s why every case study also states what it doesn’t measure. It’s the one thing on this site a competitor can’t copy tomorrow — they’d have to have done it.',
     },
-    pillars: {
-      eyebrow: 'The outcome',
-      title: 'The tools that end up assembling.',
-      intro:
-        'Nothing is imposed upfront. As your prototypes prove themselves, they interconnect around a shared core — until an ecosystem cut to your business.',
-      note: 'And whatever else your teams need, beyond these five domains.',
-    },
-    ecosystem: {
-      eyebrow: 'The interconnection',
-      title: 'In the end, everything connects.',
-      caption:
-        'At the centre, your data core. Around it, your proven tools. Hover a room to light up its links.',
-    },
-    method: {
-      eyebrow: 'The method',
-      title: 'From idea to production, with your teams.',
-      intro: 'A short loop where your teams co-build at every step — that’s what makes change management unnecessary.',
-      steps: [
-        { n: '01', title: 'Prototype', text: 'A team’s idea becomes a real tool in a matter of days.' },
-        { n: '02', title: 'Test live', text: 'Your teams use it in real conditions, right away.' },
-        { n: '03', title: 'Review', text: 'We check the tool does the job, with no blind spots.' },
-        { n: '04', title: 'Iterate', text: 'We adjust in real time, with the people who use it.' },
-        { n: '05', title: 'Validate', text: 'The tool fits the need; adoption is already there.' },
-        { n: '06', title: 'Ship', text: 'Deployed with the teams, with no change management.' },
-      ],
-    },
-    why: {
-      eyebrow: 'Why it works',
-      title: 'Fast, bespoke, adopted.',
-      items: [
-        { title: 'Fast', text: 'AI collapses timelines: a prototype in days, not months.' },
-        { title: 'Bespoke', text: 'The tool fits your processes, your vocabulary, your reality.' },
-        { title: 'Adopted from day one', text: 'Built with the teams, so used from the very first day.' },
-      ],
-    },
-    useCases: {
-      eyebrow: 'Where to start',
-      title: 'Two questions to ask your teams.',
-      items: [
-        { tag: 'Boost revenue', title: 'Which tools are you missing to sell more?', text: 'Data & BI to decide, CRM to convert, showcase and e-commerce sites to sell, POS to take payment — prototyped to your business.' },
-        { tag: 'Gain productivity', title: 'Which tools are you missing to move faster?', text: 'PLM, PIM and your line-of-business tools: we prototype the enablers that remove low-value tasks and everyday friction.' },
-      ],
-    },
-    about: {
-      eyebrow: 'About',
-      title: 'One conviction: your tools should look like your business.',
-      text: 'Meridian Architecture grew from a simple observation — companies deserve better than a pile of software that constrains them. We build the alternative, one prototype at a time.',
-      cta: 'Our vision',
-    },
-    finalCta: {
-      eyebrow: 'Let’s talk',
-      title: 'Describe an idea. We’ll prototype it.',
-      text: 'A first conversation is enough to spot, with your teams, the tool you’re missing — and sketch its prototype. No commitment.',
-      button: 'Let’s talk about your case',
+    // Temps 5 — a single action
+    action: {
+      eyebrow: 'A single action',
+      title: 'Describe a gesture you repeat.',
+      text: 'We’ll tell you whether it’s a task, a capability or a system — and what it would take to automate it.',
+      button: 'Talk about a specific case',
       micro: 'Reply within 48 business hours.',
     },
   },
