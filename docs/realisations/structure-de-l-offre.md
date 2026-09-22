@@ -4,9 +4,9 @@
 > [`../POSITIONNEMENT.md`](../POSITIONNEMENT.md) § 6. Elle sert deux choses : montrer la
 > réalisation, et **prouver que le gabarit tient** avant d'en écrire trois autres.
 >
-> **22 septembre 2026.** Tous les chiffres de la section « Ce qui est mesuré » sont
-> rejoués par `mesurer.py`, livré avec le classeur. Un chiffre qu'on ne peut pas refaire
-> est une affirmation.
+> **22 septembre 2026.** Tous les chiffres sont rejoués par l'outil lui-même
+> (`so.py auditer`, `so.py verifier`). Un chiffre qu'on ne peut pas refaire est une
+> affirmation.
 
 ---
 
@@ -18,8 +18,8 @@ Vincent est salarié, et elle cite ses données d'exploitation.
 | Ce qu'il faut | |
 |---|---|
 | **Un accord écrit de publication** | Il se demande, il ne se suppose pas |
-| **À défaut — trois substitutions** | « une maison française de prêt-à-porter et maroquinerie » · les proportions plutôt que les volumes (« 86 % d'une colonne en erreur » plutôt que « 450 lignes sur 521 ») · aucune capture d'écran, aucun nom de référence, aucun code d'article |
-| **Ce qui reste publiable sans rien demander** | La nature du problème, la raison pour laquelle personne ne l'avait automatisé, et la méthode de mesure. C'est déjà une fiche — plus courte, et qui tient |
+| **À défaut — trois substitutions** | « une maison française de prêt-à-porter et maroquinerie » · les proportions plutôt que les volumes · aucune capture, aucun nom de référence, aucun code d'article |
+| **Ce qui reste publiable sans rien demander** | La nature du problème, la raison pour laquelle personne ne l'avait automatisé, **le rapport 373 → 0**, et la méthode de contrôle. C'est déjà une fiche, et elle tient |
 
 ---
 
@@ -28,104 +28,136 @@ Vincent est salarié, et elle cite ses données d'exploitation.
 Chaque saison, quelqu'un reprend à la main un export plat du système — une ligne par
 référence-coloris — et le retourne en **matrice de présentation** : les produits en
 colonnes, leurs attributs en lignes, groupés par catégorie commerciale. C'est le document
-que lisent le merchandising et le commercial pour arbitrer une offre.
+que lisent le merchandising et le commercial pour arbitrer l'offre.
+
+**Coût déclaré par l'équipe : cinq jours de travail par saison.**
+*(Déclaré, non chronométré — voir « Ce qui n'est pas mesuré ».)*
 
 ## Pourquoi personne ne l'avait automatisé
 
-**Parce que la règle change chaque saison, et que personne ne sait l'écrire à l'avance.**
+**Parce que la règle de regroupement n'est écrite nulle part — et ce n'est pas une
+impression, c'est vérifié sur le fichier.**
 
-Une macro sait transposer un tableau. Elle ne sait pas :
+Les blocs de la matrice s'appellent *CABAS COTON*, *CABAS LIN*, *ANIMATIONS CABAS TEXTILE*,
+*MOON CUIR*, *OTHILIA ANIMATIONS*… Aucune colonne de l'export ne les donne :
 
-- **découper en blocs de catégorie** quand le nombre de catégories, leur nom et leur ordre
-  changent d'une saison à l'autre — *cabas coton*, *cabas lin*, *animations cabas textile*,
-  *moon animation cuir*… ce sont des regroupements commerciaux, pas une colonne du fichier ;
-- **décider ce qui monte en ligne et ce qui reste en colonne** selon la catégorie : un cabas
-  et une trousse ne se présentent pas avec les mêmes attributs ;
-- **reconnaître qu'une valeur est arrivée au mauvais endroit** — c'est exactement le défaut
-  que la mesure ci-dessous a trouvé, et qu'aucune formule n'aurait signalé ;
-- **rattraper un rapprochement qui a échoué** sans faire disparaître la ligne : une macro
-  écrit `#N/A` et passe à la suivante.
+| Ce qu'on aurait pu croire | Ce que la mesure dit |
+|---|---|
+| « C'est l'activité » | Non — *CABAS COTON* et *CABAS LIN* ont la même : `CC1 : CABAS` |
+| « C'est le préfixe de la référence » | Non — *CABAS COTON* et *TROUSSE COTON* partagent `0PVE01` |
+| « C'est la matière » | La matière n'est dans **aucune** des treize colonnes |
+
+S'y ajoute tout ce qu'une macro ne sait pas faire : rattraper un rapprochement qui a échoué
+sans faire disparaître la ligne, reconnaître qu'une valeur est arrivée au mauvais endroit,
+ou décider qu'un bloc est devenu trop large et doit se couper en deux.
 
 > Une macro exécute des règles qu'on a su écrire.
-> Ici, la règle est un jugement commercial qui se reprend à chaque saison.
+> Ici, la règle est un jugement commercial, repris à chaque saison.
 
 ## Ce qui a été construit
 
-*(Section à compléter — voir « Ce qui n'est pas encore mesuré ».)*
+Un outil en trois commandes — **auditer**, **générer**, **vérifier** — qui prend l'export
+tel qu'il arrive.
 
-Le principe retenu : **la transformation lit le fichier tel qu'il arrive**, reconstruit les
-blocs de catégorie à partir du contenu plutôt que d'une position fixe, et **refuse de
-produire une matrice dont un libellé ne décrit pas sa valeur** — le contrôle est dans la
-chaîne, pas à côté.
+**Il lit le vrai format de la maison.** Les classeurs de saison pèsent 41 et 82 Mo au format
+binaire `.xlsb`. Exiger une conversion préalable aurait été déplacer d'un cran la ressaisie
+qu'on prétend supprimer. Aucune colonne n'est attendue à une position donnée : les entêtes
+sont normalisées puis rapprochées d'un vocabulaire. Un export dont l'ordre change ne casse
+rien ; un export dont une colonne manque le dit.
+
+**Il audite sur trois plans, et le troisième est celui qui manque partout** — complétude,
+cohérence, puis **vraisemblance** : un prix nul, une quantité négative, ou une seule valeur
+de prix sur tout un catalogue. Un contrôle de complétude déclare bon un fichier dont toutes
+les cases sont remplies et fausses.
+
+**Il range sans jamais jeter.** Il déduit la famille depuis le libellé, retrouve dans un
+fichier de règles ce qui a déjà été décidé — la clé est l'*article*, donc ranger une fois
+vaut pour tous les coloris — et **propose** pour le reste en le disant. Une référence non
+rangée va dans un bloc `À RANGER` visible dans toutes les sorties.
+
+**Il contrôle sa propre sortie avant d'écrire**, et refuse si le contrôle échoue.
+
+**Il sort en Excel, PowerPoint et PDF.** Le classeur pour travailler, la présentation pour
+le comité, le document pour laisser.
+
+### La décision qui supprime le défaut plutôt que de le corriger
+
+Dans la matrice faite à la main, les libellés de ligne et les valeurs venaient de deux
+endroits différents : les libellés recopiés en tête de bloc, les valeurs collées ensuite.
+Une colonne oubliée dans les libellés — *activité* — et tout glissait d'un cran.
+
+Ici, **le libellé et la valeur sortent de la même liste ordonnée, dans la même boucle.**
+Il n'y a plus deux sources à faire coïncider. Le décalage n'est pas rattrapé : il est
+rendu impossible.
 
 ## Ce qui est mesuré
 
-*Classeur des accessoires, mesuré le 22/09/2026. Rejouable :* `python3 mesurer.py`.
+### Le contrôle d'alignement, posé sur les deux matrices par la même commande
 
-### L'état du fichier produit à la main
+*`so.py verifier`, sur le classeur des accessoires. La question : le libellé de cette ligne
+décrit-il vraiment la valeur qu'on y trouve ?*
 
-| | |
-|---|---:|
-| Lignes de l'export source | **521** |
-| Colonnes de l'export source | **13** |
-| Matrice produite | **966 lignes × 49 colonnes** |
-| Blocs de catégorie à reconstituer | **72** |
-| Références placées dans la matrice | **373** |
+| | Valeurs mal placées | Références portées |
+|---|---:|---:|
+| **La matrice faite à la main** | **373 sur 1 492** | 373 |
+| **La matrice produite par l'outil** | **0 sur 2 084** | **521** |
 
-### Les défauts que la mesure trouve
+Les 373 valeurs mal placées étaient **100 %** de la ligne *prix de vente* : elle portait un
+code d'activité, pas un prix. Et les **148 références** qui manquaient à la matrice faite à
+la main y sont — aucune n'est perdue en route, l'outil le vérifie à chaque passage.
 
-| Défaut | Mesure | Ce qu'il coûte |
-|---|---:|---|
-| **Les libellés sont décalés d'une ligne** | **373 valeurs sur 373** sous le libellé *prix de vente* sont un **code d'activité**, pas un prix | Le document se lit faux de bout en bout. La colonne *activité* manque dans les libellés, donc tout glisse à partir de là — et la dernière donnée, la quantité retail, **n'apparaît nulle part** |
-| **Les quantités ne se rapprochent pas** | **86 %** de la colonne *quantité wholesale* et **66 %** de *quantité retail* sont en `#N/A` dans la source | Les arbitrages se font sur un tableau dont les deux tiers des quantités sont absents |
-| **Les prix manquent en partie** | **13 %** de la colonne *prix de vente* en `#N/A` | — |
-| **Les erreurs se propagent dans la matrice** | **653 cellules en erreur** — 334 `#N/A` et **319 `#VALUE!`** | Le `#VALUE!` n'existe pas dans la source : il **naît de la transformation elle-même** |
-| **Un écart de périmètre non expliqué** | 521 références en source, **373** dans la matrice | 148 références sont hors matrice. Ce n'est pas nécessairement un défaut — mais rien dans le fichier ne dit pourquoi |
+### Le temps de traitement
 
-**Le premier défaut mérite qu'on s'y arrête, parce qu'il dit la thèse entière.** Le fichier
-est *complet* : toutes les cellules sont remplies, aucune formule n'est cassée à cet
-endroit, et un contrôle qui compte les cases vides l'aurait déclaré bon. Il est pourtant
-**faux d'un bout à l'autre** — et il a fallu comparer le libellé de chaque ligne à la nature
-de sa valeur pour le voir. C'est la même règle que sur les autres chantiers de la maison :
+| Fichier | Poids | Ce qui est fait | Durée |
+|---|---:|---|---:|
+| Saison, par drop (`.xlsb`) | 41 Mo | lecture + audit | **0,1 s** |
+| Saison, par catégorie (`.xlsb`) | 82 Mo | lecture, audit, matrice, **quatre sorties** | **3,8 s** |
 
-> Un contrôle doit mesurer ce qu'il affirme.
-> Un vert qui ne mesure rien ment plus efficacement que l'absence de vert.
+### Ce que l'audit trouve dans les fichiers, et que personne ne voyait
 
-## Ce qui n'est pas mesuré
+| | Accessoires | Saison |
+|---|---:|---:|
+| Références lues | 521 | 699 – 701 |
+| Lignes de séparation écartées **et comptées** | — | 107 |
+| *Quantité wholesale* en erreur | **86 %** | 100 % vide |
+| *Quantité retail* en erreur | **66 %** | **65 %** |
+| *Prix de vente* en erreur | 13 % | **65 %** |
+| Références à prix nul ou négatif | **4** | **7** |
 
-**Et il faut le lire avant le reste du tableau.**
+**Ces défauts ne sont pas créés par l'outil : ils étaient déjà là.** La différence est
+qu'ils sont maintenant comptés, nommés, et transportés dans une feuille d'audit qui voyage
+avec le classeur — un chiffre sans sa réserve se recopie ailleurs et perd sa réserve en route.
+
+### Trois défauts trouvés par le contrôle, pendant la construction
+
+*Aucun n'aurait été vu à la relecture — et c'est le meilleur argument pour le contrôle.*
 
 | | |
 |---|---|
-| **Le temps gagné** | Non mesuré. Le temps que met une personne à produire la matrice **se chronomètre, il ne se déduit pas** — et c'est la seule mesure qui intéresse vraiment une direction. À faire sur la prochaine saison, montre en main |
-| **L'après** | La transformation automatisée **n'a pas encore été mesurée sur ce fichier**. Les chiffres ci-dessus sont l'état de départ. Tant que la colonne « après » est vide, cette fiche décrit un problème, pas un résultat |
-| **Les deux classeurs de saison** | 41 Mo et 82 Mo au format binaire `.xlsb`, non lus par l'outil de mesure. Seul le classeur des accessoires est chiffré ici |
-| **Les formules** | Le classeur est lu en valeurs calculées. Une formule juste qui rend une valeur fausse n'est pas distinguée d'une valeur saisie |
-| **Le taux d'erreur acceptable** | Aucun seuil n'a été convenu avec le métier. 86 % de quantités absentes est visiblement trop ; on ne sait pas dire à partir de quand c'est trop |
+| **Le contrôle a refusé notre propre matrice** au premier classeur de saison : 910 valeurs `0x2a` là où un prix était attendu. La bibliothèque de lecture rendait les erreurs Excel sous leur code binaire, `0x2a` au lieu de `#N/A` — une cellule en erreur passait donc pour une valeur renseignée |
+| **Les lignes de séparation comptaient comme des références** — un tiret dans la colonne SKU pour aérer à l'écran. Elles sont désormais écartées **et comptées**, jamais écartées en silence |
+| **Le PDF ne sortait pas** : Chromium en ligne de commande échoue dans un conteneur sans dbus — il rend 2 et n'écrit rien, sans le dire |
 
-## Les mesures à produire pour que cette fiche soit complète
+## Ce qui n'est pas mesuré
 
-*Elles sont courtes, et ce sont elles qui transforment un constat en preuve.*
+**Et il faut le lire avant le reste.**
 
-| # | La mesure | Comment |
-|---|---|---|
-| 1 | **Le temps, avant** | Chronométrer la production manuelle d'une matrice de saison |
-| 2 | **Le temps, après** | Chronométrer la même sur le même fichier |
-| 3 | **L'alignement, après** | Rejouer `mesurer.py` sur la matrice produite : le décalage doit tomber à **0 sur 373** |
-| 4 | **Les erreurs nées de la transformation** | Les 319 `#VALUE!` doivent tomber à zéro — ils sont créés par la chaîne, donc ils dépendent d'elle |
-| 5 | **Les rapprochements échoués** | Ils ne peuvent pas tomber à zéro — la donnée manque en amont. Mais ils doivent être **nommés** plutôt qu'écrits `#N/A` |
-| 6 | **L'écart de périmètre** | Expliquer les 148 références, ou le faire disparaître |
-
----
+| | |
+|---|---|
+| **Le temps gagné** | **Cinq jours est un chiffre déclaré par l'équipe, pas chronométré.** Il se mesure montre en main sur une vraie saison, avant et après. C'est la seule mesure qui intéressera une direction, et c'est la seule qui manque |
+| **Les regroupements réels** | Au premier passage, la famille seule donne des blocs trop larges — *CABAS* à 184 colonnes là où la maison en fait quatre. Le fichier de règles se remplit à l'usage ; **il n'a pas encore été rempli** |
+| **La qualité des données en amont** | 86 % de quantités en erreur viennent d'un rapprochement qui échoue ailleurs. L'outil les compte ; il ne les répare pas, et rien ne dit à partir de quel taux c'est inacceptable |
+| **L'adoption** | L'outil n'a pas encore été employé par l'équipe sur une saison entière |
+| **Les formules** | Les classeurs sont lus en valeurs calculées |
 
 ## La marche
 
 **Une tâche.** Un geste répété par une équipe, à chaque saison, sur un fichier.
 
-Et ce qu'il annonce de la marche suivante : *les deux tiers des quantités manquent parce
-que le rapprochement échoue en amont.* Automatiser la mise en forme ne les fera pas
-apparaître. **C'est le cas d'école de l'escalier** — on entre par la tâche, on découvre que
-le problème est une capacité, puis un système.
+Et ce qu'il annonce de la marche suivante : *les deux tiers des quantités manquent parce que
+le rapprochement échoue en amont.* Retourner le tableau plus vite ne les fera pas apparaître.
+**C'est le cas d'école de l'escalier** — on entre par la tâche, on découvre que le problème
+est une capacité, puis un système.
 
 ---
 
