@@ -70,10 +70,12 @@ cohérence, puis **vraisemblance** : un prix nul, une quantité négative, ou un
 de prix sur tout un catalogue. Un contrôle de complétude déclare bon un fichier dont toutes
 les cases sont remplies et fausses.
 
-**Il range sans jamais jeter.** Il déduit la famille depuis le libellé, retrouve dans un
-fichier de règles ce qui a déjà été décidé — la clé est l'*article*, donc ranger une fois
-vaut pour tous les coloris — et **propose** pour le reste en le disant. Une référence non
-rangée va dans un bloc `À RANGER` visible dans toutes les sorties.
+**Il range sans jamais jeter, et il a appris où ranger dans les fichiers de la maison.**
+Plutôt que de demander à l'équipe de saisir ses regroupements dans un formulaire — la
+troisième ressaisie du projet — l'outil les **relève dans les matrices déjà faites** :
+**901 références-coloris rangées dans 41 blocs réels**, tirées des trois classeurs. Pour ce
+qu'il ne connaît pas, il déduit la famille depuis le libellé et **propose** en le disant.
+Une référence non rangée va dans un bloc `À RANGER` visible dans toutes les sorties.
 
 **Il contrôle sa propre sortie avant d'écrire**, et refuse si le contrôle échoue.
 
@@ -105,6 +107,30 @@ décrit-il vraiment la valeur qu'on y trouve ?*
 Les 373 valeurs mal placées étaient **100 %** de la ligne *prix de vente* : elle portait un
 code d'activité, pas un prix. Et les **148 références** qui manquaient à la matrice faite à
 la main y sont — aucune n'est perdue en route, l'outil le vérifie à chaque passage.
+
+### Ce que les règles relevées changent
+
+*Même fichier d'accessoires, avant et après le relevé des regroupements.*
+
+| | Famille seule | Règles relevées |
+|---|---:|---:|
+| Blocs produits | 23 | **36** |
+| Plus gros bloc | 184 colonnes | **91** |
+| Rangements restant à valider | 521 | **91** |
+
+### Le relevé a réfuté l'hypothèse de départ
+
+La clé de rangement était l'*article*, en supposant qu'une gamme entière allait dans le même
+bloc. Le relevé a rendu **20 articles rangés dans deux blocs** — puis la vérification a dit
+pourquoi : **la matière est portée par le coloris**, pas par l'article.
+
+| | |
+|---|---|
+| `0PVE01-V40315-117` · CAFE | → CABAS COTON |
+| `0PVE01-V40315-959` · OR/NOIR | → CABAS LIN |
+
+Même cabas, deux matières, deux blocs. Avec la référence-coloris pour clé : **zéro conflit**.
+C'est le relevé qui a tranché, pas la conception.
 
 ### Le temps de traitement
 
@@ -145,7 +171,9 @@ avec le classeur — un chiffre sans sa réserve se recopie ailleurs et perd sa 
 | | |
 |---|---|
 | **Le temps gagné** | **Cinq jours est un chiffre déclaré par l'équipe, pas chronométré.** Il se mesure montre en main sur une vraie saison, avant et après. C'est la seule mesure qui intéressera une direction, et c'est la seule qui manque |
-| **Les regroupements réels** | Au premier passage, la famille seule donne des blocs trop larges — *CABAS* à 184 colonnes là où la maison en fait quatre. Le fichier de règles se remplit à l'usage ; **il n'a pas encore été rempli** |
+| **Les 91 rangements restants** | 430 références sur 521 sont rangées par les règles relevées. Les 91 autres sont des références que les matrices existantes ne couvraient pas — elles attendent une décision, **et elles sont visibles, pas escamotées** |
+| **Deux intitulés à trancher** | Le relevé signale *KNITWEAR* et *KNITWEARS*, puis *JUM* tronqué de *JUMPSUITS* — un seul bloc, ou deux ? L'outil ne fusionne pas d'office : ce serait décider seul d'un regroupement commercial |
+| **Trois blocs sans nom** | Leur intitulé, dans le fichier d'origine, est une référence produit. Personne ne les a nommés, et l'outil ne leur invente pas de nom |
 | **La qualité des données en amont** | 86 % de quantités en erreur viennent d'un rapprochement qui échoue ailleurs. L'outil les compte ; il ne les répare pas, et rien ne dit à partir de quel taux c'est inacceptable |
 | **L'adoption** | L'outil n'a pas encore été employé par l'équipe sur une saison entière |
 | **Les formules** | Les classeurs sont lus en valeurs calculées |
