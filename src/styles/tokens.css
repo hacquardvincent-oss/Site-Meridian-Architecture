@@ -15,7 +15,7 @@
   --ink: #0e0e10;            /* noir — typographie */
   --ink-2: #1a1a1d;          /* noir secondaire (surfaces sombres) */
   --ink-soft: #43454a;       /* texte secondaire */
-  --stone: #8a8d93;          /* texte tertiaire / légendes */
+  --stone: #676a71;          /* texte tertiaire / légendes — étalonné AA (≥4.5:1 sur blanc et sur --plaster-deep) */
 
   /* ---- Accent : BLEU PASTEL, réservé aux animations / détails ---- */
   --accent: #9db8dd;         /* bleu pastel */
