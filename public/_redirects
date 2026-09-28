@@ -1,0 +1,13 @@
+# Redirections Cloudflare Pages (301). Première règle qui matche = gagne.
+
+# « Le concept » est fusionné dans « Ce que nous automatisons ».
+/concept/        /solutions/       301
+/en/concept/     /en/solutions/    301
+
+# Ancien schéma i18n : le français était préfixé /fr, il est désormais à la racine.
+# (les slugs n'ont pas changé, seul le préfixe disparaît — mapping 1:1)
+/fr/concept/     /solutions/       301
+/fr/concept      /solutions/       301
+/fr              /                 301
+/fr/             /                 301
+/fr/*            /:splat           301

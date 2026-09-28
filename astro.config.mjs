@@ -18,9 +18,6 @@ export default defineConfig({
       prefixDefaultLocale: false,
     },
   },
-  // Le concept est fusionné dans « Ce que nous automatisons ».
-  redirects: {
-    '/concept/': '/solutions/',
-    '/en/concept/': '/en/solutions/',
-  },
+  // Toutes les redirections (concept fusionné + ancien préfixe /fr) sont dans
+  // public/_redirects — de vrais 301 côté Cloudflare, avec joker /fr/*.
 });
