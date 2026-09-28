@@ -2,7 +2,7 @@
 
 export const locales = ['en', 'fr'] as const;
 export type Locale = (typeof locales)[number];
-export const defaultLocale: Locale = 'en';
+export const defaultLocale: Locale = 'fr';
 
 export interface RouteDef {
   id: string;
@@ -16,21 +16,22 @@ export interface RouteDef {
 
 /** Pages du site, dans l'ordre de la navigation. */
 export const routes: RouteDef[] = [
-  { id: 'home', en: '/', fr: '/fr/', labelEn: 'Home', labelFr: 'Accueil' },
-  { id: 'concept', en: '/concept/', fr: '/fr/concept/', labelEn: 'Concept', labelFr: 'Le concept', hidden: true },
-  { id: 'solutions', en: '/solutions/', fr: '/fr/solutions/', labelEn: 'What we automate', labelFr: 'Ce que nous automatisons' },
-  { id: 'outils', en: '/tools/', fr: '/fr/outils/', labelEn: 'Case studies', labelFr: 'Réalisations' },
-  { id: 'methode', en: '/method/', fr: '/fr/methode/', labelEn: 'Method', labelFr: 'La méthode' },
-  { id: 'about', en: '/about/', fr: '/fr/a-propos/', labelEn: 'About', labelFr: 'À propos' },
-  { id: 'contact', en: '/contact/', fr: '/fr/contact/', labelEn: 'Contact', labelFr: 'Contact' },
-  { id: 'prototyper', en: '/prototyping-an-idea/', fr: '/fr/prototyper-une-idee/', labelEn: 'Prototype an idea', labelFr: 'Prototyper une idée', hidden: true },
-  { id: 'mentions', en: '/legal-notice/', fr: '/fr/mentions-legales/', labelEn: 'Legal notice', labelFr: 'Mentions légales', hidden: true },
-  { id: 'confidentialite', en: '/privacy/', fr: '/fr/confidentialite/', labelEn: 'Privacy', labelFr: 'Confidentialité', hidden: true },
+  { id: 'home', fr: '/', en: '/en/', labelEn: 'Home', labelFr: 'Accueil' },
+  { id: 'solutions', fr: '/solutions/', en: '/en/solutions/', labelEn: 'What we automate', labelFr: 'Ce que nous automatisons' },
+  { id: 'outils', fr: '/outils/', en: '/en/tools/', labelEn: 'Case studies', labelFr: 'Réalisations' },
+  { id: 'methode', fr: '/methode/', en: '/en/method/', labelEn: 'Method', labelFr: 'La méthode' },
+  { id: 'about', fr: '/a-propos/', en: '/en/about/', labelEn: 'About', labelFr: 'À propos' },
+  { id: 'contact', fr: '/contact/', en: '/en/contact/', labelEn: 'Contact', labelFr: 'Contact' },
+  { id: 'prototyper', fr: '/prototyper-une-idee/', en: '/en/prototyping-an-idea/', labelEn: 'Prototype an idea', labelFr: 'Prototyper une idée', hidden: true },
+  { id: 'mentions', fr: '/mentions-legales/', en: '/en/legal-notice/', labelEn: 'Legal notice', labelFr: 'Mentions légales', hidden: true },
+  { id: 'confidentialite', fr: '/confidentialite/', en: '/en/privacy/', labelEn: 'Privacy', labelFr: 'Confidentialité', hidden: true },
 ];
 
 export function getLocaleFromUrl(url: URL): Locale {
-  const [, first] = url.pathname.split('/');
-  return first === 'fr' ? 'fr' : 'en';
+  const base = (import.meta.env.BASE_URL || '/').replace(/\/+$/, '');
+  const path = base && url.pathname.startsWith(base) ? url.pathname.slice(base.length) : url.pathname;
+  const [, first] = path.split('/');
+  return first === 'en' ? 'en' : 'fr';
 }
 
 export function routeById(id: string): RouteDef {

@@ -12,7 +12,7 @@ const L = isFr
   ? { what: 'Qu’est-ce que c’est ?', use: 'À quoi ça sert ?', how: 'Comment ça fonctionne ?', meridian: 'Avec Meridian', faq: 'Questions fréquentes', others: 'Autres outils', back: 'Tous les outils' }
   : { what: 'What is it?', use: 'What is it for?', how: 'How it works', meridian: 'With Meridian', faq: 'Frequently asked questions', others: 'Other tools', back: 'All tools' };
 
-const toolsBase = isFr ? '/fr/outils/' : '/tools/';
+const toolsBase = isFr ? '/outils/' : '/en/tools/';
 const others = getTools(locale).filter((t) => t.slug !== tool.slug);
 ---
 <PageHero eyebrow={`${tool.need} · ${tool.angle}`} title={tool.name} lead={tool.lead} index="Outils" graphic="arc" />

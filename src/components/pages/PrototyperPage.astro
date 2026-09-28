@@ -9,7 +9,7 @@ interface Props { locale: Locale }
 const { locale } = Astro.props;
 const isFr = locale === 'fr';
 const c = getPillar(locale);
-const toolsBase = isFr ? '/fr/outils/' : '/tools/';
+const toolsBase = isFr ? '/outils/' : '/en/tools/';
 const tools = getTools(locale);
 const toolsLabel = isFr ? 'Voir tous les outils' : 'See all tools';
 ---

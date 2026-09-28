@@ -1,7 +1,7 @@
 ---
-import Base from '../layouts/Base.astro';
-import LegalPage from '../components/pages/LegalPage.astro';
-import { getPrivacy } from '../i18n/legal';
+import Base from '../../layouts/Base.astro';
+import LegalPage from '../../components/pages/LegalPage.astro';
+import { getPrivacy } from '../../i18n/legal';
 
 const locale = 'en' as const;
 const doc = getPrivacy(locale);

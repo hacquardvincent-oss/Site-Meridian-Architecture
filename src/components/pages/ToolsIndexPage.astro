@@ -8,7 +8,7 @@ interface Props { locale: Locale }
 const { locale } = Astro.props;
 const isFr = locale === 'fr';
 const tools = getTools(locale);
-const toolsBase = isFr ? '/fr/outils/' : '/tools/';
+const toolsBase = isFr ? '/outils/' : '/en/tools/';
 
 const hero = isFr
   ? { eyebrow: 'Les outils', title: 'Ce que nous prototypons.', lead: 'Les outils qui boostent votre chiffre d’affaires et ceux qui vous font gagner en productivité — prototypés à l’IA, testés par vos équipes. Chacun a sa page : ce que c’est, à quoi ça sert, comment ça marche.' }

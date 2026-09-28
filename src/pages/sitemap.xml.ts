@@ -13,8 +13,8 @@ export const GET: APIRoute = ({ site }) => {
 
   // Pages dynamiques : une page de contexte par outil (FR + EN).
   const toolPairs = getTools('fr').map((t) => ({
-    fr: abs(withBase(`/fr/outils/${t.slug}/`)),
-    en: abs(withBase(`/tools/${t.slug}/`)),
+    fr: abs(withBase(`/outils/${t.slug}/`)),
+    en: abs(withBase(`/en/tools/${t.slug}/`)),
   }));
 
   const entries = [...routePairs, ...toolPairs]

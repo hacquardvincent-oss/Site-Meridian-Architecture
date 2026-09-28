@@ -97,6 +97,12 @@ const fr = {
       button: 'Parler d’un cas précis',
       micro: 'Réponse sous 48 h ouvrées.',
     },
+    // Les cinq formes concrètes — bandeau discret, rangées sur ces marches
+    piliers: {
+      intro: 'Concrètement, cinq formes s’y rangent —',
+      items: ['Automatisation', 'Widgets e-commerce', 'Middleware', 'Agents IA', 'Écosystèmes digitaux'],
+      link: 'Ce que nous automatisons',
+    },
   },
 
   concept: {
@@ -140,59 +146,65 @@ const fr = {
 
   solutions: {
     meta: {
-      title: 'L’offre — Meridian Architecture',
-      description: 'Nous prototypons à l’IA les idées de vos équipes et les transformons en outils sur-mesure, testés et adoptés en temps réel. Deux angles : chiffre d’affaires et productivité.',
+      title: 'Ce que nous automatisons — Meridian Architecture',
+      description: 'Cinq formes d’automatisation sur-mesure, de la tâche au système : automatisation, widgets e-commerce, middleware, agents IA, écosystèmes digitaux. Chacune posée sur l’échelle, chacune mesurée.',
     },
     hero: {
-      eyebrow: 'L’offre',
-      title: 'De l’idée à l’outil, sur-mesure.',
-      lead: 'Nous partons des idées de vos équipes et les rendons concrètes : prototypées à l’IA, testées et adaptées en temps réel, jusqu’à la mise en production — sans conduite du changement.',
+      eyebrow: 'Ce que nous automatisons',
+      title: 'Cinq formes. Une seule échelle.',
+      lead: 'De la tâche répétée au système qui relie tout, voici les formes concrètes que prend l’automatisation sur-mesure — rangées de la plus petite à la plus grande, la même échelle que sur l’accueil.',
     },
-    builder: {
-      eyebrow: 'Le prototypage',
-      title: 'Le prototypage sur-mesure, propulsé par l’IA.',
-      body: 'On ne spécifie plus un outil : on le prototype avec celles et ceux qui l’utiliseront. L’IA matérialise l’idée en quelques jours ; vos équipes testent et ajustent en temps réel. Quand on met en production, l’outil est déjà adopté — parce qu’elles l’ont construit.',
-      points: [
-        'On part des idées de vos équipes, jamais d’un cahier des charges.',
-        'Ce qui coûtait des mois se prototype en quelques jours.',
-        'L’adoption est intégrée : zéro conduite du changement.',
-      ],
+    axes: {
+      eyebrow: 'Comment lire cette page',
+      title: 'La forme, posée sur l’ampleur.',
+      body: 'L’accueil pose l’échelle — une tâche, une capacité, un système. Ici, les formes : ce qu’on construit vraiment. Chacune indique où elle se situe sur l’échelle. On commence toujours par la marche la plus basse qui règle votre problème — et la liste s’allongera.',
     },
-    method: {
-      eyebrow: 'La méthode',
-      title: 'De l’idée à la prod, en six temps.',
-      steps: [
-        { n: '01', title: 'Prototyper', text: 'L’idée d’une équipe devient un outil réel et cliquable en quelques jours.' },
-        { n: '02', title: 'Tester en live', text: 'Vos équipes l’utilisent en conditions réelles, tout de suite.' },
-        { n: '03', title: 'Recetter', text: 'On vérifie, avec elles, que l’outil fait le job — sans angle mort.' },
-        { n: '04', title: 'Itérer', text: 'On ajuste en temps réel avec celles et ceux qui s’en servent.' },
-        { n: '05', title: 'Valider', text: 'L’outil colle au besoin ; l’adoption est déjà là.' },
-        { n: '06', title: 'Mettre en prod', text: 'Déployé avec les équipes, sans conduite du changement.' },
-      ],
-    },
-    profiles: {
-      eyebrow: 'Par où on commence',
-      title: 'Deux questions à poser à vos équipes.',
-      items: [
-        {
-          tag: 'Data/BI · CRM · e-commerce · POS',
-          kicker: 'Booster le chiffre d’affaires',
-          title: 'Quels outils vous manquent pour vendre plus ?',
-          text: 'Data & BI pour décider sur des faits, CRM pour convertir et fidéliser, sites vitrines et e-commerce pour vendre, POS pour encaisser — chaque brique prototypée à votre métier et testée par vos équipes.',
-          example: 'Cas concret : un tableau de bord réunissant ventes, marge et stock en temps réel, prototypé en quelques jours et adopté sans formation.',
-        },
-        {
-          tag: 'PLM · PIM · outils métier',
-          kicker: 'Gagner en productivité',
-          title: 'Quels outils vous manquent pour aller plus vite ?',
-          text: 'PLM, PIM et vos outils métier : on prototype les facilitateurs qui suppriment les ressaisies, les tâches à faible valeur et les frictions du quotidien — au plus près de vos process.',
-          example: 'Cas concret : un générateur de fiches produit branché sur votre PIM, qui fait gagner des heures à chaque mise en marché.',
-        },
-      ],
-    },
+    laddernote: 'Sur l’échelle',
+    pillars: [
+      {
+        slug: 'automatisation',
+        name: 'Automatisation',
+        gloss: 'retirer une tâche des mains',
+        marche: 'Une tâche',
+        what: 'On automatise un geste répété — y compris ce qu’on ne savait pas automatiser hier : lire une pièce, trier des cas, recopier d’un outil à l’autre. Pas la macro Excel : ce qui, jusqu’ici, demandait un humain.',
+        example: 'Exemple : 373 valeurs mal placées sur le classeur d’une collection, repérées et corrigées en 3,8 s — l’audit prenait une demi-journée.',
+      },
+      {
+        slug: 'widgets-e-commerce',
+        name: 'Widgets e-commerce',
+        gloss: 'une brique ajoutée à votre canal de vente',
+        marche: 'Une tâche → une capacité',
+        what: 'Un composant qui se greffe sur votre site marchand : configurateur, calcul de port, fiche produit générée, moteur de recommandation. Il fait une chose, bien, là où vos clients achètent.',
+        example: 'Exemple : un configurateur qui compose l’article sur mesure et pousse la commande complète en caisse, sans ressaisie.',
+      },
+      {
+        slug: 'middleware',
+        name: 'Middleware',
+        gloss: 'connecteurs entre vos logiciels',
+        marche: 'Une capacité',
+        what: 'Le liant qui fait dialoguer des outils qui s’ignoraient. Une donnée saisie une seule fois circule partout — la ressaisie et les écarts entre systèmes disparaissent.',
+        example: 'Exemple : une commande qui met à jour le stock, déclenche la facturation et alimente les tableaux de bord d’un seul geste.',
+      },
+      {
+        slug: 'agents-ia',
+        name: 'Agents IA',
+        gloss: 'un collègue logiciel, en autonomie',
+        marche: 'Une capacité → un système',
+        what: 'Un agent qui fait un travail de tête sans surveillance constante : qualifier des demandes, rédiger un premier jet, surveiller un flux et alerter. Il tient une capacité entière, pas un seul geste.',
+        example: 'Exemple : un agent qui trie les demandes entrantes, prépare la réponse et n’escalade que les cas qui sortent du cadre.',
+      },
+      {
+        slug: 'ecosystemes',
+        name: 'Écosystèmes digitaux',
+        gloss: 'l’ensemble, sur un socle commun',
+        marche: 'Un système',
+        what: 'Quand les briques éprouvées se relient autour d’une donnée commune, le patchwork de logiciels rigides laisse place à un ensemble unique, taillé à votre métier. C’est l’aboutissement, jamais le point de départ.',
+        example: 'Exemple : BI, gestion, cycle de vie et information produit, portails — reliés en direct, une saison traversée sans rupture.',
+      },
+    ],
     endgame: {
       eyebrow: 'L’aboutissement',
-      title: 'Quand les prototypes tiennent, l’écosystème émerge.',
+      title: 'Quand les briques tiennent, l’écosystème émerge.',
       text: 'Rien n’est imposé d’emblée. À mesure que vos outils s’éprouvent, ils s’interconnectent autour d’un socle de données commun — jusqu’à remplacer le patchwork de logiciels rigides par un ensemble unique, taillé à votre métier.',
     },
     interconnect: {
@@ -382,6 +394,12 @@ const en = {
       button: 'Talk about a specific case',
       micro: 'Reply within 48 business hours.',
     },
+    // The five concrete forms — discreet strip, arranged on these steps
+    piliers: {
+      intro: 'Concretely, five forms sit on them —',
+      items: ['Automation', 'E-commerce widgets', 'Middleware', 'AI agents', 'Digital ecosystems'],
+      link: 'What we automate',
+    },
   },
 
   concept: {
@@ -425,59 +443,65 @@ const en = {
 
   solutions: {
     meta: {
-      title: 'The offer — Meridian Architecture',
-      description: 'We prototype your teams’ ideas with AI and turn them into bespoke tools, tested and adopted in real time. Two angles: revenue and productivity.',
+      title: 'What we automate — Meridian Architecture',
+      description: 'Five forms of bespoke automation, from a task to a system: automation, e-commerce widgets, middleware, AI agents, digital ecosystems. Each placed on the scale, each measured.',
     },
     hero: {
-      eyebrow: 'The offer',
-      title: 'From idea to tool, bespoke.',
-      lead: 'We start from your teams’ ideas and make them real: prototyped with AI, tested and adapted in real time, all the way to production — with no change management.',
+      eyebrow: 'What we automate',
+      title: 'Five forms. One scale.',
+      lead: 'From a repeated task to the system that ties everything together, here are the concrete forms bespoke automation takes — ordered smallest to largest, the same scale as the home page.',
     },
-    builder: {
-      eyebrow: 'The prototyping',
-      title: 'Bespoke prototyping, powered by AI.',
-      body: 'We no longer spec a tool: we prototype it with the very people who’ll use it. AI materialises the idea in days; your teams test and adjust in real time. By the time we go to production, the tool is already adopted — because they built it.',
-      points: [
-        'We start from your teams’ ideas, never from a spec sheet.',
-        'What used to take months is prototyped in days.',
-        'Adoption is built in: zero change management.',
-      ],
+    axes: {
+      eyebrow: 'How to read this page',
+      title: 'The form, placed on the scale.',
+      body: 'The home page sets the scale — a task, a capability, a system. Here are the forms: what we actually build. Each one shows where it sits on the scale. We always start from the lowest step that solves your problem — and the list will grow.',
     },
-    method: {
-      eyebrow: 'The method',
-      title: 'From idea to production, in six steps.',
-      steps: [
-        { n: '01', title: 'Prototype', text: 'A team’s idea becomes a real, clickable tool in a matter of days.' },
-        { n: '02', title: 'Test live', text: 'Your teams use it in real conditions, right away.' },
-        { n: '03', title: 'Review', text: 'We check, with them, that the tool does the job — with no blind spots.' },
-        { n: '04', title: 'Iterate', text: 'We adjust in real time with the people who use it.' },
-        { n: '05', title: 'Validate', text: 'The tool fits the need; adoption is already there.' },
-        { n: '06', title: 'Ship', text: 'Deployed with the teams, with no change management.' },
-      ],
-    },
-    profiles: {
-      eyebrow: 'Where to start',
-      title: 'Two questions to ask your teams.',
-      items: [
-        {
-          tag: 'Data/BI · CRM · e-commerce · POS',
-          kicker: 'Boost revenue',
-          title: 'Which tools are you missing to sell more?',
-          text: 'Data & BI to decide on facts, CRM to convert and retain, showcase and e-commerce sites to sell, POS to take payment — each brick prototyped to your business and tested by your teams.',
-          example: 'Real case: a dashboard bringing sales, margin and stock together in real time, prototyped in days and adopted with no training.',
-        },
-        {
-          tag: 'PLM · PIM · line-of-business tools',
-          kicker: 'Gain productivity',
-          title: 'Which tools are you missing to move faster?',
-          text: 'PLM, PIM and your line-of-business tools: we prototype the enablers that remove re-keying, low-value tasks and everyday friction — as close as possible to your processes.',
-          example: 'Real case: a product-sheet generator wired to your PIM, saving hours at every launch.',
-        },
-      ],
-    },
+    laddernote: 'On the scale',
+    pillars: [
+      {
+        slug: 'automatisation',
+        name: 'Automation',
+        gloss: 'take a task off people’s hands',
+        marche: 'A task',
+        what: 'We automate a repeated gesture — including what couldn’t be automated yesterday: reading a document, sorting cases, re-keying from one tool to another. Not the Excel macro: what used to need a human.',
+        example: 'Example: 373 misplaced values in a collection’s workbook, caught and corrected in 3.8 s — the audit used to take half a day.',
+      },
+      {
+        slug: 'widgets-e-commerce',
+        name: 'E-commerce widgets',
+        gloss: 'a brick added to your sales channel',
+        marche: 'A task → a capability',
+        what: 'A component that grafts onto your storefront: configurator, shipping calculator, generated product page, recommendation engine. It does one thing, well, right where your customers buy.',
+        example: 'Example: a configurator that builds the bespoke item and pushes the complete order to checkout, with no re-keying.',
+      },
+      {
+        slug: 'middleware',
+        name: 'Middleware',
+        gloss: 'connectors between your software',
+        marche: 'A capability',
+        what: 'The connective tissue that makes tools that ignored each other talk. Data entered once flows everywhere — re-keying and gaps between systems disappear.',
+        example: 'Example: an order that updates stock, triggers invoicing and feeds the dashboards in a single move.',
+      },
+      {
+        slug: 'agents-ia',
+        name: 'AI agents',
+        gloss: 'a software colleague, autonomous',
+        marche: 'A capability → a system',
+        what: 'An agent that does head-work without constant supervision: qualifying requests, drafting a first pass, watching a flow and raising the alert. It holds a whole capability, not a single gesture.',
+        example: 'Example: an agent that triages incoming requests, prepares the reply, and only escalates the cases that fall outside the frame.',
+      },
+      {
+        slug: 'ecosystemes',
+        name: 'Digital ecosystems',
+        gloss: 'the whole, on a shared core',
+        marche: 'A system',
+        what: 'When the proven bricks link up around shared data, the patchwork of rigid software gives way to a single whole, cut to your business. It’s the outcome, never the starting point.',
+        example: 'Example: BI, operations, product lifecycle and information, portals — wired straight together, one season carried with no break.',
+      },
+    ],
     endgame: {
       eyebrow: 'The outcome',
-      title: 'When the prototypes hold, the ecosystem emerges.',
+      title: 'When the bricks hold, the ecosystem emerges.',
       text: 'Nothing is imposed upfront. As your tools prove themselves, they interconnect around a shared data core — until the patchwork of rigid software gives way to a single whole, cut to your business.',
     },
     interconnect: {

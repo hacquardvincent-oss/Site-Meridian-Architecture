@@ -1,18 +1,11 @@
 ---
-// L'anglais est désormais à la racine. On redirige l'ancienne adresse /en/ vers /.
-import { withBase } from '../../i18n/routes';
-const target = withBase('/');
+import Base from '../../layouts/Base.astro';
+import HomePage from '../../components/pages/HomePage.astro';
+import { getContent } from '../../i18n/content';
+
+const locale = 'en' as const;
+const c = getContent(locale);
 ---
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="refresh" content={`0; url=${target}`} />
-    <link rel="canonical" href={target} />
-    <meta name="robots" content="noindex" />
-    <title>Meridian Architecture</title>
-  </head>
-  <body>
-    <p>Redirecting to <a href={target}>Meridian Architecture</a>…</p>
-  </body>
-</html>
+<Base title={c.home.meta.title} description={c.home.meta.description} pageId="home" locale={locale} heroTheme="dark">
+  <HomePage locale={locale} />
+</Base>

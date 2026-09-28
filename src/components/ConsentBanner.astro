@@ -4,8 +4,8 @@ interface Props { locale: Locale }
 const { locale } = Astro.props;
 const isFr = locale === 'fr';
 const t = isFr
-  ? { text: 'Nous utilisons des cookies de mesure d’audience (Google Analytics) pour améliorer le site. Vous pouvez accepter ou refuser — le site fonctionne dans les deux cas.', accept: 'Accepter', refuse: 'Refuser', more: 'En savoir plus' }
-  : { text: 'We use audience-measurement cookies (Google Analytics) to improve the site. You can accept or decline — the site works either way.', accept: 'Accept', refuse: 'Decline', more: 'Learn more' };
+  ? { text: 'Nous utilisons des cookies de mesure d’audience (Google Analytics) pour améliorer le site. Vous pouvez accepter ou refuser — le site fonctionne dans les deux cas.', accept: 'Accepter', refuse: 'Refuser', more: 'Politique de confidentialité' }
+  : { text: 'We use audience-measurement cookies (Google Analytics) to improve the site. You can accept or decline — the site works either way.', accept: 'Accept', refuse: 'Decline', more: 'Privacy policy' };
 const privacyHref = pathFor('confidentialite', locale);
 ---
 <div class="consent" data-consent hidden>

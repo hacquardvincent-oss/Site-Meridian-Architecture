@@ -11,71 +11,41 @@ const data = getContent(locale);
 const c = data.solutions;
 const modules = data.modules;
 ---
-<PageHero eyebrow={c.hero.eyebrow} title={c.hero.title} lead={c.hero.lead} index="02 — 05" image="/images/solutions.jpg" theme="light" />
+<PageHero eyebrow={c.hero.eyebrow} title={c.hero.title} lead={c.hero.lead} index="01 — 05" image="/images/solutions.jpg" theme="light" />
 
-<!-- Le métier : Builder Product -->
+<!-- Comment lire : la forme, posée sur l'ampleur -->
 <section class="section">
-  <div class="container builder" data-reveal>
-    <div class="builder__head">
-      <span class="eyebrow">{c.builder.eyebrow}</span>
-      <h2 class="builder__title">{c.builder.title}</h2>
-    </div>
-    <div class="builder__body">
-      <p class="lead">{c.builder.body}</p>
-      <ul class="builder__points">
-        {c.builder.points.map((p) => (
-          <li class="builder__point"><span class="builder__tick" aria-hidden="true"></span>{p}</li>
-        ))}
-      </ul>
-    </div>
+  <div class="container axes" data-reveal>
+    <span class="eyebrow">{c.axes.eyebrow}</span>
+    <h2 class="axes__title">{c.axes.title}</h2>
+    <p class="lead axes__body measure">{c.axes.body}</p>
   </div>
 </section>
 
-<!-- La méthode : 5 temps -->
+<!-- Les piliers : une section par forme, rangée par ampleur -->
 <section class="section section--alt">
   <div class="container">
-    <span class="eyebrow" data-reveal>{c.method.eyebrow}</span>
-    <h2 class="method__title" data-reveal style="--reveal-delay:80ms">{c.method.title}</h2>
-    <ol class="flow">
-      {c.method.steps.map((s, i) => (
-        <li class="flow__step" data-reveal style={`--reveal-delay:${i * 60}ms`}>
-          <div class="flow__marker">
-            <span class="flow__n mono">{s.n}</span>
-            {i < c.method.steps.length - 1 && <span class="flow__line" aria-hidden="true"></span>}
+    <ol class="pillars">
+      {c.pillars.map((p, i) => (
+        <li class="pillar" id={p.slug} data-reveal style={`--reveal-delay:${i * 60}ms`}>
+          <div class="pillar__head">
+            <span class="pillar__n mono">{String(i + 1).padStart(2, '0')}</span>
+            <div class="pillar__id">
+              <h3 class="pillar__name">{p.name}</h3>
+              <p class="pillar__gloss">{p.gloss}</p>
+            </div>
+            <span class="pillar__marche mono"><span class="pillar__marche-label">{c.laddernote}</span>{p.marche}</span>
           </div>
-          <div class="flow__content" class:list={[{ 'flow__content--last': i === c.method.steps.length - 1 }]}>
-            <h3 class="flow__step-title">{s.title}</h3>
-            <p class="muted flow__text">{s.text}</p>
-          </div>
+          <p class="pillar__what measure">{p.what}</p>
+          <p class="pillar__example">{p.example}</p>
         </li>
       ))}
     </ol>
   </div>
 </section>
 
-<!-- Deux portes d'entrée -->
+<!-- Le 5e pilier, en constellation : l'écosystème émerge -->
 <section class="section">
-  <div class="container">
-    <span class="eyebrow" data-reveal>{c.profiles.eyebrow}</span>
-    <h2 class="profiles__title" data-reveal style="--reveal-delay:80ms">{c.profiles.title}</h2>
-    <div class="profiles">
-      {c.profiles.items.map((p, i) => (
-        <article class="profile" data-reveal style={`--reveal-delay:${i * 90}ms`}>
-          <div class="profile__meta">
-            <span class="profile__kicker mono">{p.kicker}</span>
-            <span class="profile__tag">{p.tag}</span>
-          </div>
-          <h3 class="profile__title">{p.title}</h3>
-          <p class="profile__text">{p.text}</p>
-          <p class="profile__example muted">{p.example}</p>
-        </article>
-      ))}
-    </div>
-  </div>
-</section>
-
-<!-- L'aboutissement : l'écosystème émerge -->
-<section class="section section--alt">
   <div class="container endgame" data-reveal>
     <div class="endgame__head">
       <span class="eyebrow">{c.endgame.eyebrow}</span>
@@ -104,51 +74,40 @@ const modules = data.modules;
 <CtaPanel locale={locale} />
 
 <style>
-  /* Builder Product */
-  .builder { display: grid; gap: var(--space-l); }
-  .builder__title { margin-top: var(--space-s); font-size: var(--step-3); }
-  .builder__points { list-style: none; padding: 0; margin: var(--space-l) 0 0; display: grid; gap: var(--space-m); }
-  .builder__point { display: flex; align-items: baseline; gap: var(--space-s); font-size: var(--step-1); color: var(--ink); }
-  .builder__tick { flex: none; width: 1.5rem; height: 1px; background: var(--brass); transform: translateY(-0.4em); }
-  @media (min-width: 56em) {
-    .builder { grid-template-columns: 0.9fr 1.1fr; gap: var(--space-2xl); align-items: start; }
-    .builder__points { margin-top: 0; }
+  /* Comment lire */
+  .axes { display: grid; gap: var(--space-s); max-width: 62ch; }
+  .axes__title { margin-top: var(--space-2xs); font-size: var(--step-3); }
+  .axes__body { margin-top: var(--space-2xs); }
+
+  /* Les piliers — l'escalier des formes */
+  .pillars { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--space-2xl); }
+  .pillar { padding-top: var(--space-l); border-top: 1px solid var(--line-strong); }
+  .pillar__head { display: grid; grid-template-columns: auto 1fr; gap: var(--space-2xs) var(--space-m); align-items: baseline; }
+  .pillar__n { grid-row: span 2; font-size: var(--step-0); color: var(--ink); letter-spacing: var(--tracking-wide); padding-top: 0.35em; }
+  .pillar__id { display: flex; flex-direction: column; gap: var(--space-3xs); }
+  .pillar__name { font-size: var(--step-3); font-weight: 400; letter-spacing: var(--tracking-tight); line-height: 1.05; }
+  .pillar__gloss { font-size: var(--step-0); color: var(--text); }
+  .pillar__marche {
+    grid-column: 1 / -1; margin-top: var(--space-2xs);
+    display: inline-flex; flex-wrap: wrap; gap: 0.5rem;
+    font-size: var(--step--1); color: var(--text); letter-spacing: var(--tracking-wide);
+  }
+  .pillar__marche-label { color: var(--text-subtle); text-transform: uppercase; letter-spacing: var(--tracking-label); }
+  .pillar__marche-label::after { content: '·'; margin-left: 0.5rem; color: var(--text-subtle); }
+  .pillar__what { margin-top: var(--space-m); font-size: var(--step-1); color: var(--ink); line-height: var(--leading-normal); }
+  .pillar__example {
+    margin-top: var(--space-m); font-size: var(--step--1); line-height: var(--leading-normal); max-width: 60ch;
+    padding: var(--space-s) var(--space-m); border-left: 2px solid var(--brass); background: var(--brass-wash); color: var(--text);
+  }
+  @media (min-width: 52em) {
+    .pillar__head { grid-template-columns: auto 1fr auto; }
+    .pillar__n { grid-row: 1; }
+    .pillar__marche { grid-column: 3; grid-row: 1; margin-top: 0; justify-content: flex-end; text-align: right; align-self: baseline; }
+    .pillar__what { max-width: 68ch; padding-left: calc(var(--step-0) + var(--space-m)); }
+    .pillar__example { margin-left: calc(var(--step-0) + var(--space-m)); }
   }
 
-  /* Méthode — flow (aligné sur MethodePage) */
-  .method__title { margin-top: var(--space-s); margin-bottom: var(--space-xl); }
-  .flow { list-style: none; padding: 0; margin: 0; display: grid; gap: 0; }
-  .flow__step { display: grid; grid-template-columns: auto 1fr; gap: var(--space-l); }
-  .flow__marker { display: flex; flex-direction: column; align-items: center; }
-  .flow__n {
-    display: grid; place-items: center;
-    width: 3rem; height: 3rem; flex: none;
-    border: 1px solid var(--line-strong); border-radius: 50%;
-    font-size: var(--step--1); color: var(--accent-text); background: var(--surface);
-  }
-  .flow__line { flex: 1; width: 1px; background: var(--line-strong); margin-block: var(--space-2xs); }
-  .flow__content { padding-bottom: var(--space-xl); }
-  .flow__content--last { padding-bottom: 0; }
-  .flow__step-title { font-size: var(--step-2); }
-  .flow__text { margin-top: var(--space-2xs); max-width: 54ch; font-size: var(--step-0); }
-
-  /* Profils — deux portes d'entrée */
-  .profiles__title { margin-top: var(--space-s); margin-bottom: var(--space-xl); }
-  .profiles { display: grid; gap: var(--space-l); }
-  @media (min-width: 56em) { .profiles { grid-template-columns: 1fr 1fr; gap: var(--space-xl); } }
-  .profile { display: flex; flex-direction: column; gap: var(--space-s); padding-top: var(--space-m); border-top: 1px solid var(--line-strong); }
-  .profile__meta { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--space-s); }
-  .profile__kicker { font-size: var(--step--1); letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--accent-deep); }
-  .profile__tag { font-size: var(--step--1); color: var(--text-subtle); }
-  .profile__title { font-size: var(--step-2); }
-  .profile__text { font-size: var(--step-0); color: var(--text); max-width: 46ch; }
-  .profile__example {
-    font-size: var(--step--1); line-height: var(--leading-normal); max-width: 46ch;
-    padding: var(--space-s) var(--space-m); border-left: 2px solid var(--brass);
-    background: var(--brass-wash); margin-top: auto;
-  }
-
-  /* Aboutissement */
+  /* Écosystème — constellation */
   .endgame { display: grid; gap: var(--space-xl); }
   .endgame__head { display: grid; gap: var(--space-s); max-width: 60ch; }
   .endgame__title { margin-top: var(--space-2xs); }
@@ -158,7 +117,7 @@ const modules = data.modules;
   .mod { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-2xs); padding-top: var(--space-m); border-top: 1px solid var(--line); }
   .mod__glyph { width: 2.25rem; height: 2.25rem; color: var(--ink); }
   .mod__abbr { font-family: var(--font-display); font-size: var(--step-1); font-weight: 500; color: var(--ink); margin-top: var(--space-2xs); }
-  .mod__name { font-size: var(--step--1); color: var(--text-muted); }
+  .mod__name { font-size: var(--step--1); color: var(--text); }
 
   .interconnect { display: grid; gap: var(--space-l); padding-top: var(--space-l); border-top: 1px solid var(--line); }
   .interconnect__title { margin-top: var(--space-s); font-size: var(--step-2); }

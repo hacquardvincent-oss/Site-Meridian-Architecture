@@ -12,10 +12,15 @@ export default defineConfig({
   site: SITE_URL,
   base: BASE_PATH,
   i18n: {
-    defaultLocale: 'en',
+    defaultLocale: 'fr',
     locales: ['en', 'fr'],
     routing: {
       prefixDefaultLocale: false,
     },
+  },
+  // Le concept est fusionné dans « Ce que nous automatisons ».
+  redirects: {
+    '/concept/': '/solutions/',
+    '/en/concept/': '/en/solutions/',
   },
 });

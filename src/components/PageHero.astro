@@ -106,6 +106,8 @@ const { eyebrow, title, lead, index, graphic, image, theme = 'dark' } = Astro.pr
   .page-hero__foot { position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; padding-bottom: var(--space-l); }
   .page-hero__foot-row { display: flex; justify-content: space-between; align-items: center; font-size: var(--step--1); letter-spacing: var(--tracking-wide); }
   .page-hero__coord { color: var(--accent); }
+  /* Sur un hero clair, l'index passe en encre : le pastel n'est pas fait pour du texte (charte) et échoue à AA. */
+  .page-hero--light .page-hero__coord { color: var(--ink); }
   .page-hero--light .page-hero__foot-row { color: var(--text-subtle); }
   .page-hero--dark .page-hero__foot-row { color: rgba(255,255,255,0.6); }
 </style>
