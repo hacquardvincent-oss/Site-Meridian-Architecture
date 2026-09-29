@@ -37,7 +37,15 @@ const modules = data.modules;
             <span class="pillar__marche mono"><span class="pillar__marche-label">{c.laddernote}</span>{p.marche}</span>
           </div>
           <p class="pillar__what measure">{p.what}</p>
-          <p class="pillar__example">{p.example}</p>
+          <div class="pillar__list">
+            <p class="pillar__list-label mono">{p.itemsLabel}</p>
+            <ul class="pillar__items">
+              {p.items.map((it) => (
+                <li class="pillar__item">{it}</li>
+              ))}
+            </ul>
+          </div>
+          {p.proof && <p class="pillar__proof">{p.proof}</p>}
         </li>
       ))}
     </ol>
@@ -95,8 +103,20 @@ const modules = data.modules;
   .pillar__marche-label { color: var(--text-subtle); text-transform: uppercase; letter-spacing: var(--tracking-label); }
   .pillar__marche-label::after { content: '·'; margin-left: 0.5rem; color: var(--text-subtle); }
   .pillar__what { margin-top: var(--space-m); font-size: var(--step-1); color: var(--ink); line-height: var(--leading-normal); }
-  .pillar__example {
-    margin-top: var(--space-m); font-size: var(--step--1); line-height: var(--leading-normal); max-width: 60ch;
+  .pillar__list { margin-top: var(--space-l); }
+  .pillar__list-label { font-size: var(--step--1); letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--text-subtle); }
+  .pillar__items { list-style: none; padding: 0; margin: var(--space-m) 0 0; display: grid; gap: var(--space-s); }
+  @media (min-width: 46em) { .pillar__items { grid-template-columns: 1fr 1fr; gap: var(--space-s) var(--space-xl); } }
+  .pillar__item {
+    position: relative; padding-left: var(--space-m);
+    font-size: var(--step-0); line-height: var(--leading-normal); color: var(--text); max-width: 52ch;
+  }
+  .pillar__item::before {
+    content: ''; position: absolute; left: 0; top: 0.72em;
+    width: 0.5rem; height: 1px; background: var(--ink);
+  }
+  .pillar__proof {
+    margin-top: var(--space-l); font-size: var(--step--1); line-height: var(--leading-normal); max-width: 60ch;
     padding: var(--space-s) var(--space-m); border-left: 2px solid var(--brass); background: var(--brass-wash); color: var(--text);
   }
   @media (min-width: 52em) {
@@ -104,7 +124,7 @@ const modules = data.modules;
     .pillar__n { grid-row: 1; }
     .pillar__marche { grid-column: 3; grid-row: 1; margin-top: 0; justify-content: flex-end; text-align: right; align-self: baseline; }
     .pillar__what { max-width: 68ch; padding-left: calc(var(--step-0) + var(--space-m)); }
-    .pillar__example { margin-left: calc(var(--step-0) + var(--space-m)); }
+    .pillar__list, .pillar__proof { margin-left: calc(var(--step-0) + var(--space-m)); }
   }
 
   /* Écosystème — constellation */
