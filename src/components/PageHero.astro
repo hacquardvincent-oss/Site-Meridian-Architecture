@@ -18,7 +18,7 @@ const { eyebrow, title, lead, index, graphic, image, theme = 'dark' } = Astro.pr
 ---
 
 {image ? (
-  <section class:list={['page-hero', 'page-hero--photo', `page-hero--${theme}`]} data-hero>
+  <section class:list={['page-hero', 'page-hero--photo', `page-hero--${theme}`]} data-hero data-section-theme={theme}>
     <div class="page-hero__media">
       <img class="page-hero__img" src={withBase(image)} alt="" fetchpriority="high" />
       <div class="page-hero__scrim"></div>
@@ -36,7 +36,7 @@ const { eyebrow, title, lead, index, graphic, image, theme = 'dark' } = Astro.pr
     </div>
   </section>
 ) : (
-  <section class="page-hero">
+  <section class="page-hero" data-section-theme="light">
     <div class="container page-hero__grid">
       <div class="page-hero__inner">
         <span class="eyebrow" data-reveal>{eyebrow}</span>
@@ -55,7 +55,8 @@ const { eyebrow, title, lead, index, graphic, image, theme = 'dark' } = Astro.pr
 )}
 
 <style>
-  .page-hero { padding-block: clamp(3rem, 9vh, 6rem) 0; position: relative; overflow: hidden; }
+  /* Hero « graphique » (sans photo) : dégage le header fixe transparent. */
+  .page-hero { padding-block: calc(4.75rem + clamp(2rem, 6vh, 3.5rem)) 0; position: relative; overflow: hidden; }
   .page-hero__grid { position: relative; display: grid; gap: var(--space-xl); align-items: center; }
   .page-hero__inner { max-width: 46rem; display: flex; flex-direction: column; gap: var(--space-m); }
   .page-hero__title { font-size: var(--step-5); font-weight: 400; margin-top: 0.2rem; }

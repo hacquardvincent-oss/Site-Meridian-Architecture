@@ -22,7 +22,7 @@ const solutionsHref = pathFor('solutions', locale); // « Ce que nous automatiso
 <div class="stack" data-stack>
 
   {/* ============ 01 · LA FRONTIÈRE — hero photo, sombre ============ */}
-  <section class="panel panel--hero" style="--i:1" data-hero>
+  <section class="panel panel--hero" style="--i:1" data-hero data-section-theme="dark">
     <div class="panel__card hero">
       <div class="hero__media">
         <img class="hero__img" src={withBase('/images/hero.jpg')} alt="" fetchpriority="high" />
@@ -52,7 +52,7 @@ const solutionsHref = pathFor('solutions', locale); // « Ce que nous automatiso
   </section>
 
   {/* ============ 02 · LES TROIS MARCHES — clair ============ */}
-  <section class="panel panel--paper" style="--i:2">
+  <section class="panel panel--paper" style="--i:2" data-section-theme="light">
     <div class="panel__card panel__card--pad">
       <div class="container">
         <span class="eyebrow" data-reveal>{h.marches.eyebrow}</span>
@@ -83,7 +83,7 @@ const solutionsHref = pathFor('solutions', locale); // « Ce que nous automatiso
   </section>
 
   {/* ============ 03 · UNE PREUVE PAR MARCHE — clair (alt) ============ */}
-  <section class="panel panel--alt" style="--i:3">
+  <section class="panel panel--alt" style="--i:3" data-section-theme="light">
     <div class="panel__card panel__card--pad">
       <div class="container">
         <span class="eyebrow" data-reveal>{h.preuves.eyebrow}</span>
@@ -105,7 +105,7 @@ const solutionsHref = pathFor('solutions', locale); // « Ce que nous automatiso
   </section>
 
   {/* ============ 04 · LA RÈGLE DE LA MAISON — bandeau photo, sombre ============ */}
-  <section class="panel panel--band" style="--i:4" aria-label={h.regle.eyebrow}>
+  <section class="panel panel--band" style="--i:4" aria-label={h.regle.eyebrow} data-section-theme="dark">
     <div class="panel__card photoband">
       <img class="photoband__img" src={withBase('/images/band.jpg')} alt="" loading="lazy" />
       <div class="photoband__scrim"></div>
@@ -118,7 +118,7 @@ const solutionsHref = pathFor('solutions', locale); // « Ce que nous automatiso
   </section>
 
   {/* ============ 05 · UNE SEULE ACTION — sombre ============ */}
-  <section class="panel panel--cta" style="--i:5">
+  <section class="panel panel--cta" style="--i:5" data-section-theme="dark">
     <div class="panel__card panel__card--pad">
       <div class="container">
         <div class="cta" data-reveal>
