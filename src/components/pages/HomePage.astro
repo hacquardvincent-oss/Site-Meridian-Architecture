@@ -37,9 +37,9 @@ const solutionsHref = pathFor('solutions', locale); // « Ce que nous automatiso
       <div class="container hero__inner">
         <span class="eyebrow hero__eyebrow" data-reveal>{h.frontiere.eyebrow}</span>
         <h1 class="frontier" data-reveal style="--reveal-delay:80ms">
-          <span class="frontier__a">{h.frontiere.lineA}</span>
-          <span class="frontier__b">{h.frontiere.lineB}</span>
+          <span class="frontier__b">{h.frontiere.title}</span>
         </h1>
+        <p class="frontier__sub" data-reveal style="--reveal-delay:160ms">{h.frontiere.sub}</p>
       </div>
 
       <div class="hero__foot">
@@ -51,33 +51,26 @@ const solutionsHref = pathFor('solutions', locale); // « Ce que nous automatiso
     </div>
   </section>
 
-  {/* ============ 02 · LES TROIS MARCHES — clair ============ */}
+  {/* ============ 02 · LES TROIS PILIERS — clair ============ */}
   <section class="panel panel--paper" style="--i:2" data-section-theme="light">
     <div class="panel__card panel__card--pad">
       <div class="container">
-        <span class="eyebrow" data-reveal>{h.marches.eyebrow}</span>
-        <h2 class="secttl" data-reveal style="--reveal-delay:80ms">{h.marches.title}</h2>
-        <p class="sectintro muted" data-reveal style="--reveal-delay:120ms">{h.marches.intro}</p>
-        <a class="piliers" href={solutionsHref} data-reveal style="--reveal-delay:200ms">
-          <span class="piliers__intro">{h.piliers.intro}</span>
-          <span class="piliers__items">{h.piliers.items.join('  ·  ')}</span>
-          <Arrow class="arrow piliers__arrow" size={14} />
-        </a>
-        <ol class="marches">
-          {h.marches.items.map((m, i) => (
-            <li class="marche" style={`--step:${i}; --reveal-delay:${i * 90}ms`} data-reveal>
-              <div class="marche__head">
-                <span class="marche__n mono">{m.n}</span>
-                <h3 class="marche__name">{m.name}</h3>
+        <span class="eyebrow" data-reveal>{h.piliers.eyebrow}</span>
+        <h2 class="secttl" data-reveal style="--reveal-delay:80ms">{h.piliers.title}</h2>
+        <p class="sectintro muted" data-reveal style="--reveal-delay:120ms">{h.piliers.intro}</p>
+        <ol class="hpil">
+          {h.piliers.items.map((p, i) => (
+            <li class="hpil__item" data-reveal style={`--reveal-delay:${i * 90}ms`}>
+              <span class="hpil__n mono">{p.n}</span>
+              <div class="hpil__body">
+                <h3 class="hpil__name">{p.name}</h3>
+                <p class="hpil__what">{p.what}</p>
+                <p class="hpil__ex muted">{p.examples}</p>
               </div>
-              <dl class="marche__grid">
-                <div class="marche__cell"><dt>{h.marches.col.automatise}</dt><dd>{m.automatise}</dd></div>
-                <div class="marche__cell"><dt>{h.marches.col.decide}</dt><dd>{m.decide}</dd></div>
-                <div class="marche__cell"><dt>{h.marches.col.ampleur}</dt><dd>{m.ampleur}</dd></div>
-              </dl>
             </li>
           ))}
         </ol>
+        <a class="arrow-link hpil__link" href={solutionsHref}>{h.piliers.link} <Arrow class="arrow" size={15} /></a>
       </div>
     </div>
   </section>
@@ -169,8 +162,8 @@ const solutionsHref = pathFor('solutions', locale); // « Ce que nous automatiso
 
   /* ---- LA FRONTIÈRE (la phrase, et rien d'autre) ---- */
   .frontier { display: flex; flex-direction: column; gap: var(--space-m); max-width: 20ch; font-weight: 400; letter-spacing: var(--tracking-tight); }
-  .frontier__a { color: rgba(255,255,255,0.62); font-size: var(--step-3); line-height: 1.12; }
-  .frontier__b { color: #fff; font-size: var(--step-5); line-height: 1.04; max-width: 18ch; }
+  .frontier__b { color: #fff; font-size: var(--step-5); line-height: 1.05; max-width: 20ch; }
+  .frontier__sub { color: rgba(255,255,255,0.8); font-size: var(--step-1); line-height: var(--leading-normal); max-width: 46ch; margin-top: var(--space-m); }
 
   .hero__foot { position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; padding-bottom: var(--space-l); }
   .hero__foot-row { display: flex; justify-content: space-between; align-items: center; font-size: var(--step--1); letter-spacing: var(--tracking-wide); color: rgba(255,255,255,0.6); }
@@ -180,31 +173,14 @@ const solutionsHref = pathFor('solutions', locale); // « Ce que nous automatiso
   .secttl { margin-top: var(--space-s); }
   .sectintro { margin-top: var(--space-m); max-width: 60ch; }
 
-  /* ---- LES TROIS MARCHES (l'escalier) ---- */
-  .marches { list-style: none; padding: 0; margin: var(--space-2xl) 0 0; display: grid; gap: var(--space-l); }
-  .marche { padding-top: var(--space-m); border-top: 1px solid var(--line-strong); }
-  .marche__head { display: flex; align-items: baseline; gap: var(--space-m); }
-  .marche__n { font-size: var(--step--1); color: var(--ink); letter-spacing: var(--tracking-wide); }
-  .marche__name { font-size: var(--step-3); font-weight: 400; letter-spacing: var(--tracking-tight); }
-  .marche__grid { display: grid; gap: var(--space-m) var(--space-l); margin: var(--space-m) 0 0; }
-  .marche__cell dt { font-size: var(--step--1); letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--text-subtle); }
-  .marche__cell dd { margin: var(--space-3xs) 0 0; font-size: var(--step-0); color: var(--text); }
-  @media (min-width: 52em) {
-    .marche__grid { grid-template-columns: 1.3fr 1fr 0.8fr; align-items: start; }
-    /* l'escalier : chaque marche s'avance un peu plus */
-    .marche { margin-left: calc(var(--step, 0) * clamp(0rem, 4vw, 3.5rem)); }
-  }
-
-  /* Bandeau discret : les cinq formes concrètes, vers « Ce que nous automatisons » */
-  .piliers {
-    display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.4rem var(--space-s);
-    margin-top: var(--space-l); padding-top: var(--space-m);
-    border-top: 1px solid var(--line); text-decoration: none;
-  }
-  .piliers__intro { font-size: var(--step--1); letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--text-subtle); }
-  .piliers__items { font-size: var(--step-0); color: var(--ink); }
-  .piliers__arrow { color: var(--ink); transition: transform var(--dur, 0.3s) var(--ease, ease); }
-  .piliers:hover .piliers__arrow { transform: translateX(4px); }
+  /* ---- LES TROIS PILIERS ---- */
+  .hpil { list-style: none; padding: 0; margin: var(--space-2xl) 0 0; display: grid; gap: var(--space-xl); }
+  .hpil__item { display: grid; grid-template-columns: auto 1fr; gap: var(--space-s) var(--space-m); padding-top: var(--space-l); border-top: 1px solid var(--line-strong); }
+  .hpil__n { grid-row: span 3; font-size: var(--step-0); color: var(--ink); letter-spacing: var(--tracking-wide); padding-top: 0.35em; }
+  .hpil__name { font-size: var(--step-3); font-weight: 400; letter-spacing: var(--tracking-tight); line-height: 1.05; }
+  .hpil__what { margin-top: var(--space-2xs); font-size: var(--step-1); color: var(--ink); line-height: var(--leading-tight); }
+  .hpil__ex { margin-top: var(--space-s); font-size: var(--step-0); max-width: 64ch; line-height: var(--leading-normal); }
+  .hpil__link { margin-top: var(--space-xl); }
 
   /* ---- LES PREUVES ---- */
   .proofs { list-style: none; padding: 0; margin: var(--space-2xl) 0 0; display: grid; gap: var(--space-l); }
@@ -248,7 +224,7 @@ const solutionsHref = pathFor('solutions', locale); // « Ce que nous automatiso
       padding-block: clamp(4.75rem, 7.5vh, 6.5rem) var(--space-l);
     }
     .secttl { font-size: var(--step-3); }
-    .marches { margin-top: var(--space-xl); }
+    .hpil { margin-top: var(--space-xl); }
     .proofs { margin-top: var(--space-xl); }
 
     @supports (animation-timeline: scroll()) {

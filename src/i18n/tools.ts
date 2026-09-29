@@ -431,35 +431,39 @@ export interface PillarRef { slug: string; order: number; name: string; note: st
 
 interface PillarDef { slug: string; order: number; fr: string; en: string; noteFr: string; noteEn: string }
 const PILLARS: PillarDef[] = [
-  { slug: 'widgets-e-commerce', order: 2, fr: 'Widgets e-commerce', en: 'E-commerce widgets', noteFr: 'ce qui fait vendre en ligne', noteEn: 'what drives online sales' },
-  { slug: 'middleware', order: 3, fr: 'Middleware', en: 'Middleware', noteFr: 'connecter et outiller', noteEn: 'connect and equip' },
-  { slug: 'ecosystemes', order: 5, fr: 'Écosystèmes digitaux', en: 'Digital ecosystems', noteFr: 'l’ensemble intégré', noteEn: 'the integrated whole' },
+  { slug: 'automatisation', order: 1, fr: 'Automatisation', en: 'Automation', noteFr: 'le temps repris à la machine', noteEn: 'time won back' },
+  { slug: 'middleware', order: 2, fr: 'Middleware', en: 'Middleware', noteFr: 'vos logiciels métier, sur-mesure', noteEn: 'bespoke line-of-business software' },
+  { slug: 'e-commerce', order: 3, fr: 'E-commerce', en: 'E-commerce', noteFr: 'ce qui fait vendre en ligne', noteEn: 'what drives online sales' },
 ];
 
+const DEFAULT_PILLAR = 'middleware';
 const PILLAR_BY_TOOL: Record<string, string> = {
-  'site-vitrine-ecommerce': 'widgets-e-commerce',
-  'seo-geo': 'widgets-e-commerce',
-  'pos': 'widgets-e-commerce',
   'data-bi': 'middleware',
   'pim': 'middleware',
   'plm': 'middleware',
   'crm-fidelisation': 'middleware',
-  'erp': 'ecosystemes',
+  'erp': 'middleware',
+  'site-vitrine-ecommerce': 'e-commerce',
+  'seo-geo': 'e-commerce',
+  'pos': 'e-commerce',
 };
 
-export function pillarOf(locale: Locale, slug: string): PillarRef {
-  const def = PILLARS.find((p) => p.slug === (PILLAR_BY_TOOL[slug] ?? 'middleware'))!;
+function refOf(locale: Locale, def: PillarDef): PillarRef {
   return { slug: def.slug, order: def.order, name: locale === 'fr' ? def.fr : def.en, note: locale === 'fr' ? def.noteFr : def.noteEn };
 }
 
-/** Les domaines groupés par pilier, dans l'ordre d'ampleur (pour la page Réalisations). */
+export function pillarOf(locale: Locale, slug: string): PillarRef {
+  const def = PILLARS.find((p) => p.slug === (PILLAR_BY_TOOL[slug] ?? DEFAULT_PILLAR))!;
+  return refOf(locale, def);
+}
+
+/** Les domaines groupés par pilier, dans l'ordre des piliers (pour la page Réalisations). */
 export function toolsByPillar(locale: Locale): { pillar: PillarRef; tools: Tool[] }[] {
-  const groups = PILLARS
-    .map((def) => {
-      const ref = pillarOf(locale, Object.keys(PILLAR_BY_TOOL).find((s) => PILLAR_BY_TOOL[s] === def.slug)!);
-      return { pillar: ref, tools: getTools(locale).filter((t) => (PILLAR_BY_TOOL[t.slug] ?? 'middleware') === def.slug) };
-    })
+  return PILLARS
+    .map((def) => ({
+      pillar: refOf(locale, def),
+      tools: getTools(locale).filter((t) => (PILLAR_BY_TOOL[t.slug] ?? DEFAULT_PILLAR) === def.slug),
+    }))
     .filter((g) => g.tools.length > 0)
     .sort((a, b) => a.pillar.order - b.pillar.order);
-  return groups;
 }

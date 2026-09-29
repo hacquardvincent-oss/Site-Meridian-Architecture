@@ -11,8 +11,8 @@ const toolsBase = isFr ? '/outils/' : '/en/tools/';
 const groups = toolsByPillar(locale);
 
 const hero = isFr
-  ? { eyebrow: 'Réalisations', title: 'Ce qu’on construit.', lead: 'Les domaines qu’on prototype, connecte et met en production — rangés par forme, du plus petit au plus grand, comme sur « Ce que nous automatisons ». Chacun a sa page : ce que c’est, à quoi ça sert, comment ça marche.' }
-  : { eyebrow: 'What we build', title: 'What we build.', lead: 'The domains we prototype, connect and ship — grouped by form, smallest to largest, like on “What we automate.” Each has its page: what it is, what it’s for, how it works.' };
+  ? { eyebrow: 'Réalisations', title: 'Ce qu’on construit.', lead: 'Les domaines qu’on prototype, connecte et met en production — groupés par pilier, comme sur « Le savoir-faire ». Chacun a sa page : ce que c’est, à quoi ça sert, comment ça marche.' }
+  : { eyebrow: 'What we build', title: 'What we build.', lead: 'The domains we prototype, connect and ship — grouped by pillar, like on “The craft.” Each has its page: what it is, what it’s for, how it works.' };
 ---
 <PageHero eyebrow={hero.eyebrow} title={hero.title} lead={hero.lead} index="Réalisations" graphic="iso" />
 

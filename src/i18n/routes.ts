@@ -17,7 +17,7 @@ export interface RouteDef {
 /** Pages du site, dans l'ordre de la navigation. */
 export const routes: RouteDef[] = [
   { id: 'home', fr: '/', en: '/en/', labelEn: 'Home', labelFr: 'Accueil' },
-  { id: 'solutions', fr: '/solutions/', en: '/en/solutions/', labelEn: 'What we automate', labelFr: 'Ce que nous automatisons' },
+  { id: 'solutions', fr: '/solutions/', en: '/en/solutions/', labelEn: 'The craft', labelFr: 'Le savoir-faire' },
   { id: 'outils', fr: '/outils/', en: '/en/tools/', labelEn: 'Case studies', labelFr: 'Réalisations' },
   { id: 'methode', fr: '/methode/', en: '/en/method/', labelEn: 'Method', labelFr: 'La méthode' },
   { id: 'about', fr: '/a-propos/', en: '/en/about/', labelEn: 'About', labelFr: 'À propos' },
