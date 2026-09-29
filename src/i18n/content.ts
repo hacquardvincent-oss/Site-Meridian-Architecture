@@ -105,45 +105,6 @@ const fr = {
     },
   },
 
-  concept: {
-    meta: {
-      title: 'Le concept — Meridian Architecture',
-      description: 'Le prototype comme point de départ : un outil fonctionnel qui confronte l’idée au réel, à la place d’un cahier des charges et de mois de développement à l’aveugle.',
-    },
-    hero: {
-      eyebrow: 'Le concept',
-      title: 'Le prototype comme point de départ.',
-      lead: 'On ne conçoit plus un logiciel sur plan. On le prototype — un outil réel, cliquable, qui confronte l’idée au réel avant tout engagement.',
-    },
-    sections: [
-      {
-        eyebrow: 'Le point de départ',
-        title: 'Le cahier des charges est un pari',
-        body: 'Spécifier un outil sur le papier, c’est parier des mois de développement sur des hypothèses jamais confrontées au réel. Les vrais besoins se révèlent trop tard — quand le budget est déjà engagé et l’outil déjà rigide. La complexité n’est pas dans votre métier : elle est dans cette façon de faire.',
-      },
-      {
-        eyebrow: 'Le déplacement',
-        title: 'Du plan figé au prototype vivant',
-        body: 'Meridian renverse la logique. Au lieu de spécifier puis construire, on prototype d’abord. L’IA permet de matérialiser un prototype fonctionnel en quelques jours — un objet réel qu’on manipule, teste et corrige. Le prototype devient le vrai plan : il révèle le besoin, réduit le risque, et sert de socle à l’outil final.',
-      },
-      {
-        eyebrow: 'La nuance',
-        title: 'Un prototype, pas une maquette',
-        body: 'Une maquette illustre ; un prototype fonctionne. Le nôtre embarque la vraie logique métier, les vrais parcours, des données de test réalistes — assez abouti pour trancher une décision, assez léger pour être jeté sans regret. C’est cette différence qui transforme une intuition en certitude.',
-      },
-    ],
-    principles: {
-      eyebrow: 'Les principes',
-      title: 'Quatre partis pris',
-      items: [
-        { title: 'Prototyper, pas spécifier', text: 'On conçoit en construisant : un prototype fonctionnel plutôt qu’un document d’hypothèses.' },
-        { title: 'Confronter au réel', text: 'Le prototype se teste sur votre vrai workflow, entre de vraies mains — la décision s’appuie sur des faits.' },
-        { title: 'Propulsé par l’IA', text: 'L’IA matérialise le prototype en jours, pas en mois : on peut tester chaque idée, vite.' },
-        { title: 'Du prototype à l’écosystème', text: 'Le prototype éprouvé devient l’outil de référence, puis une brique de votre écosystème.' },
-      ],
-    },
-  },
-
   solutions: {
     meta: {
       title: 'Ce que nous automatisons — Meridian Architecture',
@@ -441,45 +402,6 @@ const en = {
       intro: 'Concretely, five forms sit on them —',
       items: ['Automation', 'E-commerce widgets', 'Middleware', 'AI agents', 'Digital ecosystems'],
       link: 'What we automate',
-    },
-  },
-
-  concept: {
-    meta: {
-      title: 'The concept — Meridian Architecture',
-      description: 'The prototype as starting point: a working tool that confronts the idea with reality, instead of a spec sheet and months of blind development.',
-    },
-    hero: {
-      eyebrow: 'The concept',
-      title: 'The prototype as starting point.',
-      lead: 'We no longer design software on paper. We prototype it — a real, clickable tool that confronts the idea with reality before any commitment.',
-    },
-    sections: [
-      {
-        eyebrow: 'The starting point',
-        title: 'A spec sheet is a bet',
-        body: 'Specifying a tool on paper means betting months of development on assumptions never confronted with reality. The real needs surface too late — once the budget is committed and the tool is already rigid. The complexity isn’t in your business: it’s in that way of working.',
-      },
-      {
-        eyebrow: 'The shift',
-        title: 'From a frozen plan to a living prototype',
-        body: 'Meridian flips the logic. Instead of specifying then building, we prototype first. AI lets us materialise a working prototype in days — a real object you handle, test and correct. The prototype becomes the true plan: it reveals the need, cuts the risk, and grounds the final tool.',
-      },
-      {
-        eyebrow: 'The nuance',
-        title: 'A prototype, not a mock-up',
-        body: 'A mock-up illustrates; a prototype works. Ours carries the real business logic, the real journeys, realistic test data — polished enough to settle a decision, light enough to be thrown away without regret. That difference is what turns a hunch into a certainty.',
-      },
-    ],
-    principles: {
-      eyebrow: 'The principles',
-      title: 'Four commitments',
-      items: [
-        { title: 'Prototype, don’t spec', text: 'We design by building: a working prototype rather than a document of assumptions.' },
-        { title: 'Confront with reality', text: 'The prototype is tested on your real workflow, in real hands — decisions rest on facts.' },
-        { title: 'AI-powered', text: 'AI materialises the prototype in days, not months: you can test every idea, fast.' },
-        { title: 'From prototype to ecosystem', text: 'The proven prototype becomes the reference tool, then a brick of your ecosystem.' },
-      ],
     },
   },
 
