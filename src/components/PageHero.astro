@@ -20,7 +20,7 @@ const { eyebrow, title, lead, index, graphic, image, theme = 'dark' } = Astro.pr
 {image ? (
   <section class:list={['page-hero', 'page-hero--photo', `page-hero--${theme}`]} data-hero data-section-theme={theme}>
     <div class="page-hero__media">
-      <img class="page-hero__img" src={withBase(image)} alt="" fetchpriority="high" />
+      <img class="page-hero__img" src={withBase(image)} alt="" fetchpriority="high" data-parallax />
       <div class="page-hero__scrim"></div>
     </div>
     <div class="container page-hero__pinner">

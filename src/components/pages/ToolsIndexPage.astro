@@ -25,7 +25,7 @@ const hero = isFr
       </div>
       <ul class="grid">
         {g.tools.map((t, i) => (
-          <li class="cell" data-reveal style={`--reveal-delay:${i * 50}ms`}>
+          <li class="cell" data-reveal="scale" style={`--reveal-delay:${i * 50}ms`}>
             <a class="cell__link" href={withBase(`${toolsBase}${t.slug}/`)}>
               <span class="cell__need mono">{t.need}</span>
               <h3 class="cell__name">{t.name}</h3>

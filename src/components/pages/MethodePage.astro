@@ -1,6 +1,6 @@
 ---
 import { getContent } from '../../i18n/content';
-import type { Locale } from '../../i18n/routes';
+import { withBase, type Locale } from '../../i18n/routes';
 import PageHero from '../PageHero.astro';
 import CtaPanel from '../CtaPanel.astro';
 
@@ -31,6 +31,15 @@ const steps = c.steps;
         </li>
       ))}
     </ol>
+  </div>
+</section>
+
+<section class="photoband" data-section-theme="dark">
+  <img class="photoband__img" src={withBase('/images/home.jpg')} alt="" loading="lazy" data-parallax />
+  <div class="photoband__scrim"></div>
+  <div class="container photoband__inner">
+    <span class="photoband__eyebrow" data-reveal>{c.band.eyebrow}</span>
+    <p class="photoband__line" data-reveal style="--reveal-delay:80ms">{c.band.line}</p>
   </div>
 </section>
 
@@ -81,4 +90,12 @@ const steps = c.steps;
   .commit__item { display: flex; flex-direction: column; gap: var(--space-2xs); padding-top: var(--space-m); border-top: 1px solid var(--line-strong); }
   .commit__tick { width: 1.5rem; height: 1px; background: var(--brass); margin-bottom: var(--space-xs); }
   .commit__name { font-size: var(--step-1); }
+
+  /* Bandeau photo */
+  .photoband { position: relative; min-height: 60vh; display: grid; place-items: center; overflow: hidden; background: var(--ink); color: #fff; }
+  .photoband__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .photoband__scrim { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(12,12,15,0.6) 0%, rgba(12,12,15,0.42) 50%, rgba(12,12,15,0.66) 100%); }
+  .photoband__inner { position: relative; z-index: 2; text-align: center; padding-block: var(--space-2xl); }
+  .photoband__eyebrow { display: inline-block; font-size: var(--step--1); letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--accent); margin-bottom: var(--space-m); }
+  .photoband__line { font-family: var(--font-display); font-weight: 400; font-size: var(--step-4); line-height: 1.14; letter-spacing: var(--tracking-tight); max-width: 24ch; margin: 0 auto; color: #fff; }
 </style>

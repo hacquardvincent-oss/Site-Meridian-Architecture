@@ -120,6 +120,10 @@ const fr = {
       title: 'La forme, posée sur l’ampleur.',
       body: 'L’accueil pose l’échelle — une tâche, une capacité, un système. Ici, les formes : ce qu’on construit vraiment. Chacune indique où elle se situe sur l’échelle. On commence toujours par la marche la plus basse qui règle votre problème — et la liste s’allongera.',
     },
+    band: {
+      eyebrow: 'De la forme au système',
+      line: 'Chaque forme éprouvée devient une brique de la suivante.',
+    },
     laddernote: 'Sur l’échelle',
     pillars: [
       {
@@ -226,6 +230,10 @@ const fr = {
       eyebrow: 'La méthode',
       title: 'De l’idée à la prod, avec vos équipes.',
       lead: 'Une boucle courte et transparente : à chaque temps, un livrable concret que vos équipes voient, testent et valident — c’est ce qui rend la conduite du changement inutile.',
+    },
+    band: {
+      eyebrow: 'Pourquoi ça tient',
+      line: 'Vos équipes l’ont construit. C’est pour ça qu’elles l’adoptent.',
     },
     deliverableLabel: 'Livrable',
     steps: [
@@ -420,6 +428,10 @@ const en = {
       title: 'The form, placed on the scale.',
       body: 'The home page sets the scale — a task, a capability, a system. Here are the forms: what we actually build. Each one shows where it sits on the scale. We always start from the lowest step that solves your problem — and the list will grow.',
     },
+    band: {
+      eyebrow: 'From form to system',
+      line: 'Each proven form becomes a brick of the next.',
+    },
     laddernote: 'On the scale',
     pillars: [
       {
@@ -526,6 +538,10 @@ const en = {
       eyebrow: 'The method',
       title: 'From idea to production, with your teams.',
       lead: 'A short, transparent loop: at every step, a concrete deliverable your teams see, test and validate — that’s what makes change management unnecessary.',
+    },
+    band: {
+      eyebrow: 'Why it holds',
+      line: 'Your teams built it. That’s why they adopt it.',
     },
     deliverableLabel: 'Deliverable',
     steps: [
