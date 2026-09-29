@@ -423,3 +423,43 @@ export function getTools(locale: Locale): Tool[] {
 export function getTool(locale: Locale, slug: string): Tool | undefined {
   return tools[locale].find((t) => t.slug === slug);
 }
+
+/* ---- Rattachement aux cinq piliers (« Ce que nous automatisons ») ----
+   Chaque domaine se range sur une forme, ordonnée par ampleur. La liste
+   des piliers vit dans content.ts ; ici on ne garde que le rattachement. */
+export interface PillarRef { slug: string; order: number; name: string; note: string }
+
+interface PillarDef { slug: string; order: number; fr: string; en: string; noteFr: string; noteEn: string }
+const PILLARS: PillarDef[] = [
+  { slug: 'widgets-e-commerce', order: 2, fr: 'Widgets e-commerce', en: 'E-commerce widgets', noteFr: 'ce qui fait vendre en ligne', noteEn: 'what drives online sales' },
+  { slug: 'middleware', order: 3, fr: 'Middleware', en: 'Middleware', noteFr: 'connecter et outiller', noteEn: 'connect and equip' },
+  { slug: 'ecosystemes', order: 5, fr: 'Écosystèmes digitaux', en: 'Digital ecosystems', noteFr: 'l’ensemble intégré', noteEn: 'the integrated whole' },
+];
+
+const PILLAR_BY_TOOL: Record<string, string> = {
+  'site-vitrine-ecommerce': 'widgets-e-commerce',
+  'seo-geo': 'widgets-e-commerce',
+  'pos': 'widgets-e-commerce',
+  'data-bi': 'middleware',
+  'pim': 'middleware',
+  'plm': 'middleware',
+  'crm-fidelisation': 'middleware',
+  'erp': 'ecosystemes',
+};
+
+export function pillarOf(locale: Locale, slug: string): PillarRef {
+  const def = PILLARS.find((p) => p.slug === (PILLAR_BY_TOOL[slug] ?? 'middleware'))!;
+  return { slug: def.slug, order: def.order, name: locale === 'fr' ? def.fr : def.en, note: locale === 'fr' ? def.noteFr : def.noteEn };
+}
+
+/** Les domaines groupés par pilier, dans l'ordre d'ampleur (pour la page Réalisations). */
+export function toolsByPillar(locale: Locale): { pillar: PillarRef; tools: Tool[] }[] {
+  const groups = PILLARS
+    .map((def) => {
+      const ref = pillarOf(locale, Object.keys(PILLAR_BY_TOOL).find((s) => PILLAR_BY_TOOL[s] === def.slug)!);
+      return { pillar: ref, tools: getTools(locale).filter((t) => (PILLAR_BY_TOOL[t.slug] ?? 'middleware') === def.slug) };
+    })
+    .filter((g) => g.tools.length > 0)
+    .sort((a, b) => a.pillar.order - b.pillar.order);
+  return groups;
+}

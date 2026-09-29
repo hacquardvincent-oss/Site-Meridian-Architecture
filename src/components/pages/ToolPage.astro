@@ -1,5 +1,5 @@
 ---
-import { getTools, type Tool } from '../../i18n/tools';
+import { getTools, pillarOf, type Tool } from '../../i18n/tools';
 import { pathFor, withBase, type Locale } from '../../i18n/routes';
 import PageHero from '../PageHero.astro';
 import CtaPanel from '../CtaPanel.astro';
@@ -14,8 +14,9 @@ const L = isFr
 
 const toolsBase = isFr ? '/outils/' : '/en/tools/';
 const others = getTools(locale).filter((t) => t.slug !== tool.slug);
+const pillar = pillarOf(locale, tool.slug);
 ---
-<PageHero eyebrow={`${tool.need} · ${tool.angle}`} title={tool.name} lead={tool.lead} index="Outils" graphic="arc" />
+<PageHero eyebrow={`${tool.need} · ${pillar.name}`} title={tool.name} lead={tool.lead} index="Réalisations" graphic="arc" />
 
 <section class="section">
   <div class="container tool">
@@ -100,7 +101,7 @@ const others = getTools(locale).filter((t) => t.slug !== tool.slug);
   @media (min-width: 48em) { .others { grid-template-columns: repeat(3, 1fr); gap: var(--space-m); } }
   .other__link { display: flex; flex-direction: column; gap: var(--space-2xs); padding: var(--space-m); border: 1px solid var(--line); height: 100%; transition: border-color var(--dur) var(--ease), transform var(--dur) var(--ease); }
   .other__link:hover { border-color: var(--line-strong); transform: translateY(-3px); }
-  .other__need { font-size: var(--step--1); letter-spacing: var(--tracking-wide); text-transform: uppercase; color: var(--accent-deep); }
+  .other__need { font-size: var(--step--1); letter-spacing: var(--tracking-wide); text-transform: uppercase; color: var(--text-subtle); }
   .other__name { font-size: var(--step-1); font-weight: 500; color: var(--ink); }
   .other__short { font-size: var(--step--1); }
 </style>
