@@ -1,6 +1,6 @@
 ---
 import { getContent } from '../../i18n/content';
-import { withBase, type Locale } from '../../i18n/routes';
+import { pathFor, withBase, type Locale } from '../../i18n/routes';
 import Arrow from '../Arrow.astro';
 
 interface Props { locale: Locale }
@@ -8,6 +8,7 @@ const { locale } = Astro.props;
 const data = getContent(locale);
 const c = data.contact;
 const f = c.form;
+const privacyHref = pathFor('confidentialite', locale);
 const needTypes = locale === 'fr'
   ? ['Automatisation', 'Outil sur-mesure', 'Site', 'App', 'Widget', 'Autre']
   : ['Automation', 'Bespoke tool', 'Website', 'App', 'Widget', 'Other'];
@@ -26,18 +27,18 @@ const needTypes = locale === 'fr'
 
     <form class="ccard" data-contact-form data-email={data.site.email} novalidate data-reveal style="--reveal-delay:120ms">
       <input type="hidden" name="_subject" value="Nouvelle demande — meridian-architecture.com" />
-      <input type="hidden" name="_template" value="table" />
+      <input type="hidden" name="_template" value="box" />
       <input type="hidden" name="_captcha" value="false" />
       <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
 
       <div class="ccard__grid">
         <div class="field">
           <label for="prenom">{f.firstName}</label>
-          <input id="prenom" name="prenom" type="text" autocomplete="given-name" required />
+          <input id="prenom" name="Prénom" type="text" autocomplete="given-name" required />
         </div>
         <div class="field">
           <label for="nom">{f.lastName}</label>
-          <input id="nom" name="nom" type="text" autocomplete="family-name" required />
+          <input id="nom" name="Nom" type="text" autocomplete="family-name" required />
         </div>
         <div class="field">
           <label for="email">{f.email}</label>
@@ -45,7 +46,7 @@ const needTypes = locale === 'fr'
         </div>
         <div class="field">
           <label for="entreprise">{f.company}</label>
-          <input id="entreprise" name="entreprise" type="text" autocomplete="organization" />
+          <input id="entreprise" name="Entreprise" type="text" autocomplete="organization" />
         </div>
       </div>
 
@@ -54,7 +55,7 @@ const needTypes = locale === 'fr'
         <div class="chips__row">
           {needTypes.map((t, i) => (
             <label class="chip">
-              <input type="radio" name="type_besoin" value={t} required={i === 0} />
+              <input type="radio" name="Besoin" value={t} required={i === 0} />
               <span>{t}</span>
             </label>
           ))}
@@ -63,11 +64,11 @@ const needTypes = locale === 'fr'
 
       <div class="field">
         <label for="message">{f.message}</label>
-        <textarea id="message" name="message" rows="3" placeholder={f.placeholderMessage}></textarea>
+        <textarea id="message" name="Message" rows="2" placeholder={f.placeholderMessage} required></textarea>
       </div>
 
       <button class="btn btn--brass ccard__btn" type="submit">{f.submit} <Arrow class="arrow" /></button>
-      <p class="ccard__note mono">{f.note}</p>
+      <p class="ccard__note mono">{f.note} <a class="ccard__notelink" href={privacyHref}>{f.noteLink} →</a></p>
       <p class="ccard__success" data-success hidden>{f.success}</p>
       <p class="ccard__error" data-error hidden>{f.error}</p>
     </form>
@@ -79,6 +80,12 @@ const needTypes = locale === 'fr'
           <dt class="mono">{c.details.emailLabel}</dt>
           <dd><a class="cintro__mail" href={`mailto:${data.site.email}`}>{data.site.email}</a></dd>
         </div>
+        {data.site.phone && (
+          <div>
+            <dt class="mono">{c.details.phoneLabel}</dt>
+            <dd><a class="cintro__mail" href={`tel:${data.site.phone.replace(/\s+/g, '')}`}>{data.site.phone}</a></dd>
+          </div>
+        )}
         <div>
           <dt class="mono">{c.details.responseLabel}</dt>
           <dd>{c.details.response}</dd>
@@ -89,7 +96,7 @@ const needTypes = locale === 'fr'
 </section>
 
 <style>
-  .chero { position: relative; min-height: 100svh; display: grid; align-items: center; overflow: hidden; background: var(--ink); color: #fff; padding-block: calc(4.75rem + var(--space-xl)) var(--space-2xl); }
+  .chero { position: relative; min-height: 100svh; display: grid; align-items: center; overflow: hidden; background: var(--ink); color: #fff; padding-block: calc(4.75rem + var(--space-s)) var(--space-l); }
   .chero__media { position: absolute; inset: 0; z-index: 0; }
   .chero__img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .chero__scrim { position: absolute; inset: 0; background:
@@ -116,8 +123,8 @@ const needTypes = locale === 'fr'
   .cintro__details dd { font-size: var(--step-0); color: rgba(255,255,255,0.9); }
   .cintro__mail { color: #fff; border-bottom: 1px solid var(--accent); padding-bottom: 1px; }
 
-  .ccard { background: var(--plaster); color: var(--ink); border-radius: var(--radius-lg); padding: clamp(1.5rem, 3.5vw, 2.5rem); box-shadow: 0 30px 70px -28px rgba(0,0,0,0.55); display: grid; gap: var(--space-l); }
-  .ccard__grid { display: grid; gap: var(--space-m) var(--space-l); }
+  .ccard { background: var(--plaster); color: var(--ink); border-radius: var(--radius-lg); padding: clamp(1.25rem, 3vw, 2rem); box-shadow: 0 30px 70px -28px rgba(0,0,0,0.55); display: grid; gap: var(--space-m); }
+  .ccard__grid { display: grid; gap: var(--space-s) var(--space-l); }
   @media (min-width: 30em) { .ccard__grid { grid-template-columns: 1fr 1fr; } }
   .field { display: flex; flex-direction: column; gap: var(--space-2xs); }
   .field label { font-family: var(--font-mono); font-size: var(--step--1); letter-spacing: 0.04em; color: var(--text-subtle); text-transform: uppercase; }
@@ -145,6 +152,8 @@ const needTypes = locale === 'fr'
 
   .ccard__btn { justify-self: start; }
   .ccard__note { font-size: var(--step--1); color: var(--text-subtle); }
+  .ccard__notelink { color: var(--ink); border-bottom: 1px solid var(--line-strong); padding-bottom: 1px; white-space: nowrap; }
+  .ccard__notelink:hover { border-bottom-color: var(--ink); }
   .ccard__success { padding: var(--space-m); border: 1px solid var(--brass); border-radius: var(--radius); color: var(--ink); background: var(--brass-wash); }
   .ccard__error { padding: var(--space-m); border: 1px solid var(--line-strong); border-radius: var(--radius); color: var(--ink); background: var(--plaster-deep); font-size: var(--step--1); }
   .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }

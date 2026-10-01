@@ -31,6 +31,7 @@ const fr = {
     metaDescription:
       'Meridian Architecture prototype à l’IA les idées de vos équipes et les transforme en outils sur-mesure — testés et adoptés en temps réel, sans conduite du changement. Deux angles : chiffre d’affaires et productivité.',
     email: 'vincent@meridian-architecture.com',
+    phone: '',
     location: 'France · à distance',
   },
 
@@ -245,7 +246,7 @@ const fr = {
     },
     hero: {
       eyebrow: 'Contact',
-      title: 'Parlons de votre cas.',
+      title: 'Comment pouvons-nous vous aider ?',
       lead: 'Dites-nous ce qui vous freine — automatisation, outil sur-mesure, e-commerce. On revient vers vous avec une première lecture, sans engagement.',
     },
     form: {
@@ -254,17 +255,19 @@ const fr = {
       company: 'Entreprise',
       email: 'E-mail',
       needTypeLabel: 'Votre besoin',
-      message: 'En deux mots (optionnel)',
+      message: 'En deux mots',
       submit: 'Envoyer',
       placeholderMessage: 'Un exemple concret, un outil que vous utilisez, une échéance…',
       orEmail: 'Ou écrivez-nous directement :',
       success: 'Merci — votre message est bien parti. On vous répond sous 48 h ouvrées.',
       error: 'L’envoi a échoué. Réessayez, ou écrivez-nous directement à l’adresse ci-contre.',
-      note: 'Vos données ne servent qu’à vous répondre. Jamais de revente, jamais de spam.',
+      note: 'Vos données ne servent qu’à vous répondre.',
+      noteLink: 'Comment nous utilisons vos données',
     },
     details: {
       eyebrow: 'Coordonnées',
       emailLabel: 'E-mail',
+      phoneLabel: 'Téléphone',
       areaLabel: 'Zone',
       responseLabel: 'Délai de réponse',
       response: 'Sous 48 h ouvrées',
@@ -297,6 +300,7 @@ const en = {
     metaDescription:
       'Meridian Architecture prototypes your teams’ ideas with AI and turns them into bespoke tools — tested and adopted in real time, with no change management. Two angles: revenue and productivity.',
     email: 'vincent@meridian-architecture.com',
+    phone: '',
     location: 'France · remote',
   },
 
@@ -511,7 +515,7 @@ const en = {
     },
     hero: {
       eyebrow: 'Contact',
-      title: 'Let’s talk about your case.',
+      title: 'How can we help?',
       lead: 'Tell us what’s holding you back — automation, bespoke tool, e-commerce. We’ll come back with a first read, no commitment.',
     },
     form: {
@@ -520,17 +524,19 @@ const en = {
       company: 'Company',
       email: 'Email',
       needTypeLabel: 'Your need',
-      message: 'In a few words (optional)',
+      message: 'In a few words',
       submit: 'Send',
       placeholderMessage: 'A concrete example, a tool you use, a deadline…',
       orEmail: 'Or write to us directly:',
       success: 'Thank you — your message is on its way. We’ll reply within 48 business hours.',
       error: 'Sending failed. Please try again, or email us directly at the address opposite.',
-      note: 'Your details are only used to reply to you. Never resold, never spammed.',
+      note: 'Your details are only used to reply to you.',
+      noteLink: 'How we use your data',
     },
     details: {
       eyebrow: 'Details',
       emailLabel: 'Email',
+      phoneLabel: 'Phone',
       areaLabel: 'Area',
       responseLabel: 'Response time',
       response: 'Within 48 business hours',
