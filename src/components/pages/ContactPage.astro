@@ -12,22 +12,17 @@ const f = c.form;
 const sectors = locale === 'fr'
   ? ['Retail & distribution', 'Services B2B', 'Industrie', 'Autre']
   : ['Retail & distribution', 'B2B services', 'Industry', 'Other'];
-
-// Clé d'accès Web3Forms (publique par conception — elle n'autorise que l'envoi
-// vers l'email associé). À créer sur web3forms.com avec vincent@meridian-architecture.com,
-// puis la poser ici ou via la variable d'env PUBLIC_WEB3FORMS_KEY.
-const WEB3FORMS_KEY = import.meta.env.PUBLIC_WEB3FORMS_KEY || 'REPLACE_WITH_WEB3FORMS_ACCESS_KEY';
 ---
 <PageHero eyebrow={c.hero.eyebrow} title={c.hero.title} lead={c.hero.lead} index="05 — 05" image="/images/contact.jpg" theme="light" />
 
 <section class="section">
   <div class="container contact">
-    <form class="contact__form" data-contact-form novalidate data-reveal>
-      <input type="hidden" name="access_key" value={WEB3FORMS_KEY} />
-      <input type="hidden" name="subject" value="Nouvelle demande — meridian-architecture.com" />
-      <input type="hidden" name="from_name" value="Site Meridian Architecture" />
+    <form class="contact__form" data-contact-form data-email={data.site.email} novalidate data-reveal>
+      <input type="hidden" name="_subject" value="Nouvelle demande — meridian-architecture.com" />
+      <input type="hidden" name="_template" value="table" />
+      <input type="hidden" name="_captcha" value="false" />
       {/* Honeypot anti-spam : caché aux humains, rempli par les bots. */}
-      <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+      <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
       <div class="field">
         <label for="name">{f.name}</label>
         <input id="name" name="name" type="text" autocomplete="name" required />
@@ -122,9 +117,10 @@ const WEB3FORMS_KEY = import.meta.env.PUBLIC_WEB3FORMS_KEY || 'REPLACE_WITH_WEB3
       submitBtn.disabled = true;
       submitBtn.textContent = '…';
       try {
-        const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: new FormData(form) });
+        const endpoint = `https://formsubmit.co/ajax/${encodeURIComponent(form.dataset.email || '')}`;
+        const res = await fetch(endpoint, { method: 'POST', headers: { Accept: 'application/json' }, body: new FormData(form) });
         const data = await res.json().catch(() => ({}));
-        if (res.ok && data.success) {
+        if (res.ok && (data.success === true || data.success === 'true')) {
           success.hidden = false;
           form.querySelectorAll('input, textarea, select, button').forEach((el) => {
             (el as HTMLInputElement).disabled = true;

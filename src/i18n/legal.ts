@@ -61,7 +61,7 @@ const frPrivacy: LegalDoc = {
       'Le site utilise des cookies de mesure d’audience (Google Analytics 4). Par défaut, aucun cookie de mesure n’est déposé : le consentement est demandé via un bandeau, et rien n’est collecté tant que vous n’avez pas accepté (Consent Mode). Vous pouvez refuser sans conséquence sur l’usage du site, et revenir sur votre choix en effaçant les données de navigation de votre navigateur.',
     ] },
     { title: 'Destinataires et transferts', paras: [
-      'Vos données peuvent être traitées par nos sous-traitants techniques : Google (mesure d’audience), Cloudflare (hébergement) et Web3Forms (acheminement du formulaire de contact), situés hors de l’Union européenne. Ces transferts sont encadrés par les garanties appropriées (clauses contractuelles types).',
+      'Vos données peuvent être traitées par nos sous-traitants techniques : Google (mesure d’audience), Cloudflare (hébergement) et FormSubmit (acheminement du formulaire de contact), situés hors de l’Union européenne. Ces transferts sont encadrés par les garanties appropriées (clauses contractuelles types).',
     ] },
     { title: 'Durée de conservation', bullets: [
       'Données de contact : le temps de traiter votre demande, puis archivage dans une limite raisonnable.',
@@ -121,7 +121,7 @@ const enPrivacy: LegalDoc = {
       'The site uses analytics cookies (Google Analytics 4). By default, no analytics cookie is set: consent is requested via a banner, and nothing is collected until you accept (Consent Mode). You can decline with no impact on your use of the site, and change your choice by clearing your browser data.',
     ] },
     { title: 'Recipients and transfers', paras: [
-      'Your data may be processed by our technical sub-processors: Google (analytics), Cloudflare (hosting) and Web3Forms (contact-form delivery), located outside the European Union. These transfers are covered by appropriate safeguards (standard contractual clauses).',
+      'Your data may be processed by our technical sub-processors: Google (analytics), Cloudflare (hosting) and FormSubmit (contact-form delivery), located outside the European Union. These transfers are covered by appropriate safeguards (standard contractual clauses).',
     ] },
     { title: 'Retention period', bullets: [
       'Contact data: for the time needed to handle your request, then archived within a reasonable limit.',
