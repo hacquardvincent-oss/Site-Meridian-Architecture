@@ -45,6 +45,10 @@ const needTypes = locale === 'fr'
           <input id="email" name="email" type="email" autocomplete="email" required />
         </div>
         <div class="field">
+          <label for="telephone">{f.phone}</label>
+          <input id="telephone" name="Téléphone" type="tel" autocomplete="tel" required />
+        </div>
+        <div class="field field--full">
           <label for="entreprise">{f.company}</label>
           <input id="entreprise" name="Entreprise" type="text" autocomplete="organization" />
         </div>
@@ -86,10 +90,6 @@ const needTypes = locale === 'fr'
             <dd><a class="cintro__mail" href={`tel:${data.site.phone.replace(/\s+/g, '')}`}>{data.site.phone}</a></dd>
           </div>
         )}
-        <div>
-          <dt class="mono">{c.details.responseLabel}</dt>
-          <dd>{c.details.response}</dd>
-        </div>
       </dl>
     </div>
   </div>
@@ -102,7 +102,8 @@ const needTypes = locale === 'fr'
   .chero__scrim { position: absolute; inset: 0; background:
     linear-gradient(100deg, rgba(12,12,15,0.86) 0%, rgba(12,12,15,0.66) 38%, rgba(12,12,15,0.4) 70%, rgba(12,12,15,0.6) 100%); }
   .chero__grid { position: relative; z-index: 2; display: grid; gap: var(--space-xl); }
-  .cintro__head, .cintro__body { max-width: 34rem; }
+  .cintro__head { max-width: 44rem; }
+  .cintro__body { max-width: 34rem; }
   @media (min-width: 60em) {
     .chero__grid {
       grid-template-columns: 1fr minmax(28rem, 34rem);
@@ -116,7 +117,7 @@ const needTypes = locale === 'fr'
   }
   .cintro__eyebrow { color: rgba(255,255,255,0.72); }
   .cintro__eyebrow::before { background: rgba(255,255,255,0.45); }
-  .cintro__title { font-size: var(--step-5); font-weight: 400; line-height: 1.04; letter-spacing: var(--tracking-tight); margin-top: var(--space-m); color: #fff; }
+  .cintro__title { font-size: var(--step-3); font-weight: 400; line-height: 1.08; letter-spacing: var(--tracking-tight); margin-top: var(--space-m); color: #fff; }
   .cintro__lead { font-size: var(--step-1); line-height: var(--leading-normal); color: rgba(255,255,255,0.84); margin-top: var(--space-m); max-width: 40ch; }
   .cintro__details { display: grid; gap: var(--space-m); margin-top: var(--space-xl); }
   .cintro__details dt { font-size: var(--step--1); letter-spacing: var(--tracking-label); text-transform: uppercase; color: rgba(255,255,255,0.56); margin-bottom: var(--space-3xs); }
@@ -127,6 +128,7 @@ const needTypes = locale === 'fr'
   .ccard__grid { display: grid; gap: var(--space-s) var(--space-l); }
   @media (min-width: 30em) { .ccard__grid { grid-template-columns: 1fr 1fr; } }
   .field { display: flex; flex-direction: column; gap: var(--space-2xs); }
+  .field--full { grid-column: 1 / -1; }
   .field label { font-family: var(--font-mono); font-size: var(--step--1); letter-spacing: 0.04em; color: var(--text-subtle); text-transform: uppercase; }
   .field input, .field textarea {
     background: transparent; border: 0; border-bottom: 1px solid var(--line-strong);
