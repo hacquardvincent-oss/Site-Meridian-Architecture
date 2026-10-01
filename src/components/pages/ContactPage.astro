@@ -12,12 +12,22 @@ const f = c.form;
 const sectors = locale === 'fr'
   ? ['Retail & distribution', 'Services B2B', 'Industrie', 'Autre']
   : ['Retail & distribution', 'B2B services', 'Industry', 'Other'];
+
+// Clé d'accès Web3Forms (publique par conception — elle n'autorise que l'envoi
+// vers l'email associé). À créer sur web3forms.com avec vincent@meridian-architecture.com,
+// puis la poser ici ou via la variable d'env PUBLIC_WEB3FORMS_KEY.
+const WEB3FORMS_KEY = import.meta.env.PUBLIC_WEB3FORMS_KEY || 'REPLACE_WITH_WEB3FORMS_ACCESS_KEY';
 ---
 <PageHero eyebrow={c.hero.eyebrow} title={c.hero.title} lead={c.hero.lead} index="05 — 05" image="/images/contact.jpg" theme="light" />
 
 <section class="section">
   <div class="container contact">
-    <form class="contact__form" data-contact-form data-mailto={data.site.email} novalidate data-reveal>
+    <form class="contact__form" data-contact-form novalidate data-reveal>
+      <input type="hidden" name="access_key" value={WEB3FORMS_KEY} />
+      <input type="hidden" name="subject" value="Nouvelle demande — meridian-architecture.com" />
+      <input type="hidden" name="from_name" value="Site Meridian Architecture" />
+      {/* Honeypot anti-spam : caché aux humains, rempli par les bots. */}
+      <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
       <div class="field">
         <label for="name">{f.name}</label>
         <input id="name" name="name" type="text" autocomplete="name" required />
@@ -43,6 +53,7 @@ const sectors = locale === 'fr'
       <button class="btn btn--brass" type="submit">{f.submit} <Arrow class="arrow" /></button>
       <p class="contact__note mono">{f.note}</p>
       <p class="contact__success" data-success hidden>{f.success}</p>
+      <p class="contact__error" data-error hidden>{f.error}</p>
     </form>
 
     <aside class="contact__aside" data-reveal style="--reveal-delay:120ms">
@@ -87,6 +98,8 @@ const sectors = locale === 'fr'
   .contact__form .btn { grid-column: 1 / -1; justify-self: start; margin-top: var(--space-xs); }
   .contact__note { grid-column: 1 / -1; font-size: var(--step--1); color: var(--text-subtle); }
   .contact__success { grid-column: 1 / -1; padding: var(--space-m); border: 1px solid var(--brass); border-radius: var(--radius); color: var(--ink); background: var(--brass-wash); }
+  .contact__error { grid-column: 1 / -1; padding: var(--space-m); border: 1px solid var(--line-strong); border-radius: var(--radius); color: var(--ink); background: var(--plaster-deep); font-size: var(--step--1); }
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 
   .contact__details { display: grid; gap: var(--space-l); margin-block: var(--space-l); }
   .contact__details dt { font-size: 0.72rem; letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--text-subtle); margin-bottom: var(--space-3xs); }
@@ -98,28 +111,33 @@ const sectors = locale === 'fr'
 <script>
   const form = document.querySelector('[data-contact-form]') as HTMLFormElement | null;
   const success = document.querySelector('[data-success]') as HTMLElement | null;
-  if (form && success) {
-    form.addEventListener('submit', (e) => {
+  const errorEl = document.querySelector('[data-error]') as HTMLElement | null;
+  const submitBtn = form?.querySelector('button[type="submit"]') as HTMLButtonElement | null;
+  if (form && success && errorEl && submitBtn) {
+    const original = submitBtn.innerHTML;
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
       if (!form.checkValidity()) { form.reportValidity(); return; }
-      const to = form.getAttribute('data-mailto') || '';
-      const fd = new FormData(form);
-      const val = (k: string) => String(fd.get(k) || '').trim();
-      const subject = `Demande de contact — ${val('name')}${val('company') ? ' · ' + val('company') : ''}`;
-      const body = [
-        `Nom : ${val('name')}`,
-        `Société : ${val('company')}`,
-        `Email : ${val('email')}`,
-        `Secteur : ${val('sector')}`,
-        '',
-        val('message'),
-      ].join('\r\n');
-      window.location.href = `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-      success.hidden = false;
-      form.querySelectorAll('input, textarea, select, button').forEach((el) => {
-        (el as HTMLInputElement).disabled = true;
-      });
-      success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      errorEl.hidden = true;
+      submitBtn.disabled = true;
+      submitBtn.textContent = '…';
+      try {
+        const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: new FormData(form) });
+        const data = await res.json().catch(() => ({}));
+        if (res.ok && data.success) {
+          success.hidden = false;
+          form.querySelectorAll('input, textarea, select, button').forEach((el) => {
+            (el as HTMLInputElement).disabled = true;
+          });
+          success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        } else {
+          throw new Error(data.message || 'send failed');
+        }
+      } catch {
+        errorEl.hidden = false;
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = original;
+      }
     });
   }
 </script>

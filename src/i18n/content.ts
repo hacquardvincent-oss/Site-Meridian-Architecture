@@ -257,8 +257,9 @@ const fr = {
       submit: 'Envoyer',
       placeholderMessage: 'Quels outils utilisez-vous aujourd’hui ? Qu’est-ce qui vous freine ?',
       orEmail: 'Ou écrivez-nous directement :',
-      success: 'Merci — formulaire à connecter à votre service d’envoi (voir note).',
-      note: 'Formulaire de démonstration : à brancher sur Formspree, Netlify Forms ou votre CRM lors de la mise en ligne.',
+      success: 'Merci — votre message est bien parti. On vous répond sous 48 h ouvrées.',
+      error: 'L’envoi a échoué. Réessayez, ou écrivez-nous directement à l’adresse ci-contre.',
+      note: 'Vos données ne servent qu’à vous répondre. Jamais de revente, jamais de spam.',
     },
     details: {
       eyebrow: 'Coordonnées',
@@ -521,8 +522,9 @@ const en = {
       submit: 'Send',
       placeholderMessage: 'Which tools do you use today? What’s holding you back?',
       orEmail: 'Or write to us directly:',
-      success: 'Thank you — form to be connected to your sending service (see note).',
-      note: 'Demo form: to be wired to Formspree, Netlify Forms or your CRM at launch.',
+      success: 'Thank you — your message is on its way. We’ll reply within 48 business hours.',
+      error: 'Sending failed. Please try again, or email us directly at the address opposite.',
+      note: 'Your details are only used to reply to you. Never resold, never spammed.',
     },
     details: {
       eyebrow: 'Details',
