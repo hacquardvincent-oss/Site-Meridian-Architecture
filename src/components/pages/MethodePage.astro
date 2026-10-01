@@ -1,7 +1,6 @@
 ---
 import { getContent } from '../../i18n/content';
 import { withBase, type Locale } from '../../i18n/routes';
-import PageHero from '../PageHero.astro';
 import CtaPanel from '../CtaPanel.astro';
 
 interface Props { locale: Locale }
@@ -9,81 +8,121 @@ const { locale } = Astro.props;
 const c = getContent(locale).methode;
 const steps = c.steps;
 ---
-<PageHero eyebrow={c.hero.eyebrow} title={c.hero.title} lead={c.hero.lead} index="03 — 05" image="/images/method.jpg" theme="dark" />
+<div class="stack" style="--n:4">
 
-<section class="section">
-  <div class="container">
-    <ol class="flow">
-      {steps.map((s, i) => (
-        <li class="flow__step" data-reveal style={`--reveal-delay:${i * 60}ms`}>
-          <div class="flow__marker">
-            <span class="flow__n mono">{s.n}</span>
-            {i < steps.length - 1 && <span class="flow__line" aria-hidden="true"></span>}
-          </div>
-          <div class="flow__content" class:list={[{ 'flow__content--last': i === steps.length - 1 }]}>
-            <h2 class="flow__title">{s.title}</h2>
-            <p class="muted flow__text">{s.text}</p>
-            <p class="flow__deliverable">
-              <span class="flow__deliverable-label mono">{c.deliverableLabel}</span>
-              <span class="flow__deliverable-text">{s.deliverable}</span>
-            </p>
-          </div>
-        </li>
-      ))}
-    </ol>
-  </div>
-</section>
+  {/* 01 — hero */}
+  <section class="panel panel--ink" style="--i:1" data-section-theme="dark">
+    <div class="panel__card mhero">
+      <div class="mhero__media">
+        <img class="mhero__img" src={withBase('/images/method.jpg')} alt="" fetchpriority="high" data-parallax />
+        <div class="mhero__scrim"></div>
+      </div>
+      <div class="container mhero__inner">
+        <span class="eyebrow" data-reveal>{c.hero.eyebrow}</span>
+        <h1 class="mhero__title" data-reveal style="--reveal-delay:80ms">{c.hero.title}</h1>
+        <p class="mhero__lead lead" data-reveal style="--reveal-delay:140ms">{c.hero.lead}</p>
+      </div>
+    </div>
+  </section>
 
-<section class="photoband" data-section-theme="dark">
-  <img class="photoband__img" src={withBase('/images/home.jpg')} alt="" loading="lazy" data-parallax />
-  <div class="photoband__scrim"></div>
-  <div class="container photoband__inner">
-    <span class="photoband__eyebrow" data-reveal>{c.band.eyebrow}</span>
-    <p class="photoband__line" data-reveal style="--reveal-delay:80ms">{c.band.line}</p>
-  </div>
-</section>
+  {/* 02 — les six temps */}
+  <section class="panel panel--paper" style="--i:2" data-section-theme="light">
+    <div class="panel__card panel__card--pad">
+      <div class="container">
+        <ol class="flow">
+          {steps.map((s, i) => (
+            <li class="flow__step" data-reveal style={`--reveal-delay:${i * 50}ms`}>
+              <div class="flow__marker">
+                <span class="flow__n mono">{s.n}</span>
+                {i < steps.length - 1 && <span class="flow__line" aria-hidden="true"></span>}
+              </div>
+              <div class="flow__content" class:list={[{ 'flow__content--last': i === steps.length - 1 }]}>
+                <h2 class="flow__title">{s.title}</h2>
+                <p class="muted flow__text">{s.text}</p>
+                <p class="flow__deliverable">
+                  <span class="flow__deliverable-label mono">{c.deliverableLabel}</span>
+                  <span class="flow__deliverable-text">{s.deliverable}</span>
+                </p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </section>
 
-<section class="section section--alt">
-  <div class="container">
-    <span class="eyebrow" data-reveal>{c.principles.eyebrow}</span>
-    <h2 class="commit__title" data-reveal style="--reveal-delay:80ms">{c.principles.title}</h2>
-    <ul class="commit">
-      {c.principles.items.map((p, i) => (
-        <li class="commit__item" data-reveal style={`--reveal-delay:${i * 70}ms`}>
-          <span class="commit__tick" aria-hidden="true"></span>
-          <h3 class="commit__name">{p.title}</h3>
-          <p class="muted">{p.text}</p>
-        </li>
-      ))}
-    </ul>
-  </div>
-</section>
+  {/* 03 — bandeau photo */}
+  <section class="panel panel--ink" style="--i:3" data-section-theme="dark">
+    <div class="panel__card photoband">
+      <img class="photoband__img" src={withBase('/images/home.jpg')} alt="" loading="lazy" data-parallax />
+      <div class="photoband__scrim"></div>
+      <div class="container photoband__inner">
+        <span class="photoband__eyebrow" data-reveal>{c.band.eyebrow}</span>
+        <p class="photoband__line" data-reveal style="--reveal-delay:80ms">{c.band.line}</p>
+      </div>
+    </div>
+  </section>
+
+  {/* 04 — nos engagements */}
+  <section class="panel panel--alt" style="--i:4" data-section-theme="light">
+    <div class="panel__card panel__card--pad">
+      <div class="container">
+        <span class="eyebrow" data-reveal>{c.principles.eyebrow}</span>
+        <h2 class="commit__title" data-reveal style="--reveal-delay:80ms">{c.principles.title}</h2>
+        <ul class="commit">
+          {c.principles.items.map((p, i) => (
+            <li class="commit__item" data-reveal="scale" style={`--reveal-delay:${i * 70}ms`}>
+              <span class="commit__tick" aria-hidden="true"></span>
+              <h3 class="commit__name">{p.title}</h3>
+              <p class="muted">{p.text}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+</div>
 
 <CtaPanel locale={locale} />
 
 <style>
+  /* ---- Hero méthode (photo sombre) ---- */
+  .mhero { position: relative; min-height: 100vh; min-height: 100svh; display: grid; align-content: center; overflow: hidden; background: var(--ink); color: #fff; }
+  .mhero__media { position: absolute; inset: 0; z-index: 0; }
+  .mhero__img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .mhero__scrim { position: absolute; inset: 0; background:
+    linear-gradient(90deg, rgba(12,12,15,0.86) 0%, rgba(12,12,15,0.6) 44%, rgba(12,12,15,0.28) 72%, rgba(12,12,15,0.44) 100%),
+    linear-gradient(180deg, rgba(12,12,15,0.34) 0%, rgba(12,12,15,0.08) 45%, rgba(12,12,15,0.56) 100%); }
+  .mhero__inner { position: relative; z-index: 2; padding-block: var(--space-2xl); display: flex; flex-direction: column; gap: var(--space-m); }
+  .mhero .eyebrow { color: rgba(255,255,255,0.72); }
+  .mhero .eyebrow::before { background: rgba(255,255,255,0.45); }
+  .mhero__title { font-size: var(--step-6); font-weight: 400; line-height: 1.02; letter-spacing: var(--tracking-tight); max-width: 22ch; margin-top: var(--space-s); color: #fff; }
+  .mhero__lead { max-width: 48ch; color: rgba(255,255,255,0.84); }
+
+  /* ---- Six temps (flow) ---- */
   .flow { list-style: none; padding: 0; margin: 0; display: grid; gap: 0; }
   .flow__step { display: grid; grid-template-columns: auto 1fr; gap: var(--space-l); }
   .flow__marker { display: flex; flex-direction: column; align-items: center; }
   .flow__n {
     display: grid; place-items: center;
-    width: 3rem; height: 3rem; flex: none;
+    width: 2.75rem; height: 2.75rem; flex: none;
     border: 1px solid var(--line-strong); border-radius: 50%;
-    font-size: var(--step--1); color: var(--accent-text); background: var(--surface);
+    font-size: var(--step--1); color: var(--ink); background: var(--surface);
   }
   .flow__line { flex: 1; width: 1px; background: var(--line-strong); margin-block: var(--space-2xs); }
-  .flow__content { padding-bottom: var(--space-xl); }
+  .flow__content { padding-bottom: var(--space-l); }
   .flow__content--last { padding-bottom: 0; }
   .flow__title { font-size: var(--step-2); }
-  .flow__text { margin-top: var(--space-2xs); max-width: 54ch; font-size: var(--step-0); }
+  .flow__text { margin-top: var(--space-2xs); max-width: 60ch; font-size: var(--step-0); }
   .flow__deliverable {
     display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--space-2xs) var(--space-s);
-    margin-top: var(--space-s); padding: var(--space-xs) var(--space-m);
-    border-left: 2px solid var(--brass); background: var(--brass-wash); max-width: 54ch;
+    margin-top: var(--space-xs); padding: var(--space-2xs) var(--space-m);
+    border-left: 2px solid var(--brass); background: var(--brass-wash); max-width: 60ch;
   }
   .flow__deliverable-label { font-size: var(--step--1); letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--text-subtle); }
   .flow__deliverable-text { font-size: var(--step-0); color: var(--text); }
 
+  /* ---- Engagements ---- */
   .commit__title { margin-top: var(--space-s); }
   .commit { list-style: none; padding: 0; margin: var(--space-xl) 0 0; display: grid; gap: var(--space-l); }
   @media (min-width: 48em) { .commit { grid-template-columns: repeat(3, 1fr); gap: var(--space-xl); } }
@@ -91,11 +130,11 @@ const steps = c.steps;
   .commit__tick { width: 1.5rem; height: 1px; background: var(--brass); margin-bottom: var(--space-xs); }
   .commit__name { font-size: var(--step-1); }
 
-  /* Bandeau photo */
-  .photoband { position: relative; min-height: 60vh; display: grid; place-items: center; overflow: hidden; background: var(--ink); color: #fff; }
+  /* ---- Bandeau photo ---- */
+  .photoband { position: relative; min-height: 100vh; display: grid; place-items: center; overflow: hidden; background: var(--ink); color: #fff; }
   .photoband__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
   .photoband__scrim { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(12,12,15,0.6) 0%, rgba(12,12,15,0.42) 50%, rgba(12,12,15,0.66) 100%); }
   .photoband__inner { position: relative; z-index: 2; text-align: center; padding-block: var(--space-2xl); }
   .photoband__eyebrow { display: inline-block; font-size: var(--step--1); letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--accent); margin-bottom: var(--space-m); }
-  .photoband__line { font-family: var(--font-display); font-weight: 400; font-size: var(--step-4); line-height: 1.14; letter-spacing: var(--tracking-tight); max-width: 24ch; margin: 0 auto; color: #fff; }
+  .photoband__line { font-family: var(--font-display); font-weight: 400; font-size: var(--step-4); line-height: 1.14; letter-spacing: var(--tracking-tight); max-width: 30ch; margin: 0 auto; color: #fff; }
 </style>

@@ -1,55 +1,91 @@
 ---
 import { getContent } from '../../i18n/content';
-import type { Locale } from '../../i18n/routes';
-import PageHero from '../PageHero.astro';
+import { withBase, type Locale } from '../../i18n/routes';
 import CtaPanel from '../CtaPanel.astro';
 
 interface Props { locale: Locale }
 const { locale } = Astro.props;
 const c = getContent(locale).about;
 ---
-<PageHero eyebrow={c.hero.eyebrow} title={c.hero.title} lead={c.hero.lead} index="04 — 05" image="/images/about.jpg" theme="dark" />
+<div class="stack" style="--n:3">
 
-<section class="section">
-  <div class="container story" data-reveal>
-    <div class="story__head">
-      <span class="eyebrow">{c.story.eyebrow}</span>
-      <h2 class="story__title">{c.story.title}</h2>
+  {/* 01 — hero */}
+  <section class="panel panel--ink" style="--i:1" data-section-theme="dark">
+    <div class="panel__card ahero">
+      <div class="ahero__media">
+        <img class="ahero__img" src={withBase('/images/about.jpg')} alt="" fetchpriority="high" data-parallax />
+        <div class="ahero__scrim"></div>
+      </div>
+      <div class="container ahero__inner">
+        <span class="eyebrow" data-reveal>{c.hero.eyebrow}</span>
+        <h1 class="ahero__title" data-reveal style="--reveal-delay:80ms">{c.hero.title}</h1>
+        <p class="ahero__lead lead" data-reveal style="--reveal-delay:140ms">{c.hero.lead}</p>
+      </div>
     </div>
-    <p class="story__body">{c.story.body}</p>
-  </div>
-</section>
+  </section>
 
-<section class="section section--alt">
-  <div class="container">
-    <span class="eyebrow" data-reveal>{c.values.eyebrow}</span>
-    <h2 class="values__title" data-reveal style="--reveal-delay:80ms">{c.values.title}</h2>
-    <ul class="values">
-      {c.values.items.map((v, i) => (
-        <li class="value" data-reveal style={`--reveal-delay:${i * 70}ms`}>
-          <span class="value__n mono">{String(i + 1).padStart(2, '0')}</span>
-          <h3 class="value__name">{v.title}</h3>
-          <p class="muted">{v.text}</p>
-        </li>
-      ))}
-    </ul>
-    <p class="founder-note mono" data-reveal>{c.founderNote}</p>
-  </div>
-</section>
+  {/* 02 — le récit */}
+  <section class="panel panel--paper" style="--i:2" data-section-theme="light">
+    <div class="panel__card panel__card--pad">
+      <div class="container story" data-reveal>
+        <div class="story__head">
+          <span class="eyebrow">{c.story.eyebrow}</span>
+          <h2 class="story__title">{c.story.title}</h2>
+        </div>
+        <p class="story__body">{c.story.body}</p>
+      </div>
+    </div>
+  </section>
+
+  {/* 03 — valeurs */}
+  <section class="panel panel--alt" style="--i:3" data-section-theme="light">
+    <div class="panel__card panel__card--pad">
+      <div class="container">
+        <span class="eyebrow" data-reveal>{c.values.eyebrow}</span>
+        <h2 class="values__title" data-reveal style="--reveal-delay:80ms">{c.values.title}</h2>
+        <ul class="values">
+          {c.values.items.map((v, i) => (
+            <li class="value" data-reveal="scale" style={`--reveal-delay:${i * 70}ms`}>
+              <span class="value__n mono">{String(i + 1).padStart(2, '0')}</span>
+              <h3 class="value__name">{v.title}</h3>
+              <p class="muted">{v.text}</p>
+            </li>
+          ))}
+        </ul>
+        <p class="founder-note mono" data-reveal>{c.founderNote}</p>
+      </div>
+    </div>
+  </section>
+</div>
 
 <CtaPanel locale={locale} />
 
 <style>
+  /* ---- Hero à propos (photo sombre) ---- */
+  .ahero { position: relative; min-height: 100vh; min-height: 100svh; display: grid; align-content: center; overflow: hidden; background: var(--ink); color: #fff; }
+  .ahero__media { position: absolute; inset: 0; z-index: 0; }
+  .ahero__img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .ahero__scrim { position: absolute; inset: 0; background:
+    linear-gradient(90deg, rgba(12,12,15,0.86) 0%, rgba(12,12,15,0.6) 44%, rgba(12,12,15,0.28) 72%, rgba(12,12,15,0.44) 100%),
+    linear-gradient(180deg, rgba(12,12,15,0.34) 0%, rgba(12,12,15,0.08) 45%, rgba(12,12,15,0.56) 100%); }
+  .ahero__inner { position: relative; z-index: 2; padding-block: var(--space-2xl); display: flex; flex-direction: column; gap: var(--space-m); }
+  .ahero .eyebrow { color: rgba(255,255,255,0.72); }
+  .ahero .eyebrow::before { background: rgba(255,255,255,0.45); }
+  .ahero__title { font-size: var(--step-6); font-weight: 400; line-height: 1.02; letter-spacing: var(--tracking-tight); max-width: 20ch; margin-top: var(--space-s); color: #fff; }
+  .ahero__lead { max-width: 48ch; color: rgba(255,255,255,0.84); }
+
+  /* ---- Récit ---- */
   .story { display: grid; gap: var(--space-l); }
   .story__title { margin-top: var(--space-s); }
-  .story__body { font-size: var(--step-1); line-height: 1.6; color: var(--text-muted); max-width: 46ch; }
+  .story__body { font-size: var(--step-1); line-height: 1.6; color: var(--text); max-width: 50ch; }
   @media (min-width: 56em) { .story { grid-template-columns: 0.9fr 1.1fr; gap: var(--space-2xl); align-items: start; } .story__body { justify-self: end; } }
 
+  /* ---- Valeurs ---- */
   .values__title { margin-top: var(--space-s); }
   .values { list-style: none; padding: 0; margin: var(--space-xl) 0 0; display: grid; gap: var(--space-l); }
   @media (min-width: 48em) { .values { grid-template-columns: repeat(3, 1fr); gap: var(--space-xl); } }
   .value { display: flex; flex-direction: column; gap: var(--space-2xs); padding-top: var(--space-m); border-top: 1px solid var(--line-strong); }
-  .value__n { color: var(--accent-text); font-size: var(--step--1); }
+  .value__n { color: var(--ink); font-size: var(--step--1); letter-spacing: var(--tracking-wide); }
   .value__name { font-size: var(--step-1); }
-  .founder-note { margin-top: var(--space-2xl); padding: var(--space-m) var(--space-l); border-left: 2px solid var(--brass); color: var(--text-subtle); background: var(--surface); font-size: var(--step--1); }
+  .founder-note { margin-top: var(--space-2xl); padding: var(--space-m) var(--space-l); border-left: 2px solid var(--brass); color: var(--text); background: var(--brass-wash); font-size: var(--step--1); max-width: 70ch; }
 </style>

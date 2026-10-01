@@ -52,7 +52,8 @@ Optionnel plus tard : un display plus signature pour les très grands titres (à
 
 Le système géométrique est **distinctif et cohérent** — c'est lui qui fait l'identité :
 - **Structures isométriques filaires** (l'« édifice »), **glyphes par domaine**, **pictos** de cartes,
-  **compositions déstructurées** (fragments, arcs, plans).
+  **compositions déstructurées** (fragments, arcs, plans), **frise des trois piliers** (`PillarsGlyph` :
+  boucle = automatisation · modules reliés = middleware · vitrine = e-commerce — un nœud pastel par pilier).
 - Motif récurrent : l'**axe vertical « méridien »** + le **point bleu pastel**.
 - Détail signature : les **coordonnées** (`40.71°N 74.00°W`) et les **ticks d'angle** (codes de plan).
 

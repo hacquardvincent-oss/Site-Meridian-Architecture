@@ -1,141 +1,147 @@
 ---
 import { getContent } from '../../i18n/content';
 import { withBase, type Locale } from '../../i18n/routes';
-import PageHero from '../PageHero.astro';
 import CtaPanel from '../CtaPanel.astro';
 import ModuleGlyph from '../graphics/ModuleGlyph.astro';
+import PillarsGlyph from '../graphics/PillarsGlyph.astro';
 
 interface Props { locale: Locale }
 const { locale } = Astro.props;
 const data = getContent(locale);
 const c = data.solutions;
 const modules = data.modules;
+const pillarBg = ['panel--paper', 'panel--alt', 'panel--paper'];
 ---
-<PageHero eyebrow={c.hero.eyebrow} title={c.hero.title} lead={c.hero.lead} index="01 — 03" image="/images/solutions.jpg" theme="light" />
+<div class="stack" style="--n:6">
 
-<!-- Comment lire : la forme, posée sur l'ampleur -->
-<section class="section">
-  <div class="container axes" data-reveal>
-    <span class="eyebrow">{c.axes.eyebrow}</span>
-    <h2 class="axes__title">{c.axes.title}</h2>
-    <p class="lead axes__body measure">{c.axes.body}</p>
-  </div>
-</section>
+  {/* 01 — hero + graphisme des 3 piliers */}
+  <section class="panel" style="--i:1" data-hero data-section-theme="light">
+    <div class="panel__card sfhero">
+      <div class="sfhero__media">
+        <img class="sfhero__img" src={withBase('/images/solutions.jpg')} alt="" fetchpriority="high" data-parallax />
+        <div class="sfhero__scrim"></div>
+      </div>
+      <div class="container sfhero__inner">
+        <span class="eyebrow" data-reveal>{c.hero.eyebrow}</span>
+        <h1 class="sfhero__title" data-reveal style="--reveal-delay:80ms">{c.hero.title}</h1>
+        <p class="sfhero__lead lead" data-reveal style="--reveal-delay:140ms">{c.hero.lead}</p>
+        <div class="sfhero__glyph" data-reveal style="--reveal-delay:220ms"><PillarsGlyph /></div>
+      </div>
+    </div>
+  </section>
 
-<!-- Les piliers : une section par forme, rangée par ampleur -->
-<section class="section section--alt">
-  <div class="container">
-    <ol class="pillars">
-      {c.pillars.map((p, i) => (
-        <li class="pillar" id={p.slug} data-reveal style={`--reveal-delay:${i * 60}ms`}>
-          <div class="pillar__head">
-            <span class="pillar__n mono">{String(i + 1).padStart(2, '0')}</span>
-            <div class="pillar__id">
-              <h3 class="pillar__name">{p.name}</h3>
-              <p class="pillar__gloss">{p.gloss}</p>
+  {/* 02-04 — un pilier par panneau */}
+  {c.pillars.map((p, i) => (
+    <section class:list={['panel', pillarBg[i]]} style={`--i:${i + 2}`} id={p.slug} data-section-theme="light">
+      <div class="panel__card panel__card--pad">
+        <div class="container pil">
+          <div class="pil__head">
+            <span class="pil__n mono">{String(i + 1).padStart(2, '0')}</span>
+            <div class="pil__id">
+              <h2 class="pil__name">{p.name}</h2>
+              <p class="pil__gloss">{p.gloss}</p>
             </div>
           </div>
-          <p class="pillar__what measure">{p.what}</p>
-          <div class="pillar__list">
-            <p class="pillar__list-label mono">{p.itemsLabel}</p>
-            <ul class="pillar__items">
+          <p class="pil__what measure">{p.what}</p>
+          <div class="pil__list">
+            <p class="pil__list-label mono">{p.itemsLabel}</p>
+            <ul class="pil__items">
               {p.items.map((it) => (
-                <li class="pillar__item">{it}</li>
+                <li class="pil__item">{it}</li>
               ))}
             </ul>
           </div>
-          {p.proof && <p class="pillar__proof">{p.proof}</p>}
-        </li>
-      ))}
-    </ol>
-  </div>
-</section>
-
-<!-- Bandeau photo : de la forme au système -->
-<section class="photoband" data-section-theme="dark">
-  <img class="photoband__img" src={withBase('/images/concept-alt.jpg')} alt="" loading="lazy" data-parallax />
-  <div class="photoband__scrim"></div>
-  <div class="container photoband__inner">
-    <span class="photoband__eyebrow" data-reveal>{c.band.eyebrow}</span>
-    <p class="photoband__line" data-reveal style="--reveal-delay:80ms">{c.band.line}</p>
-  </div>
-</section>
-
-<!-- Le 5e pilier, en constellation : l'écosystème émerge -->
-<section class="section">
-  <div class="container endgame" data-reveal>
-    <div class="endgame__head">
-      <span class="eyebrow">{c.endgame.eyebrow}</span>
-      <h2 class="endgame__title">{c.endgame.title}</h2>
-      <p class="lead endgame__text">{c.endgame.text}</p>
-    </div>
-    <ul class="mods">
-      {modules.map((m, i) => (
-        <li class="mod" data-reveal="scale" style={`--reveal-delay:${i * 50}ms`}>
-          <ModuleGlyph abbr={m.abbr} class="mod__glyph" />
-          <span class="mod__abbr">{m.abbr}</span>
-          <span class="mod__name">{m.name}</span>
-        </li>
-      ))}
-    </ul>
-    <div class="interconnect">
-      <div class="interconnect__head">
-        <span class="eyebrow">{c.interconnect.eyebrow}</span>
-        <h3 class="interconnect__title">{c.interconnect.title}</h3>
+          {p.proof && <p class="pil__proof">{p.proof}</p>}
+        </div>
       </div>
-      <p class="interconnect__text lead">{c.interconnect.text}</p>
+    </section>
+  ))}
+
+  {/* 05 — bandeau photo */}
+  <section class="panel panel--ink" style="--i:5" data-section-theme="dark">
+    <div class="panel__card sfband">
+      <img class="sfband__img" src={withBase('/images/concept-alt.jpg')} alt="" loading="lazy" data-parallax />
+      <div class="sfband__scrim"></div>
+      <div class="container sfband__inner">
+        <span class="sfband__eyebrow" data-reveal>{c.band.eyebrow}</span>
+        <p class="sfband__line" data-reveal style="--reveal-delay:80ms">{c.band.line}</p>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
+
+  {/* 06 — l'écosystème en constellation */}
+  <section class="panel panel--alt" style="--i:6" data-section-theme="light">
+    <div class="panel__card panel__card--pad">
+      <div class="container endgame">
+        <div class="endgame__head" data-reveal>
+          <span class="eyebrow">{c.endgame.eyebrow}</span>
+          <h2 class="endgame__title">{c.endgame.title}</h2>
+          <p class="lead endgame__text">{c.endgame.text}</p>
+        </div>
+        <ul class="mods">
+          {modules.map((m, i) => (
+            <li class="mod" data-reveal="scale" style={`--reveal-delay:${i * 50}ms`}>
+              <ModuleGlyph abbr={m.abbr} class="mod__glyph" />
+              <span class="mod__abbr">{m.abbr}</span>
+              <span class="mod__name">{m.name}</span>
+            </li>
+          ))}
+        </ul>
+        <div class="interconnect">
+          <div class="interconnect__head" data-reveal>
+            <span class="eyebrow">{c.interconnect.eyebrow}</span>
+            <h3 class="interconnect__title">{c.interconnect.title}</h3>
+          </div>
+          <p class="interconnect__text lead" data-reveal>{c.interconnect.text}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
 
 <CtaPanel locale={locale} />
 
 <style>
-  /* Comment lire */
-  .axes { display: grid; gap: var(--space-s); max-width: 62ch; }
-  .axes__title { margin-top: var(--space-2xs); font-size: var(--step-3); }
-  .axes__body { margin-top: var(--space-2xs); }
+  /* ---- Hero « savoir-faire » (photo claire) ---- */
+  .sfhero { position: relative; min-height: 100vh; min-height: 100svh; display: grid; align-content: center; overflow: hidden; background: var(--plaster); color: var(--ink); }
+  .sfhero__media { position: absolute; inset: 0; z-index: 0; }
+  .sfhero__img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .sfhero__scrim { position: absolute; inset: 0; background:
+    linear-gradient(90deg, rgba(247,247,245,0.9) 0%, rgba(247,247,245,0.52) 46%, rgba(247,247,245,0.14) 78%, rgba(247,247,245,0.36) 100%),
+    linear-gradient(180deg, rgba(247,247,245,0.5) 0%, rgba(247,247,245,0.08) 44%, rgba(247,247,245,0.5) 100%); }
+  .sfhero__inner { position: relative; z-index: 2; padding-block: var(--space-2xl); display: flex; flex-direction: column; gap: var(--space-m); }
+  .sfhero__title { font-size: var(--step-6); font-weight: 400; line-height: 1.02; letter-spacing: var(--tracking-tight); max-width: 24ch; margin-top: var(--space-s); color: var(--ink); }
+  .sfhero__lead { max-width: 48ch; color: var(--text); }
+  .sfhero__glyph { width: 100%; max-width: 32rem; margin-top: var(--space-l); color: var(--ink); }
 
-  /* Les piliers — l'escalier des formes */
-  .pillars { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--space-2xl); }
-  .pillar { padding-top: var(--space-l); border-top: 1px solid var(--line-strong); }
-  .pillar__head { display: grid; grid-template-columns: auto 1fr; gap: var(--space-2xs) var(--space-m); align-items: baseline; }
-  .pillar__n { grid-row: span 2; font-size: var(--step-0); color: var(--ink); letter-spacing: var(--tracking-wide); padding-top: 0.35em; }
-  .pillar__id { display: flex; flex-direction: column; gap: var(--space-3xs); }
-  .pillar__name { font-size: var(--step-3); font-weight: 400; letter-spacing: var(--tracking-tight); line-height: 1.05; }
-  .pillar__gloss { font-size: var(--step-0); color: var(--text); }
-  .pillar__what { margin-top: var(--space-m); font-size: var(--step-1); color: var(--ink); line-height: var(--leading-normal); }
-  .pillar__list { margin-top: var(--space-l); }
-  .pillar__list-label { font-size: var(--step--1); letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--text-subtle); }
-  .pillar__items { list-style: none; padding: 0; margin: var(--space-m) 0 0; display: grid; gap: var(--space-s); }
-  @media (min-width: 46em) { .pillar__items { grid-template-columns: 1fr 1fr; gap: var(--space-s) var(--space-xl); } }
-  .pillar__item {
-    position: relative; padding-left: var(--space-m);
-    font-size: var(--step-0); line-height: var(--leading-normal); color: var(--text); max-width: 52ch;
-  }
-  .pillar__item::before {
-    content: ''; position: absolute; left: 0; top: 0.72em;
-    width: 0.5rem; height: 1px; background: var(--ink);
-  }
-  .pillar__proof {
-    margin-top: var(--space-l); font-size: var(--step--1); line-height: var(--leading-normal); max-width: 60ch;
-    padding: var(--space-s) var(--space-m); border-left: 2px solid var(--brass); background: var(--brass-wash); color: var(--text);
-  }
+  /* ---- Un pilier par panneau ---- */
+  .pil { display: grid; gap: var(--space-m); }
+  .pil__head { display: grid; grid-template-columns: auto 1fr; gap: var(--space-2xs) var(--space-m); align-items: baseline; }
+  .pil__n { grid-row: span 2; font-size: var(--step-0); color: var(--ink); letter-spacing: var(--tracking-wide); padding-top: 0.35em; }
+  .pil__id { display: flex; flex-direction: column; gap: var(--space-3xs); }
+  .pil__name { font-size: var(--step-4); font-weight: 400; letter-spacing: var(--tracking-tight); line-height: 1.04; }
+  .pil__gloss { font-size: var(--step-1); color: var(--text); }
+  .pil__what { margin-top: var(--space-2xs); font-size: var(--step-1); color: var(--ink); line-height: var(--leading-normal); max-width: 70ch; }
+  .pil__list-label { font-size: var(--step--1); letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--text-subtle); }
+  .pil__items { list-style: none; padding: 0; margin: var(--space-s) 0 0; display: grid; gap: var(--space-s); }
+  @media (min-width: 46em) { .pil__items { grid-template-columns: 1fr 1fr; gap: var(--space-s) var(--space-xl); } }
+  .pil__item { position: relative; padding-left: var(--space-m); font-size: var(--step-0); line-height: var(--leading-normal); color: var(--text); max-width: 54ch; }
+  .pil__item::before { content: ''; position: absolute; left: 0; top: 0.72em; width: 0.5rem; height: 1px; background: var(--ink); }
+  .pil__proof { margin-top: var(--space-xs); font-size: var(--step--1); line-height: var(--leading-normal); max-width: 64ch; padding: var(--space-s) var(--space-m); border-left: 2px solid var(--brass); background: var(--brass-wash); color: var(--text); }
   @media (min-width: 52em) {
-    .pillar__n { grid-row: 1; }
-    .pillar__what { max-width: 68ch; padding-left: calc(var(--step-0) + var(--space-m)); }
-    .pillar__list, .pillar__proof { margin-left: calc(var(--step-0) + var(--space-m)); }
+    .pil__what, .pil__list, .pil__proof { padding-left: calc(var(--step-0) + var(--space-m)); }
+    .pil__proof { margin-left: 0; }
   }
 
-  /* Bandeau photo : de la forme au système */
-  .photoband { position: relative; min-height: 62vh; display: grid; place-items: center; overflow: hidden; background: var(--ink); color: #fff; }
-  .photoband__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-  .photoband__scrim { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(12,12,15,0.6) 0%, rgba(12,12,15,0.42) 50%, rgba(12,12,15,0.66) 100%); }
-  .photoband__inner { position: relative; z-index: 2; text-align: center; padding-block: var(--space-2xl); }
-  .photoband__eyebrow { display: inline-block; font-size: var(--step--1); letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--accent); margin-bottom: var(--space-m); }
-  .photoband__line { font-family: var(--font-display); font-weight: 400; font-size: var(--step-4); line-height: 1.14; letter-spacing: var(--tracking-tight); max-width: 24ch; margin: 0 auto; color: #fff; }
+  /* ---- Bandeau photo ---- */
+  .sfband { position: relative; min-height: 100vh; display: grid; place-items: center; overflow: hidden; background: var(--ink); color: #fff; }
+  .sfband__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .sfband__scrim { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(12,12,15,0.6) 0%, rgba(12,12,15,0.42) 50%, rgba(12,12,15,0.66) 100%); }
+  .sfband__inner { position: relative; z-index: 2; text-align: center; padding-block: var(--space-2xl); }
+  .sfband__eyebrow { display: inline-block; font-size: var(--step--1); letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--accent); margin-bottom: var(--space-m); }
+  .sfband__line { font-family: var(--font-display); font-weight: 400; font-size: var(--step-4); line-height: 1.14; letter-spacing: var(--tracking-tight); max-width: 30ch; margin: 0 auto; color: #fff; }
 
-  /* Écosystème — constellation */
+  /* ---- Écosystème ---- */
   .endgame { display: grid; gap: var(--space-xl); }
   .endgame__head { display: grid; gap: var(--space-s); max-width: 60ch; }
   .endgame__title { margin-top: var(--space-2xs); }
@@ -146,7 +152,6 @@ const modules = data.modules;
   .mod__glyph { width: 2.25rem; height: 2.25rem; color: var(--ink); }
   .mod__abbr { font-family: var(--font-display); font-size: var(--step-1); font-weight: 500; color: var(--ink); margin-top: var(--space-2xs); }
   .mod__name { font-size: var(--step--1); color: var(--text); }
-
   .interconnect { display: grid; gap: var(--space-l); padding-top: var(--space-l); border-top: 1px solid var(--line); }
   .interconnect__title { margin-top: var(--space-s); font-size: var(--step-2); }
   .interconnect__text { max-width: 52ch; }

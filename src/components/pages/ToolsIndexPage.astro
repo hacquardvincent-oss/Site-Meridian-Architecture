@@ -1,54 +1,83 @@
 ---
 import { toolsByPillar } from '../../i18n/tools';
 import { withBase, type Locale } from '../../i18n/routes';
-import PageHero from '../PageHero.astro';
 import CtaPanel from '../CtaPanel.astro';
+import IsoStructure from '../graphics/IsoStructure.astro';
 
 interface Props { locale: Locale }
 const { locale } = Astro.props;
 const isFr = locale === 'fr';
 const toolsBase = isFr ? '/outils/' : '/en/tools/';
 const groups = toolsByPillar(locale);
+const panelCount = 1 + groups.length;
 
 const hero = isFr
   ? { eyebrow: 'Réalisations', title: 'Ce qu’on construit.', lead: 'Les domaines qu’on prototype, connecte et met en production — groupés par pilier, comme sur « Le savoir-faire ». Chacun a sa page : ce que c’est, à quoi ça sert, comment ça marche.' }
   : { eyebrow: 'What we build', title: 'What we build.', lead: 'The domains we prototype, connect and ship — grouped by pillar, like on “The craft.” Each has its page: what it is, what it’s for, how it works.' };
 ---
-<PageHero eyebrow={hero.eyebrow} title={hero.title} lead={hero.lead} index="Réalisations" graphic="iso" />
+<div class="stack" style={`--n:${panelCount}`}>
 
-{groups.map((g) => (
-  <section class="section">
-    <div class="container">
-      <div class="grp__head" data-reveal>
-        <h2 class="grp__name">{g.pillar.name}</h2>
-        <span class="grp__note">{g.pillar.note}</span>
+  {/* 01 — hero */}
+  <section class="panel panel--paper" style="--i:1" data-section-theme="light">
+    <div class="panel__card panel__card--pad">
+      <div class="container rhero">
+        <div class="rhero__text" data-reveal>
+          <span class="eyebrow">{hero.eyebrow}</span>
+          <h1 class="rhero__title">{hero.title}</h1>
+          <p class="rhero__lead lead">{hero.lead}</p>
+        </div>
+        <div class="rhero__illus" data-reveal style="--reveal-delay:120ms"><IsoStructure /></div>
       </div>
-      <ul class="grid">
-        {g.tools.map((t, i) => (
-          <li class="cell" data-reveal="scale" style={`--reveal-delay:${i * 50}ms`}>
-            <a class="cell__link" href={withBase(`${toolsBase}${t.slug}/`)}>
-              <span class="cell__need mono">{t.need}</span>
-              <h3 class="cell__name">{t.name}</h3>
-              <p class="cell__short muted">{t.short}</p>
-              <span class="cell__cue" aria-hidden="true">→</span>
-            </a>
-          </li>
-        ))}
-      </ul>
     </div>
   </section>
-))}
+
+  {/* un panneau par pilier */}
+  {groups.map((g, gi) => (
+    <section class:list={['panel', gi % 2 === 0 ? 'panel--alt' : 'panel--paper']} style={`--i:${gi + 2}`} data-section-theme="light">
+      <div class="panel__card panel__card--pad">
+        <div class="container">
+          <div class="grp__head" data-reveal>
+            <h2 class="grp__name">{g.pillar.name}</h2>
+            <span class="grp__note">{g.pillar.note}</span>
+          </div>
+          <ul class="grid">
+            {g.tools.map((t, i) => (
+              <li class="cell" data-reveal="scale" style={`--reveal-delay:${i * 50}ms`}>
+                <a class="cell__link" href={withBase(`${toolsBase}${t.slug}/`)}>
+                  <span class="cell__need mono">{t.need}</span>
+                  <h3 class="cell__name">{t.name}</h3>
+                  <p class="cell__short muted">{t.short}</p>
+                  <span class="cell__cue" aria-hidden="true">→</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+  ))}
+</div>
 
 <CtaPanel locale={locale} />
 
 <style>
+  /* ---- Hero réalisations (graphique) ---- */
+  .rhero { display: grid; gap: var(--space-xl); align-items: center; }
+  @media (min-width: 60em) { .rhero { grid-template-columns: 1.2fr 0.8fr; gap: var(--space-2xl); } }
+  .rhero__text { display: flex; flex-direction: column; gap: var(--space-m); max-width: 40rem; }
+  .rhero__title { font-size: var(--step-6); font-weight: 400; line-height: 1.02; letter-spacing: var(--tracking-tight); margin-top: var(--space-s); max-width: 18ch; }
+  .rhero__lead { max-width: 52ch; }
+  .rhero__illus { display: none; }
+  @media (min-width: 60em) { .rhero__illus { display: block; width: min(22rem, 30vw); justify-self: end; color: var(--ink); } }
+
+  /* ---- Groupes par pilier ---- */
   .grp__head { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--space-s) var(--space-m); margin-bottom: var(--space-l); padding-bottom: var(--space-s); border-bottom: 1px solid var(--line-strong); }
-  .grp__name { font-size: var(--step-2); font-weight: 400; letter-spacing: var(--tracking-tight); }
+  .grp__name { font-size: var(--step-3); font-weight: 400; letter-spacing: var(--tracking-tight); }
   .grp__note { font-size: var(--step--1); letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--text-subtle); }
   .grid { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--space-m); }
   @media (min-width: 44em) { .grid { grid-template-columns: repeat(2, 1fr); } }
   @media (min-width: 68em) { .grid { grid-template-columns: repeat(3, 1fr); } }
-  .cell__link { display: flex; flex-direction: column; gap: var(--space-2xs); height: 100%; padding: var(--space-l); border: 1px solid var(--line); position: relative; transition: border-color var(--dur) var(--ease), transform var(--dur) var(--ease); }
+  .cell__link { display: flex; flex-direction: column; gap: var(--space-2xs); height: 100%; padding: var(--space-l); border: 1px solid var(--line); position: relative; transition: border-color var(--dur) var(--ease), transform var(--dur) var(--ease); background: var(--plaster); }
   .cell__link:hover { border-color: var(--line-strong); transform: translateY(-3px); }
   .cell__need { font-size: var(--step--1); letter-spacing: var(--tracking-wide); text-transform: uppercase; color: var(--text-subtle); margin-bottom: var(--space-xs); }
   .cell__name { font-size: var(--step-2); font-weight: 400; letter-spacing: var(--tracking-tight); }

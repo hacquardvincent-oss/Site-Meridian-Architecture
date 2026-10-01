@@ -1,0 +1,101 @@
+---
+/**
+ * PillarsGlyph — les trois piliers de l'offre, en frise horizontale au trait.
+ * Même famille graphique que GeoComposition / IsoStructure : traits fins
+ * (currentColor), formes géométriques déstructurées, UN seul nœud pastel par
+ * pilier qui s'allume. De gauche à droite :
+ *   1 · Automatisation — une boucle (le flux rendu à la machine)
+ *   2 · Middleware      — des modules reliés à un cœur (les logiciels se parlent)
+ *   3 · E-commerce      — une vitrine / fenêtre (ce qui fait vendre en ligne)
+ *
+ * Décoratif : aria-hidden. Les libellés vivent déjà dans la page.
+ * Taille 100 % pilotée par le conteneur — ratio conseillé 3 : 1 (viewBox 480×160).
+ */
+interface Props { class?: string; animate?: boolean }
+const { class: className = '', animate = true } = Astro.props;
+const A = '#9db8dd';
+---
+<div class:list={['pg', { 'pg--animate': animate }, className]}>
+  <svg viewBox="0 0 480 160" preserveAspectRatio="xMidYMid meet" fill="none" aria-hidden="true">
+    <g stroke="currentColor" stroke-width="1.3" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round">
+
+      <!-- Séparateurs : ticks verticaux (écho de l'axe méridien) -->
+      <line x1="160" y1="62" x2="160" y2="98" opacity="0.16" />
+      <line x1="320" y1="62" x2="320" y2="98" opacity="0.16" />
+      <!-- Ticks d'angle (signature « plan ») -->
+      <path d="M22 34 H34 M22 34 V46" opacity="0.28" />
+      <path d="M458 126 H446 M458 126 V114" opacity="0.28" />
+
+      <!-- ─────────────── 1 · AUTOMATISATION : la boucle ─────────────── -->
+      <g class="pg__pillar" style="--i:0">
+        <!-- anneau ouvert (le cycle) + chevron directionnel -->
+        <path class="pg__draw" d="M93.5 56.6 A27 27 0 1 1 66.5 56.6" />
+        <path d="M62.5 62.3 L66.5 56.6 L59.7 57.4" />
+        <!-- unité traitée, décalée -->
+        <rect x="71" y="73" width="18" height="18" opacity="0.4" transform="rotate(-10 80 82)" />
+        <!-- nœud pastel : le point qui s'allume sur la boucle -->
+        <circle class="pg__node" cx="107" cy="80" r="3.7" fill={A} stroke="none" />
+      </g>
+
+      <!-- ─────────────── 2 · MIDDLEWARE : les modules reliés ─────────── -->
+      <g class="pg__pillar" style="--i:1">
+        <!-- liens du cœur vers les modules (ils se parlent) -->
+        <g class="pg__draw">
+          <line x1="240" y1="81" x2="234" y2="52" />
+          <line x1="240" y1="81" x2="277" y2="73" />
+          <line x1="240" y1="81" x2="212" y2="106" />
+        </g>
+        <!-- modules métier, légèrement déstructurés -->
+        <rect x="227" y="45" width="14" height="14" />
+        <rect x="270" y="66" width="14" height="14" />
+        <rect x="205" y="99" width="14" height="14" opacity="0.6" />
+        <!-- le cœur (la couche middleware) + nœud pastel -->
+        <circle cx="240" cy="81" r="6.4" />
+        <circle class="pg__node" cx="240" cy="81" r="3.4" fill={A} stroke="none" />
+      </g>
+
+      <!-- ─────────────── 3 · E-COMMERCE : la vitrine ─────────────────── -->
+      <g class="pg__pillar" style="--i:2">
+        <!-- fenêtre / écran -->
+        <rect x="365" y="53" width="70" height="54" />
+        <line x1="365" y1="67" x2="435" y2="67" />
+        <!-- contrôles de la barre (deux points discrets) -->
+        <circle cx="372" cy="60" r="1.4" opacity="0.55" />
+        <circle cx="378" cy="60" r="1.4" opacity="0.55" />
+        <!-- tuile produit + lignes (le listing) -->
+        <rect x="374" y="78" width="16" height="16" opacity="0.7" />
+        <line class="pg__draw" x1="397" y1="82" x2="424" y2="82" opacity="0.6" />
+        <line class="pg__draw" x1="397" y1="89" x2="416" y2="89" opacity="0.6" />
+        <!-- nœud pastel : le point de vente / panier qui s'allume -->
+        <circle class="pg__node" cx="428" cy="60" r="3.4" fill={A} stroke="none" />
+      </g>
+    </g>
+  </svg>
+</div>
+
+<style>
+  /* color: inherit → les traits (currentColor) prennent l'encre sur fond clair
+     et le blanc sur fond sombre. Seuls les nœuds restent pastel. */
+  .pg { color: inherit; width: 100%; display: block; }
+  .pg svg { display: block; width: 100%; height: auto; overflow: visible; }
+
+  /* Mouvement « architectural » : les traits se dessinent, les nœuds s'allument.
+     Hors .pg--animate : tout est posé, statique. */
+  .pg--animate .pg__draw {
+    stroke-dasharray: 600; stroke-dashoffset: 600;
+    animation: pg-draw 1.5s var(--ease, cubic-bezier(0.22, 1, 0.36, 1)) forwards;
+    animation-delay: calc(0.25s + var(--i, 0) * 0.45s);
+  }
+  .pg--animate .pg__node {
+    opacity: 0; transform: scale(0.4); transform-box: fill-box; transform-origin: center;
+    animation: pg-glow 0.55s ease forwards;
+    animation-delay: calc(0.95s + var(--i, 0) * 0.45s);
+  }
+  @keyframes pg-draw { to { stroke-dashoffset: 0; } }
+  @keyframes pg-glow { to { opacity: 1; transform: scale(1); } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pg--animate .pg__draw { stroke-dashoffset: 0; animation: none; }
+    .pg--animate .pg__node { opacity: 1; transform: none; animation: none; }
+  }
+</style>
