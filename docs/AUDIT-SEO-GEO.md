@@ -468,3 +468,73 @@ déclarer. Corrigé et revérifié sur le déploiement : une seule occurrence de
 
 **À retenir pour les prochains projets : un fichier `_headers` ou `_redirects`
 ne se valide pas en le relisant, il se valide en interrogeant la plateforme.**
+
+### 9 octobre 2026 — Images et Core Web Vitals
+
+Les 8 photographies utilisées passent de `public/images/` à `src/assets/images/`,
+et de `<img>` à `<Image>` d'`astro:assets`. Le DOM reste identique — une seule
+balise `<img>`, pas d'enveloppe `<picture>` — pour écarter tout risque de
+régression sur le CSS existant, qui cible des classes posées sur l'image.
+
+#### Mesures
+
+| | Avant | Après |
+|---|---|---|
+| Chemin critique accueil, **mobile** (HTML + hero + 2 polices) | 737 Ko | **95 Ko** · −87 % |
+| Chemin critique accueil, **desktop** | 737 Ko | **338 Ko** · −54 % |
+| `hero.jpg` servi | 687 Ko, taille unique | 18 / 45 / 89 / 162 / 288 Ko selon le viewport |
+| Images avec `width`/`height` | **0 / 8** | **8 / 8** |
+| Images avec `srcset` | 0 / 8 | 8 / 8 |
+| Format | JPEG | WebP, qualité 72 |
+
+#### Deux pièges rencontrés, tous deux invisibles à la relecture
+
+**1. `<Image>` met `loading="lazy"` par défaut.** Première version livrée : les
+5 heros portaient `fetchpriority="high"` *et* `loading="lazy"`. C'est
+contradictoire, et le lazy l'emporte — soit un retard de découverte sur
+l'élément LCP, exactement l'inverse de l'objectif. Corrigé en
+`loading="eager" decoding="sync"` sur les heros ; les bandeaux sous la ligne de
+flottaison gardent `lazy`/`async`.
+
+**2. `widths` ne pilote que le `srcset`.** Astro génère en plus un `src` de
+repli à la taille de la source. Résultat : des variantes de 486 Ko (hero),
+361 Ko (about) et 338 Ko (contact) produites et déployées, qu'aucun navigateur
+moderne ne télécharge. Corrigé par un `width` explicite — plus aucune variante
+au-delà de 320 Ko.
+
+#### Choix assumé : plafond à 2000 px
+
+Les sources font 2400 px, le `srcset` s'arrête à 2000. Ces photos sont
+décoratives : voile sombre et texte par-dessus. La variante 2400 px pèse 486 Ko
+contre 288 Ko à 2000 px, pour une différence invisible sous le voile. Et le
+signal de classement de Google se mesure majoritairement sur le terrain mobile,
+qui prend de toute façon la variante 640 ou 960 px.
+
+#### Trouvé au passage
+
+`public/images/concept.jpg` (136 Ko) **n'est utilisé par aucune page** — la prop
+`image` de `PageHero` et le composant `Figure` ne sont appelés nulle part. Le
+fichier est conservé et signalé dans `public/images/README.md`, pas supprimé :
+c'est un arbitrage de marque, pas technique.
+
+#### Vérifications
+
+```
+tsc --noEmit                         : 0 erreur
+Build                                : 40 pages, 48 variantes WebP
+Variantes au-delà du plafond         : 0 (avant correctif : 3)
+Heros en loading="eager"             : 5 / 5
+Non-régression canonical             : 0 anomalie
+Sitemap                              : 34 URL, 34 lastmod
+Références /images/*.jpg cassées     : 0
+```
+
+#### Reste possible sur les images
+
+- **AVIF** en plus du WebP : encore ~20 % de gain, mais impose une enveloppe
+  `<picture>`, donc du CSS à reprendre sur les 5 heros. Rapport effet/risque
+  moins bon que ce qui vient d'être fait — à faire seulement si la mesure
+  terrain le justifie.
+- **Core Web Vitals réels** : toujours pas mesurés (quota de l'API PageSpeed
+  épuisé le 9 oct.). Les chiffres ci-dessus sont des poids de transfert, pas
+  des LCP terrain. À confirmer dans la Search Console une fois le site basculé.

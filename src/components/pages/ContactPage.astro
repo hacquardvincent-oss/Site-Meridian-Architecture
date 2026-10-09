@@ -1,6 +1,8 @@
 ---
 import { getContent } from '../../i18n/content';
-import { pathFor, withBase, type Locale } from '../../i18n/routes';
+import { Image } from 'astro:assets';
+import { photos, fullBleedWidth, fullBleedWidths, FULL_BLEED_SIZES, PHOTO_QUALITY } from '../../assets/images';
+import { pathFor, type Locale } from '../../i18n/routes';
 import Arrow from '../Arrow.astro';
 
 interface Props { locale: Locale }
@@ -15,7 +17,7 @@ const needTypes = locale === 'fr'
 ---
 <section class="chero" data-section-theme="dark">
   <div class="chero__media">
-    <img class="chero__img" src={withBase('/images/contact.jpg')} alt="" fetchpriority="high" data-parallax />
+    <Image class="chero__img" src={photos.contact} width={fullBleedWidth(photos.contact)} widths={fullBleedWidths(photos.contact)} sizes={FULL_BLEED_SIZES} format="webp" quality={PHOTO_QUALITY} alt="" fetchpriority="high" loading="eager" decoding="sync" data-parallax />
     <div class="chero__scrim"></div>
   </div>
 

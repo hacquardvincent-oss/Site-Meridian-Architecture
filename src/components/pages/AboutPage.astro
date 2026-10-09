@@ -1,6 +1,8 @@
 ---
 import { getContent } from '../../i18n/content';
-import { withBase, type Locale } from '../../i18n/routes';
+import { Image } from 'astro:assets';
+import { photos, fullBleedWidth, fullBleedWidths, FULL_BLEED_SIZES, PHOTO_QUALITY } from '../../assets/images';
+import { type Locale } from '../../i18n/routes';
 import CtaPanel from '../CtaPanel.astro';
 
 interface Props { locale: Locale }
@@ -13,7 +15,7 @@ const c = getContent(locale).about;
   <section class="panel panel--ink" style="--i:1" data-section-theme="dark">
     <div class="panel__card ahero">
       <div class="ahero__media">
-        <img class="ahero__img" src={withBase('/images/about.jpg')} alt="" fetchpriority="high" data-parallax />
+        <Image class="ahero__img" src={photos.about} width={fullBleedWidth(photos.about)} widths={fullBleedWidths(photos.about)} sizes={FULL_BLEED_SIZES} format="webp" quality={PHOTO_QUALITY} alt="" fetchpriority="high" loading="eager" decoding="sync" data-parallax />
         <div class="ahero__scrim"></div>
       </div>
       <div class="container ahero__inner">

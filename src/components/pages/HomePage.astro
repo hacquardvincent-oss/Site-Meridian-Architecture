@@ -1,6 +1,8 @@
 ---
 import { getContent } from '../../i18n/content';
-import { pathFor, withBase, type Locale } from '../../i18n/routes';
+import { Image } from 'astro:assets';
+import { photos, fullBleedWidth, fullBleedWidths, FULL_BLEED_SIZES, PHOTO_QUALITY } from '../../assets/images';
+import { pathFor, type Locale } from '../../i18n/routes';
 import Arrow from '../Arrow.astro';
 
 interface Props { locale: Locale }
@@ -25,7 +27,7 @@ const solutionsHref = pathFor('solutions', locale); // « Ce que nous automatiso
   <section class="panel panel--hero" style="--i:1" data-hero data-section-theme="dark">
     <div class="panel__card hero">
       <div class="hero__media">
-        <img class="hero__img" src={withBase('/images/hero.jpg')} alt="" fetchpriority="high" />
+        <Image class="hero__img" src={photos.hero} width={fullBleedWidth(photos.hero)} widths={fullBleedWidths(photos.hero)} sizes={FULL_BLEED_SIZES} format="webp" quality={PHOTO_QUALITY} alt="" fetchpriority="high" loading="eager" decoding="sync" />
         <div class="hero__scrim"></div>
         <svg class="hero__geo" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
           <path d="M64 64 H128 M64 64 V128" stroke="#ffffff" stroke-width="1.2" opacity="0.45" />
@@ -100,7 +102,7 @@ const solutionsHref = pathFor('solutions', locale); // « Ce que nous automatiso
   {/* ============ 04 · LA RÈGLE DE LA MAISON — bandeau photo, sombre ============ */}
   <section class="panel panel--band" style="--i:4" aria-label={h.regle.eyebrow} data-section-theme="dark">
     <div class="panel__card photoband">
-      <img class="photoband__img" src={withBase('/images/band.jpg')} alt="" loading="lazy" data-parallax />
+      <Image class="photoband__img" src={photos.band} width={fullBleedWidth(photos.band)} widths={fullBleedWidths(photos.band)} sizes={FULL_BLEED_SIZES} format="webp" quality={PHOTO_QUALITY} alt="" loading="lazy" decoding="async" data-parallax />
       <div class="photoband__scrim"></div>
       <div class="container photoband__inner regle" data-reveal>
         <span class="photoband__eyebrow">{h.regle.eyebrow}</span>
