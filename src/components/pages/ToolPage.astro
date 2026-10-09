@@ -9,11 +9,46 @@ const { locale, tool } = Astro.props;
 const isFr = locale === 'fr';
 
 const L = isFr
-  ? { what: 'Qu’est-ce que c’est ?', use: 'À quoi ça sert ?', how: 'Comment ça fonctionne ?', meridian: 'Avec Meridian', faq: 'Questions fréquentes', others: 'Autres outils', back: 'Tous les outils' }
-  : { what: 'What is it?', use: 'What is it for?', how: 'How it works', meridian: 'With Meridian', faq: 'Frequently asked questions', others: 'Other tools', back: 'All tools' };
+  ? {
+      what: 'Qu’est-ce que c’est ?',
+      signs: 'Les signes que vous en avez besoin',
+      use: 'À quoi ça sert ?',
+      deltas: 'Ne pas confondre',
+      how: 'Comment ça fonctionne ?',
+      mistakes: 'Les erreurs qui coûtent le plus cher',
+      budget: 'Combien ça coûte, combien de temps',
+      notFor: 'Quand vous n’en avez pas besoin',
+      meridian: 'Avec Meridian',
+      faq: 'Questions fréquentes',
+      glossary: 'Glossaire',
+      related: 'À lire ensuite',
+      others: 'Autres outils',
+      back: 'Tous les outils',
+      vs: 'À distinguer de',
+    }
+  : {
+      what: 'What is it?',
+      signs: 'Signs you need it',
+      use: 'What is it for?',
+      deltas: 'Not to be confused with',
+      how: 'How it works',
+      mistakes: 'The mistakes that cost the most',
+      budget: 'What it costs, how long it takes',
+      notFor: 'When you don’t need it',
+      meridian: 'With Meridian',
+      faq: 'Frequently asked questions',
+      glossary: 'Glossary',
+      related: 'Read next',
+      others: 'Other tools',
+      back: 'All tools',
+      vs: 'As distinct from',
+    };
 
 const toolsBase = isFr ? '/outils/' : '/en/tools/';
-const others = getTools(locale).filter((t) => t.slug !== tool.slug);
+const all = getTools(locale);
+const related = tool.related.map((slug) => all.find((t) => t.slug === slug)).filter((t): t is Tool => Boolean(t));
+const relatedSlugs = new Set(related.map((t) => t.slug));
+const others = all.filter((t) => t.slug !== tool.slug && !relatedSlugs.has(t.slug));
 const pillar = pillarOf(locale, tool.slug);
 ---
 <PageHero eyebrow={`${tool.need} · ${pillar.name}`} title={tool.name} lead={tool.lead} index="Réalisations" graphic="arc" />
@@ -22,12 +57,35 @@ const pillar = pillarOf(locale, tool.slug);
   <div class="container tool">
     <div class="tool__block" data-reveal>
       <h2 class="tool__h">{L.what}</h2>
-      <p class="tool__p">{tool.whatIs}</p>
+      <p class="tool__p tool__p--lead">{tool.whatIs}</p>
+      {tool.whatIsMore.map((p) => <p class="tool__p">{p}</p>)}
     </div>
+
+    <div class="tool__block" data-reveal>
+      <h2 class="tool__h">{L.signs}</h2>
+      <ul class="tool__signs">
+        {tool.signs.map((s) => <li class="tool__sign">{s}</li>)}
+      </ul>
+    </div>
+
     <div class="tool__block" data-reveal>
       <h2 class="tool__h">{L.use}</h2>
-      <p class="tool__p">{tool.whatFor}</p>
+      <p class="tool__p tool__p--lead">{tool.whatFor}</p>
+      {tool.whatForMore.map((p) => <p class="tool__p">{p}</p>)}
     </div>
+
+    <div class="tool__block" data-reveal>
+      <h2 class="tool__h">{L.deltas}</h2>
+      <dl class="tool__deltas">
+        {tool.deltas.map((d) => (
+          <div class="tool__delta">
+            <dt class="tool__delta-t">{d.term}</dt>
+            <dd class="tool__delta-d">{d.delta}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+
     <div class="tool__block" data-reveal>
       <h2 class="tool__h">{L.how}</h2>
       <ol class="tool__steps">
@@ -36,6 +94,29 @@ const pillar = pillarOf(locale, tool.slug);
         ))}
       </ol>
     </div>
+
+    <div class="tool__block" data-reveal>
+      <h2 class="tool__h">{L.mistakes}</h2>
+      <ul class="tool__mistakes">
+        {tool.mistakes.map((m) => (
+          <li class="tool__mistake">
+            <h3 class="tool__mistake-h">{m.h}</h3>
+            <p class="tool__mistake-p muted">{m.p}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="tool__block" data-reveal>
+      <h2 class="tool__h">{L.budget}</h2>
+      {tool.budget.map((p) => <p class="tool__p">{p}</p>)}
+    </div>
+
+    <div class="tool__notfor" data-reveal>
+      <h2 class="tool__notfor-h">{L.notFor}</h2>
+      <p class="tool__p">{tool.notFor}</p>
+    </div>
+
     <div class="tool__meridian" data-reveal>
       <span class="eyebrow">{L.meridian}</span>
       <p class="lead">{tool.withMeridian}</p>
@@ -52,6 +133,41 @@ const pillar = pillarOf(locale, tool.slug);
         <li class="faq__item" data-reveal style={`--reveal-delay:${i * 70}ms`}>
           <h3 class="faq__q">{f.q}</h3>
           <p class="faq__a muted">{f.a}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container tool">
+    <div class="tool__block" data-reveal>
+      <h2 class="tool__h">{L.glossary}</h2>
+      <dl class="tool__deltas">
+        {tool.glossary.map((g) => (
+          <div class="tool__delta">
+            <dt class="tool__delta-t">{g.term}</dt>
+            <dd class="tool__delta-d">{g.def}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="others__head" data-reveal>
+      <span class="eyebrow">{L.related}</span>
+    </div>
+    <ul class="others">
+      {related.map((t, i) => (
+        <li class="other" data-reveal style={`--reveal-delay:${i * 50}ms`}>
+          <a class="other__link" href={withBase(`${toolsBase}${t.slug}/`)}>
+            <span class="other__need mono">{t.need}</span>
+            <span class="other__name">{t.name}</span>
+            <span class="other__short muted">{t.short}</span>
+          </a>
         </li>
       ))}
     </ul>
@@ -82,6 +198,21 @@ const pillar = pillarOf(locale, tool.slug);
 
 <style>
   .tool { display: grid; gap: var(--space-2xl); max-width: 62rem; }
+  .tool__block { display: grid; gap: var(--space-s); }
+  .tool__p--lead { color: var(--ink); }
+  .tool__signs { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--space-xs); max-width: 60ch; }
+  .tool__sign { position: relative; padding-left: 1.6rem; font-size: var(--step-1); line-height: 1.6; color: var(--text-muted); }
+  .tool__sign::before { content: ''; position: absolute; left: 0; top: 0.72em; width: 0.7rem; height: 1px; background: var(--brass); }
+  .tool__deltas { margin: 0; display: grid; gap: var(--space-m); max-width: 64ch; }
+  .tool__delta { display: grid; gap: var(--space-3xs, 0.25rem); padding-top: var(--space-s); border-top: 1px solid var(--line); }
+  .tool__delta-t { font-size: var(--step-0); font-weight: 500; color: var(--ink); }
+  .tool__delta-d { margin: 0; font-size: var(--step-0); line-height: 1.6; color: var(--text-muted); }
+  .tool__mistakes { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--space-m); max-width: 64ch; }
+  .tool__mistake { padding-top: var(--space-s); border-top: 1px solid var(--line); }
+  .tool__mistake-h { font-size: var(--step-0); font-weight: 500; margin-bottom: var(--space-2xs); }
+  .tool__mistake-p { line-height: 1.6; }
+  .tool__notfor { border-left: 2px solid var(--line-strong); padding: var(--space-m) var(--space-l); display: grid; gap: var(--space-s); }
+  .tool__notfor-h { font-size: var(--step-1); font-weight: 500; }
   .tool__h { font-size: var(--step-2); margin-bottom: var(--space-s); }
   .tool__p { font-size: var(--step-1); line-height: 1.6; color: var(--text-muted); max-width: 60ch; }
   .tool__steps { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--space-m); }

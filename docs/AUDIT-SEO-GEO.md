@@ -346,3 +346,89 @@ Consignés pour la mémoire du projet — à réévaluer sur données réelles.
 - Core Web Vitals réels : non mesurés (quota de l'API PageSpeed épuisé le 9 oct.).
 - Phase 2 (confiance et entité) : SIREN, LinkedIn, `sameAs`, identité sur
   `/a-propos/`, schéma `ProfessionalService`. **C'est le verrou n°1 restant.**
+
+### 9 octobre 2026 — Phase 3 exécutée (arbitrage : « approfondir les 8 pages, d'un coup »)
+
+Les 8 pages outils ont été réécrites en FR et en EN, soit 16 pages.
+
+#### Volume mesuré sur le build
+
+| Page | Avant | Après | Facteur |
+|---|---|---|---|
+| `/outils/seo-geo/` | 603 mots | **1 736** | ×2,9 |
+| `/outils/erp/` | 577 mots | **1 580** | ×2,7 |
+| `/outils/data-bi/` | ~580 | **1 653** | ×2,8 |
+| `/outils/plm/` | ~580 | **1 617** | ×2,8 |
+| `/outils/site-vitrine-ecommerce/` | ~580 | **1 613** | ×2,8 |
+| `/outils/crm-fidelisation/` | ~580 | **1 546** | ×2,7 |
+| `/outils/pim/` | ~580 | **1 542** | ×2,7 |
+| `/outils/pos/` | ~580 | **1 538** | ×2,7 |
+
+Versions anglaises : 1 401 à 1 547 mots (l'anglais est naturellement plus
+compact que le français, l'écart n'est pas une perte de contenu).
+
+Structure par page : 1 `h1`, 11 `h2`, 10 `h3`, 8 liens internes vers d'autres
+pages outils (3 pages liées explicitement + 5 autres).
+
+#### Structure retenue, et pourquoi
+
+L'ordre des sections suit les trois facteurs que la revue arXiv 2607.14035
+(juillet 2026) retient au niveau de preuve modéré à fort : pertinence
+requête/document, position du passage utile dans la page, présence de preuves
+extractibles.
+
+| Section | Intention |
+|---|---|
+| Qu'est-ce que c'est ? | Réponse directe, en tête de page — position favorable dans la fenêtre de contexte |
+| Les signes que vous en avez besoin | Reconnaissance par le symptôme, pas par le vocabulaire technique |
+| À quoi ça sert ? | Bénéfice, avec le coût ou la contrepartie quand il y en a une |
+| Ne pas confondre | Désambiguïsation (PIM/PLM/DAM/ERP). Requêtes moins concurrentielles que les définitions nues, et format que les moteurs génératifs reprennent volontiers |
+| Comment ça fonctionne ? | Étapes, numérotées |
+| Les erreurs qui coûtent le plus cher | Signal d'expertise (E-E-A-T), et contenu que les éditeurs n'écrivent pas |
+| Combien ça coûte, combien de temps | Qualitatif : ce qui fait monter le budget. **Aucun chiffre de prix inventé** |
+| Quand vous n'en avez pas besoin | Honnêteté explicite. Différenciant, et bloc autonome facile à citer |
+| Avec Meridian | Positionnement |
+| Questions fréquentes | 6 questions au lieu de 2 — alimente le JSON-LD `FAQPage` |
+| Glossaire | 4 termes définis — alimente le JSON-LD `DefinedTermSet` |
+
+#### Balisage ajouté
+
+Chaque page outil émet désormais 4 blocs JSON-LD valides, contre 2 :
+`Organization`, `FAQPage` (6 questions), `BreadcrumbList`, `DefinedTermSet`.
+
+#### Règle suivie sur les chiffres
+
+Aucune statistique n'a été inventée. Les seuls chiffres publiés sont des
+données externes vérifiables, citées sur la page `/outils/seo-geo/` :
+
+- Pew Research Center — 8 % de clics sur un résultat organique en présence
+  d'un résumé IA, contre 15 % sans ; 1 % sur une source citée.
+- Revue de 45 études, arXiv 2607.14035, juillet 2026 — trois facteurs retenus.
+- Aggarwal et al., GEO, ACM KDD 2024 — origine du terme.
+
+Les sections « budget » restent qualitatives : ce qui fait varier le coût, pas
+un tarif. Publier une grille de prix demande votre validation, pas la mienne.
+
+#### Vérifications
+
+```
+Typecheck TypeScript (tsc --noEmit)         : 0 erreur
+Build                                        : 40 pages
+JSON-LD                                      : 4 blocs par page outil, tous valides
+Non-régression canonical / hreflang          : 0 anomalie sur 39 pages
+Sitemap                                      : 34 URL, 34 lastmod
+```
+
+#### Réserve maintenue
+
+L'approfondissement rend ces pages crédibles. Il ne règle pas le problème de
+fond : sur `PIM : qu'est-ce que c'est`, la concurrence est Akeneo, Quable, Sage
+et SAP, avec une autorité de domaine sans commune mesure et des guides plus
+longs. **1 600 mots sur un domaine de 4 mois sans backlink ne battent pas
+4 000 mots sur un domaine installé.** Ce qui peut classer, en revanche, ce sont
+les sections de désambiguïsation (« PIM ou PLM », « CRM ou ERP ») et les
+sections d'erreurs : requêtes plus étroites, intention plus qualifiée,
+concurrence plus faible.
+
+À mesurer dans la Search Console sous 6 à 8 semaines, requête par requête,
+plutôt qu'au volume global.
