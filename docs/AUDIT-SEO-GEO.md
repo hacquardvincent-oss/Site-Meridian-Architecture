@@ -476,16 +476,53 @@ et de `<img>` à `<Image>` d'`astro:assets`. Le DOM reste identique — une seul
 balise `<img>`, pas d'enveloppe `<picture>` — pour écarter tout risque de
 régression sur le CSS existant, qui cible des classes posées sur l'image.
 
-#### Mesures
+#### Mesures — poids d'images de l'accueil, relevé par un vrai navigateur
+
+Première estimation publiée : « 95 Ko sur mobile ». **Elle était fausse** — mesurée
+en DPR 1, qui n'existe quasiment plus sur téléphone et sélectionne donc la plus
+petite variante du `srcset`. Relevé corrigé sur des profils d'appareils réels :
+
+| Appareil | Avant | Après | Gain | Variante chargée |
+|---|---|---|---|---|
+| iPhone SE — 390 × 844, DPR 2 | 802 Ko | **56 Ko** | −93 % | 960 w |
+| iPhone 15 — 393 × 852, DPR 3 | 802 Ko | **106 Ko** | −87 % | 1280 w |
+| Pixel 8 — 412 × 915, DPR 2,6 | 802 Ko | **106 Ko** | −87 % | 1280 w |
+| Portable — 1440 × 900, DPR 1 | 802 Ko | **183 Ko** | −77 % | 1600 w |
+| MacBook Pro — 1512 × 982, DPR 2 | 802 Ko | **316 Ko** | −61 % | 2000 w |
+
+Poids total de page, sur les 5 pages à photo, mobile et desktop confondus :
+**7 984 Ko → 3 262 Ko, soit −59 %.**
 
 | | Avant | Après |
 |---|---|---|
-| Chemin critique accueil, **mobile** (HTML + hero + 2 polices) | 737 Ko | **95 Ko** · −87 % |
-| Chemin critique accueil, **desktop** | 737 Ko | **338 Ko** · −54 % |
-| `hero.jpg` servi | 687 Ko, taille unique | 18 / 45 / 89 / 162 / 288 Ko selon le viewport |
+| `hero.jpg` servi | 687 Ko, taille unique | 18 / 45 / 89 / 162 / 288 Ko selon l'appareil |
 | Images avec `width`/`height` | **0 / 8** | **8 / 8** |
 | Images avec `srcset` | 0 / 8 | 8 / 8 |
 | Format | JPEG | WebP, qualité 72 |
+
+#### Non-régression visuelle
+
+Production (ancienne version) et prévisualisation Cloudflare (nouvelle) capturées
+côte à côte sur les 5 pages à photo, en 390 × 844 et 1440 × 900, animations,
+révélations au scroll et parallaxe gelées.
+
+| Page | Viewport | Écart moyen | Pixels visiblement différents |
+|---|---|---|---|
+| accueil | mobile | 3,67 / 255 | 1,72 % |
+| accueil | desktop | 1,62 / 255 | 0,13 % |
+| à propos | mobile | 3,58 / 255 | 0,99 % |
+| à propos | desktop | 1,21 / 255 | 0,00 % |
+| contact | mobile | 0,45 / 255 | 0,02 % |
+| contact | desktop | 0,69 / 255 | 0,00 % |
+| méthode | mobile | 1,44 / 255 | 0,21 % |
+| méthode | desktop | 0,84 / 255 | 0,00 % |
+| savoir-faire | mobile | 1,03 / 255 | 0,27 % |
+| savoir-faire | desktop | 0,92 / 255 | 0,00 % |
+
+Dimensions identiques partout, aucun décalage de mise en page. Les écarts
+résiduels sont du bruit de recompression JPEG → WebP dans la zone photo, vérifié
+à l'œil sur le cas le plus marqué (accueil mobile) : typographie, positions et
+voile strictement superposables.
 
 #### Deux pièges rencontrés, tous deux invisibles à la relecture
 
