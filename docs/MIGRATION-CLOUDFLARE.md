@@ -31,11 +31,18 @@ Tout se fait depuis une interface web. Aucune commande à taper.
    | Champ | Valeur |
    |---|---|
    | Project name | `meridian-architecture` |
-   | Production branch | **`main`** |
+   | Production branch | **`claude/eloquent-goodall-Zehcn`** |
    | Framework preset | **Astro** |
    | Build command | `npm run build` |
    | Build output directory | `dist` |
    | Root directory | *(laisser vide)* |
+
+   > ⚠️ **Il n'y a pas de branche `main` dans ce dépôt.** La branche par défaut,
+   > et la seule effectivement déployée aujourd'hui, est
+   > `claude/eloquent-goodall-Zehcn` (vérifié le 9 oct. 2026 :
+   > `git ls-remote --symref origin HEAD`). C'est elle qu'il faut déclarer comme
+   > *production branch*, sinon Cloudflare construira une branche vide ou
+   > inexistante.
 
 4. **Variables d'environnement : aucune à ajouter.** `astro.config.mjs` utilise
    déjà `https://meridian-architecture.com` par défaut. N'ajoutez **surtout pas**
@@ -149,17 +156,22 @@ Sans cette étape, la correction peut mettre des semaines à être prise en comp
 
 ## Point de vigilance : la branche de déploiement
 
-Le workflow actuel (`.github/workflows/deploy.yml`) se déclenche sur `main` et
-sur `claude/eloquent-goodall-Zehcn` — **pas** sur la branche de travail
-`claude/amazing-shannon-1m1mfw` qui porte les correctifs.
+État réel du dépôt au 9 octobre 2026 :
 
-Même chose pour Cloudflare : la *production branch* configurée à l'étape 1 est
-`main`.
+```
+claude/amazing-shannon-1m1mfw        <- branche de travail, porte les correctifs
+claude/eloquent-goodall-Zehcn        <- branche par défaut, c'est elle qui est déployée
+claude/positionnement-trois-marches
+```
 
-**Conséquence : les correctifs sont dans le dépôt mais ne seront pas en ligne
-tant qu'ils ne seront pas sur `main`.** Il faut donc, au choix :
+**La branche `main` n'existe pas.** Le workflow
+`.github/workflows/deploy.yml` se déclenche sur `main` *et* sur
+`claude/eloquent-goodall-Zehcn` : seule la seconde condition sert réellement.
 
-- fusionner `claude/amazing-shannon-1m1mfw` dans `main` (je peux ouvrir la pull
-  request sur demande) ;
-- ou régler la *production branch* de Cloudflare sur la branche de travail —
-  pratique pour tester, à ne pas laisser en place.
+À retenir :
+
+- La *production branch* de Cloudflare doit être **`claude/eloquent-goodall-Zehcn`**.
+- Les correctifs ne seront en ligne qu'une fois fusionnés dans cette branche.
+- À terme, renommer la branche par défaut en `main` clarifierait l'ensemble —
+  le workflow est déjà écrit pour l'accepter. À faire à froid, pas pendant la
+  migration.
