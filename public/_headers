@@ -1,23 +1,31 @@
 # En-têtes Cloudflare Pages. Ignorés par GitHub Pages.
+#
+# ATTENTION — Cloudflare Pages CUMULE toutes les règles qui correspondent à une
+# URL ; ce n'est pas « première règle gagnante » comme dans _redirects. Une
+# directive Cache-Control dans le bloc /* s'ajoute donc à celles des blocs
+# spécifiques et produit un en-tête invalide, du type :
+#   cache-control: public, max-age=31536000, immutable, public, max-age=0, must-revalidate
+# (constaté en test sur déploiement réel, 9 oct. 2026).
+# D'où la règle : aucun Cache-Control dans /*. Le HTML garde le défaut de
+# Cloudflare Pages, « public, max-age=0, must-revalidate », qui est exactement
+# ce qu'on veut : une correction est visible immédiatement.
 
-# Polices et images : immuables en pratique (noms de fichiers stables,
-# remplacés manuellement). Un an de cache navigateur + CDN.
+# Polices : noms de fichiers stables, remplacées manuellement. Un an.
 /fonts/*
   Cache-Control: public, max-age=31536000, immutable
 
+# Assets générés par Astro : empreinte dans le nom, donc cache agressif sûr.
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Photos et éléments de marque : une semaine, pour pouvoir les remplacer.
 /images/*
   Cache-Control: public, max-age=604800
 
 /brand/*
   Cache-Control: public, max-age=604800
 
-# Assets générés par Astro : empreinte dans le nom → cache agressif.
-/_astro/*
-  Cache-Control: public, max-age=31536000, immutable
-
-# HTML : revalidation systématique, pour qu'une correction soit visible
-# immédiatement par Googlebot comme par un visiteur.
+# Sécurité uniquement — surtout pas de Cache-Control ici (cf. en-tête du fichier).
 /*
-  Cache-Control: public, max-age=0, must-revalidate
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
