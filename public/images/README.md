@@ -1,17 +1,19 @@
-# Images du site
+# `public/images/` — emplacements à remplir
 
-Dépose ici tes photographies, en respectant **exactement** ces noms de fichiers.
-Elles s'afficheront automatiquement (tant qu'un fichier est absent, un placeholder
-élégant prend sa place). Glisser-déposer possible depuis l'interface GitHub.
+**Les photographies du site ne sont plus ici.** Elles vivent dans
+`src/assets/images/`, pour passer par le pipeline d'optimisation d'Astro
+(WebP, `srcset`, `width`/`height` automatiques). Voir le README de ce dossier.
 
-| Fichier | Emplacement | Format conseillé | Cadrage |
-|---|---|---|---|
-| `hero.jpg` | Grande image d'accueil (plein cadre) | ~2400 × 1030 px, paysage | Architecture / skyline NY |
-| `vision.jpg` | Section « La réponse Meridian » | ~1200 × 1500 px, portrait | Intérieur / loft new-yorkais |
-| `about.jpg` | Section « À propos » | ~1200 × 1600 px, portrait | Portrait du fondateur / lieu |
+Ce dossier ne sert plus qu'aux composants qui acceptent un **chemin public**
+pour un emplacement photo non encore rempli : le hero photo de `PageHero.astro`
+et le composant `Figure.astro`. Tant que le fichier est absent, ils affichent
+un placeholder ; déposer le fichier au bon nom l'active, sans optimisation.
 
-**Conseils**
-- Format **JPG** (ou WebP), optimisé (< 400 Ko si possible).
-- Privilégier des images **libres de droits ou t'appartenant** pour la mise en ligne
-  commerciale (les photos de listings immobiliers et de bâtiments signés sont sous droits).
-- D'autres emplacements (pages Solutions, etc.) seront ajoutés au fil de l'eau.
+| Fichier | État |
+|---|---|
+| `concept.jpg` | **Non utilisé par aucune page.** Conservé comme exemple pour la prop `image` de `PageHero`. À supprimer si cette prop ne sert jamais. |
+
+Une image servie depuis ce dossier n'est **ni convertie en WebP, ni
+redimensionnée, ni dotée de `width`/`height`**. Dès qu'un emplacement est
+vraiment utilisé, déplacer le fichier dans `src/assets/images/` et le passer
+en `<Image>`.

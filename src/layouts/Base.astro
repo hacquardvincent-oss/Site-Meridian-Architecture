@@ -18,8 +18,14 @@ interface Props {
   altPaths?: { fr: string; en: string };
   /** JSON-LD additionnel (ex. FAQPage) — injecté en plus du schéma Organization. */
   jsonLd?: unknown;
+  /**
+   * Page hors index (page de travail, 404). Émet `noindex` ET supprime
+   * canonical + hreflang : un `noindex` accompagné d'un canonical pointant
+   * ailleurs peut propager le noindex à la page cible.
+   */
+  noindex?: boolean;
 }
-const { title, description, pageId, locale, ogImage, heroTheme, altPaths, jsonLd } = Astro.props;
+const { title, description, pageId, locale, ogImage, heroTheme, altPaths, jsonLd, noindex } = Astro.props;
 
 const c = getContent(locale);
 const otherLocale: Locale = locale === 'fr' ? 'en' : 'fr';
@@ -88,10 +94,16 @@ const orgSchema = {
 
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={canonical} />
-    <link rel="alternate" hreflang="fr" href={altFr} />
-    <link rel="alternate" hreflang="en" href={altEn} />
-    <link rel="alternate" hreflang="x-default" href={altFr} />
+    {noindex ? (
+      <meta name="robots" content="noindex, follow" />
+    ) : (
+      <Fragment>
+        <link rel="canonical" href={canonical} />
+        <link rel="alternate" hreflang="fr" href={altFr} />
+        <link rel="alternate" hreflang="en" href={altEn} />
+        <link rel="alternate" hreflang="x-default" href={altFr} />
+      </Fragment>
+    )}
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={c.site.name} />

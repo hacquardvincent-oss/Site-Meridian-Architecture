@@ -1,6 +1,8 @@
 ---
 import { getContent } from '../../i18n/content';
-import { withBase, type Locale } from '../../i18n/routes';
+import { Image } from 'astro:assets';
+import { photos, fullBleedWidth, fullBleedWidths, FULL_BLEED_SIZES, PHOTO_QUALITY } from '../../assets/images';
+import { type Locale } from '../../i18n/routes';
 import CtaPanel from '../CtaPanel.astro';
 
 interface Props { locale: Locale }
@@ -14,7 +16,7 @@ const steps = c.steps;
   <section class="panel panel--ink" style="--i:1" data-section-theme="dark">
     <div class="panel__card mhero">
       <div class="mhero__media">
-        <img class="mhero__img" src={withBase('/images/method.jpg')} alt="" fetchpriority="high" data-parallax />
+        <Image class="mhero__img" src={photos.method} width={fullBleedWidth(photos.method)} widths={fullBleedWidths(photos.method)} sizes={FULL_BLEED_SIZES} format="webp" quality={PHOTO_QUALITY} alt="" fetchpriority="high" loading="eager" decoding="async" data-parallax />
         <div class="mhero__scrim"></div>
       </div>
       <div class="container mhero__inner">
@@ -54,7 +56,7 @@ const steps = c.steps;
   {/* 03 — bandeau photo */}
   <section class="panel panel--ink" style="--i:3" data-section-theme="dark">
     <div class="panel__card photoband">
-      <img class="photoband__img" src={withBase('/images/home.jpg')} alt="" loading="lazy" data-parallax />
+      <Image class="photoband__img" src={photos.home} width={fullBleedWidth(photos.home)} widths={fullBleedWidths(photos.home)} sizes={FULL_BLEED_SIZES} format="webp" quality={PHOTO_QUALITY} alt="" loading="lazy" decoding="async" data-parallax />
       <div class="photoband__scrim"></div>
       <div class="container photoband__inner">
         <span class="photoband__eyebrow" data-reveal>{c.band.eyebrow}</span>

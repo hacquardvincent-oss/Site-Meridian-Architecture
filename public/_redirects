@@ -1,13 +1,74 @@
 # Redirections Cloudflare Pages (301). Première règle qui matche = gagne.
+#
+# IMPORTANT — ce fichier n'est lu QUE par Cloudflare Pages / Netlify.
+# GitHub Pages l'ignore totalement : tant que le DNS pointe sur GitHub,
+# aucune de ces règles n'est active et les anciennes URL renvoient 404.
+# (Constaté le 9 oct. 2026 : /fr/, /fr/solutions/, /concept/ = 404.)
+#
+# Le site a connu TROIS schémas d'URL successifs. Les deux premiers sont
+# encore connus de Google — 23 URL en « Détectée, actuellement non indexée »
+# dans la Search Console au 9 oct. 2026, toutes mortes :
+#
+#   1. anglais à la racine        /tools/plm/        /method/   /privacy/
+#   2. français préfixé /fr       /fr/outils/plm/    + anglais toujours à la racine
+#   3. actuel                     /outils/plm/  (FR racine)  +  /en/tools/plm/  (EN)
+#
+# Règle de mapping : on conserve la langue. Une ancienne URL anglaise part
+# vers son équivalent anglais sous /en/, pas vers la page française — sinon
+# on dit à Google qu'une page anglaise est devenue française, ce qui brouille
+# la grappe hreflang.
 
+# ---------------------------------------------------------------------------
+# Schéma 1 — anglais à la racine (14 URL en « détectée, non indexée »)
+# ---------------------------------------------------------------------------
+# Attention : /contact/ et /solutions/ appartenaient aussi à ce schéma, mais
+# ce sont aujourd'hui des pages FRANÇAISES vivantes (HTTP 200). Aucune règle
+# ne doit les capturer.
+/tools/                  /en/tools/                 301
+/tools                   /en/tools/                 301
+/method/                 /en/method/                301
+/method                  /en/method/                301
+/about/                  /en/about/                 301
+/about                   /en/about/                 301
+/privacy/                /en/privacy/               301
+/privacy                 /en/privacy/               301
+/legal-notice/           /en/legal-notice/          301
+/legal-notice            /en/legal-notice/          301
+/prototyping-an-idea/    /en/prototyping-an-idea/   301
+/prototyping-an-idea     /en/prototyping-an-idea/   301
+
+# Pages outils anglaises : les slugs n'ont pas changé, seul le préfixe arrive.
+/tools/*                 /en/tools/:splat           301
+
+# ---------------------------------------------------------------------------
 # « Le concept » est fusionné dans « Ce que nous automatisons ».
-/concept/        /solutions/       301
+# ---------------------------------------------------------------------------
+# /concept/ sans préfixe relevait du schéma 1, donc de l'anglais : la règle
+# /fr/concept/ existe séparément pour le français. Cible anglaise, par
+# cohérence avec le reste du schéma 1.
+/concept/        /en/solutions/    301
+/concept         /en/solutions/    301
 /en/concept/     /en/solutions/    301
-
-# Ancien schéma i18n : le français était préfixé /fr, il est désormais à la racine.
-# (les slugs n'ont pas changé, seul le préfixe disparaît — mapping 1:1)
+/en/concept      /en/solutions/    301
 /fr/concept/     /solutions/       301
 /fr/concept      /solutions/       301
+
+# ---------------------------------------------------------------------------
+# Schéma 2 — français préfixé /fr (9 URL en « détectée, non indexée »)
+# ---------------------------------------------------------------------------
+# Les slugs n'ont pas changé, seul le préfixe disparaît — mapping 1:1.
 /fr              /                 301
 /fr/             /                 301
+
+# Cibles avec slash final, pour éviter une chaîne de deux 301.
+/fr/solutions/           /solutions/              301
+/fr/outils/              /outils/                 301
+/fr/methode/             /methode/                301
+/fr/a-propos/            /a-propos/               301
+/fr/contact/             /contact/                301
+/fr/prototyper-une-idee/ /prototyper-une-idee/    301
+/fr/mentions-legales/    /mentions-legales/       301
+/fr/confidentialite/     /confidentialite/        301
+
+# Filet pour tout le reste de l'ancien préfixe (pages outils incluses).
 /fr/*            /:splat           301

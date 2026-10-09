@@ -1,6 +1,8 @@
 ---
 import { getContent } from '../../i18n/content';
-import { withBase, type Locale } from '../../i18n/routes';
+import { Image } from 'astro:assets';
+import { photos, fullBleedWidth, fullBleedWidths, FULL_BLEED_SIZES, PHOTO_QUALITY } from '../../assets/images';
+import { type Locale } from '../../i18n/routes';
 import CtaPanel from '../CtaPanel.astro';
 import ModuleGlyph from '../graphics/ModuleGlyph.astro';
 import PillarsGlyph from '../graphics/PillarsGlyph.astro';
@@ -18,7 +20,7 @@ const pillarBg = ['panel--paper', 'panel--alt', 'panel--paper'];
   <section class="panel" style="--i:1" data-hero data-section-theme="light">
     <div class="panel__card sfhero">
       <div class="sfhero__media">
-        <img class="sfhero__img" src={withBase('/images/solutions.jpg')} alt="" fetchpriority="high" data-parallax />
+        <Image class="sfhero__img" src={photos.solutions} width={fullBleedWidth(photos.solutions)} widths={fullBleedWidths(photos.solutions)} sizes={FULL_BLEED_SIZES} format="webp" quality={PHOTO_QUALITY} alt="" fetchpriority="high" loading="eager" decoding="async" data-parallax />
         <div class="sfhero__scrim"></div>
       </div>
       <div class="container sfhero__inner">
@@ -60,7 +62,7 @@ const pillarBg = ['panel--paper', 'panel--alt', 'panel--paper'];
   {/* 05 — bandeau photo */}
   <section class="panel panel--ink" style="--i:5" data-section-theme="dark">
     <div class="panel__card sfband">
-      <img class="sfband__img" src={withBase('/images/concept-alt.jpg')} alt="" loading="lazy" data-parallax />
+      <Image class="sfband__img" src={photos.conceptAlt} width={fullBleedWidth(photos.conceptAlt)} widths={fullBleedWidths(photos.conceptAlt)} sizes={FULL_BLEED_SIZES} format="webp" quality={PHOTO_QUALITY} alt="" loading="lazy" decoding="async" data-parallax />
       <div class="sfband__scrim"></div>
       <div class="container sfband__inner">
         <span class="sfband__eyebrow" data-reveal>{c.band.eyebrow}</span>
