@@ -1,6 +1,14 @@
 /** Routage bilingue FR (par défaut, sans préfixe) / EN (préfixe /en). */
 
 export const locales = ['en', 'fr'] as const;
+
+/**
+ * Date de dernière révision éditoriale du site (format ISO court).
+ * Sert de `<lastmod>` par défaut dans le sitemap. À remonter quand le
+ * contenu change réellement — pas à chaque build : un lastmod qui bouge
+ * sans que le contenu bouge finit par être ignoré par Google.
+ */
+export const CONTENT_UPDATED = '2026-10-09';
 export type Locale = (typeof locales)[number];
 export const defaultLocale: Locale = 'fr';
 
@@ -12,6 +20,8 @@ export interface RouteDef {
   labelEn: string;
   /** Masqué de la navigation (mais crawlable : canonical, hreflang, sitemap). */
   hidden?: boolean;
+  /** Révision propre à cette page, si elle diffère de CONTENT_UPDATED. */
+  updated?: string;
 }
 
 /** Pages du site, dans l'ordre de la navigation. */

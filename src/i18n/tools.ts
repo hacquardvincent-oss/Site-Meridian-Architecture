@@ -22,6 +22,8 @@ export interface Tool {
   steps: string[];   // Comment ça fonctionne ?
   withMeridian: string; // Avec Meridian
   faq: ToolFaq[];
+  /** Révision propre à cet outil, si elle diffère de CONTENT_UPDATED. */
+  updated?: string;
 }
 
 const fr: Tool[] = [

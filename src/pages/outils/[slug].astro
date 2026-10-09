@@ -10,7 +10,9 @@ export function getStaticPaths() {
 }
 
 const { tool } = Astro.props;
-const altPaths = { fr: `/fr/outils/${tool.slug}/`, en: `/tools/${tool.slug}/` };
+// Schéma i18n courant : FR à la racine, EN sous /en (cf. routes.ts).
+// Ces chemins alimentent canonical + hreflang : toute erreur ici désindexe la page.
+const altPaths = { fr: `/outils/${tool.slug}/`, en: `/en/tools/${tool.slug}/` };
 const faqLd = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',

@@ -300,3 +300,49 @@ GitHub Pages ne sait pas faire de 301. Deux options :
 - Aggarwal et al., *GEO: Generative Engine Optimization* — Princeton / Georgia
   Tech / AI2, ACM KDD 2024
 - Pew Research Center — comportement de clic en présence d'un résumé IA
+
+---
+
+## Journal de résolution
+
+### 9 octobre 2026 — Phase 0 exécutée (arbitrage : « lance maintenant »)
+
+| Anomalie | État | Correctif |
+|---|---|---|
+| **P0** canonical → 404 sur 16 pages | **Corrigé** | `altPaths` réalignés sur le schéma i18n courant dans `src/pages/outils/[slug].astro` et `src/pages/en/tools/[slug].astro`, avec un commentaire d'avertissement pour éviter la récidive |
+| `/styleguide/`, `/brand/`, `404` indexables avec canonical vers `/` | **Corrigé** | Prop `noindex` ajoutée à `Base.astro`. Elle émet `noindex, follow` **et supprime canonical + hreflang** : un `noindex` accompagné d'un canonical pointant ailleurs risque de propager le noindex à la page cible — ici la page d'accueil |
+| Sitemap sans `<lastmod>` | **Corrigé** | `CONTENT_UPDATED` dans `routes.ts` + champ `updated?` facultatif par route et par outil. Volontairement **pas** la date de build : un `lastmod` qui bouge sans que le contenu bouge finit par être ignoré par Google |
+| **P1** redirections inactives | **Préparé, pas encore actif** | `public/_redirects` complété (`/concept` et `/en/concept` sans slash final n'étaient pas couverts ; cibles avec slash pour éviter les chaînes de deux 301) + `public/_headers` créé. **Inactif tant que le DNS pointe sur GitHub Pages** — voir `MIGRATION-CLOUDFLARE.md` |
+
+#### Vérifications automatisées sur le build (40 pages)
+
+```
+39 pages analysées (index.html) — 0 anomalie
+  · chaque canonical est auto-référent et résout vers une page existante
+  · 0 problème de réciprocité hreflang
+  · sitemap : 34 URL, 34 <lastmod>, 0 URL introuvable dans le build
+  · pages indexables : 34 — 0 absente du sitemap
+  · 404.html : noindex, follow + aucun canonical
+  · dist/_redirects et dist/_headers présents
+```
+
+#### Arbitrages du client, contraires à ma recommandation
+
+Consignés pour la mémoire du projet — à réévaluer sur données réelles.
+
+1. **Version EN conservée à l'index** (je recommandais `noindex`). 17 pages de
+   traduction pour une activité « France · à distance », sans backlink ni demande
+   EN identifiée. À revoir si la Search Console montre ces pages en
+   « Explorée, actuellement non indexée ».
+2. **Approfondissement des 8 pages de définitions** (je recommandais le pivot
+   vers des cas clients chiffrés). Concurrence : Akeneo, Quable, Sage, SAP, avec
+   2 000 à 4 000 mots et une autorité établie ; domaine de 4 mois ; intention
+   d'achat nulle sur ces requêtes. Reste à faire.
+
+#### Non traité à ce stade
+
+- Images : 702 Ko pour `hero.jpg`, 0 WebP/AVIF, `astro:assets` non utilisé,
+  0 attribut `width`/`height` (CLS).
+- Core Web Vitals réels : non mesurés (quota de l'API PageSpeed épuisé le 9 oct.).
+- Phase 2 (confiance et entité) : SIREN, LinkedIn, `sameAs`, identité sur
+  `/a-propos/`, schéma `ProfessionalService`. **C'est le verrou n°1 restant.**

@@ -1,27 +1,41 @@
 import type { APIRoute } from 'astro';
-import { routes, pathFor, withBase } from '../i18n/routes';
+import { routes, pathFor, withBase, CONTENT_UPDATED } from '../i18n/routes';
 import { getTools } from '../i18n/tools';
 
 const FALLBACK = new URL('https://meridian-architecture.com');
+
+interface Entry {
+  fr: string;
+  en: string;
+  lastmod: string;
+}
 
 export const GET: APIRoute = ({ site }) => {
   const base = site ?? FALLBACK;
   const abs = (path: string) => new URL(path, base).href;
 
   // Pages statiques (issues des routes déclarées).
-  const routePairs = routes.map((r) => ({ fr: abs(pathFor(r.id, 'fr')), en: abs(pathFor(r.id, 'en')) }));
-
-  // Pages dynamiques : une page de contexte par outil (FR + EN).
-  const toolPairs = getTools('fr').map((t) => ({
-    fr: abs(withBase(`/outils/${t.slug}/`)),
-    en: abs(withBase(`/en/tools/${t.slug}/`)),
+  const routeEntries: Entry[] = routes.map((r) => ({
+    fr: abs(pathFor(r.id, 'fr')),
+    en: abs(pathFor(r.id, 'en')),
+    lastmod: r.updated ?? CONTENT_UPDATED,
   }));
 
-  const entries = [...routePairs, ...toolPairs]
-    .flatMap(({ fr, en }) => [fr, en].map((loc) => ({ loc, fr, en })))
+  // Pages dynamiques : une page de contexte par outil (FR + EN).
+  // Les chemins doivent rester alignés sur altPaths dans outils/[slug].astro
+  // et en/tools/[slug].astro — sitemap et canonical doivent dire la même chose.
+  const toolEntries: Entry[] = getTools('fr').map((t) => ({
+    fr: abs(withBase(`/outils/${t.slug}/`)),
+    en: abs(withBase(`/en/tools/${t.slug}/`)),
+    lastmod: t.updated ?? CONTENT_UPDATED,
+  }));
+
+  const entries = [...routeEntries, ...toolEntries]
+    .flatMap(({ fr, en, lastmod }) => [fr, en].map((loc) => ({ loc, fr, en, lastmod })))
     .map(
-      ({ loc, fr, en }) => `  <url>
+      ({ loc, fr, en, lastmod }) => `  <url>
     <loc>${loc}</loc>
+    <lastmod>${lastmod}</lastmod>
     <xhtml:link rel="alternate" hreflang="fr" href="${fr}"/>
     <xhtml:link rel="alternate" hreflang="en" href="${en}"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="${fr}"/>

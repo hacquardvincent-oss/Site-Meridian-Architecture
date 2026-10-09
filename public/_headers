@@ -1,0 +1,23 @@
+# En-têtes Cloudflare Pages. Ignorés par GitHub Pages.
+
+# Polices et images : immuables en pratique (noms de fichiers stables,
+# remplacés manuellement). Un an de cache navigateur + CDN.
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/images/*
+  Cache-Control: public, max-age=604800
+
+/brand/*
+  Cache-Control: public, max-age=604800
+
+# Assets générés par Astro : empreinte dans le nom → cache agressif.
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# HTML : revalidation systématique, pour qu'une correction soit visible
+# immédiatement par Googlebot comme par un visiteur.
+/*
+  Cache-Control: public, max-age=0, must-revalidate
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
