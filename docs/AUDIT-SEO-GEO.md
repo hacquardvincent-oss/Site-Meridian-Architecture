@@ -575,3 +575,71 @@ Références /images/*.jpg cassées     : 0
 - **Core Web Vitals réels** : toujours pas mesurés (quota de l'API PageSpeed
   épuisé le 9 oct.). Les chiffres ci-dessus sont des poids de transfert, pas
   des LCP terrain. À confirmer dans la Search Console une fois le site basculé.
+
+### 9 octobre 2026 — Données Search Console réelles, et une lacune de mes redirections
+
+Données transmises par une autre session d'audit, à partir de captures de la
+Search Console que Vincent lui a montrées. **Premier chiffre réel du dossier** —
+tout ce qui précède était mesuré sur le site servi, pas dans la Search Console.
+
+| État | Nombre |
+|---|---|
+| Détectée, actuellement non indexée | **23** |
+| Page avec redirection | 2 |
+| Autre page avec balise canonique | 2 |
+| Introuvable (404) | 1 |
+| Explorée, actuellement non indexée | 1 |
+
+#### Ce que révèlent les 23
+
+Le site a connu **trois** schémas d'URL successifs, pas deux. Je n'en avais
+identifié que deux en lisant le dépôt.
+
+| Schéma | Forme | URL connues de Google |
+|---|---|---|
+| 1 — anglais à la racine | `/tools/plm/`, `/method/`, `/privacy/` | 14 |
+| 2 — français préfixé `/fr` | `/fr/outils/plm/` | 9 |
+| 3 — actuel | `/outils/plm/` + `/en/tools/plm/` | — |
+
+« Dernière exploration : sans objet » sur les 23 : Google les connaît et ne les
+a jamais téléchargées. L'unique 404 du rapport, `/fr/solutions/`, exploré le
+5 octobre, est le premier de la file — les autres suivront.
+
+#### La lacune
+
+Mes `_redirects` ne couvraient que le schéma 2 et `/concept/`. Vérifié sur la
+prévisualisation Cloudflare : **13 des 14 URL du schéma 1 renvoyaient encore
+404**, redirections actives. Elles seraient restées mortes après la bascule du
+domaine.
+
+Ajouté : `/tools/*`, `/tools/`, `/method/`, `/about/` (non listée par la Search
+Console mais relevant du même schéma), `/privacy/`, `/legal-notice/`,
+`/prototyping-an-idea/`, avec les variantes sans slash final.
+
+**Règle de mapping retenue : on conserve la langue.** Une ancienne URL anglaise
+part vers son équivalent sous `/en/`, pas vers la page française — sinon on
+annonce à Google qu'une page anglaise est devenue française, ce qui brouille la
+grappe hreflang. Par cohérence, `/concept/` passe de `/solutions/` à
+`/en/solutions/` : la règle `/fr/concept/` existe séparément, donc `/concept/`
+sans préfixe relevait bien de l'anglais.
+
+Simulation sur les 22 URL mortes : **0 non couverte**. Et les 4 pages vivantes
+testées (`/contact/`, `/solutions/`, `/outils/plm/`, `/en/tools/plm/`) ne
+capturent aucune règle.
+
+#### Un point qui n'est pas un problème de redirection
+
+`/contact/` figure dans le rapport, mais c'est une **page française vivante**
+(HTTP 200). Une page vivante en « détectée, actuellement non indexée » signifie
+que Google connaît l'URL et ne l'a jamais explorée. Ce n'est pas un défaut
+technique : c'est un signal d'autorité et de budget d'exploration — le même
+verrou que le SIREN, `sameAs` vide et l'absence de trace en ligne.
+
+Les 2 « page avec redirection » sont `http://www.` et `https://www.` :
+consolidation d'hôte normale, vérifiée en 301 vers l'apex.
+
+#### Ce qui manque encore
+
+**Le nombre de pages indexées**, en haut du même écran de la Search Console. Les
+23 étant toutes obsolètes, elles ne disent rien de l'état des vraies pages.
+C'est ce chiffre qui dira si `/outils/plm/` et `/methode/` sont dans l'index.
