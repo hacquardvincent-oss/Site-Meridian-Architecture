@@ -10,23 +10,72 @@ Tout se fait depuis une interface web. Aucune commande à taper.
 
 ---
 
-## Ce qui est déjà prêt dans le dépôt
+## État réel au 9 octobre 2026, après vérification
 
-| Fichier | Rôle | État |
-|---|---|---|
-| `public/_redirects` | 301 des anciennes URL (`/fr/*`, `/concept/`) | ✅ complété, couverture vérifiée |
-| `public/_headers` | `Cache-Control`, `X-Content-Type-Options`, `Referrer-Policy` | ✅ créé |
-| `astro.config.mjs` | `site` = domaine final par défaut | ✅ aucun changement requis |
-| `.nvmrc` | Node 20 | ✅ lu par Cloudflare |
-| `package.json` | `npm run build` → `dist` | ✅ détecté automatiquement |
+Le mode opératoire a d'abord été écrit en supposant qu'il fallait créer le
+projet Cloudflare. **C'est déjà fait.** Vérifié sur la pull request : le projet
+`site-meridian-architecture` est connecté au dépôt, construit à chaque commit,
+et publie une prévisualisation.
+
+| Élément | État |
+|---|---|
+| Projet Cloudflare Pages connecté au dépôt | ✅ existe (`site-meridian-architecture`) |
+| Build automatique sur chaque commit | ✅ fonctionne |
+| `public/_redirects` — 9 règles de 301 | ✅ **testées sur le déploiement réel, toutes en 301** |
+| `public/_headers` — cache et sécurité | ✅ corrigé après test (voir plus bas) |
+| `astro.config.mjs` — `site` = domaine final | ✅ aucun changement requis |
+| `.nvmrc` — Node 20 | ✅ lu par Cloudflare |
+| **Domaine `meridian-architecture.com`** | ❌ **sert encore depuis GitHub Pages** (`server: GitHub.com`) |
+
+C'est la dernière ligne qui bloque : tant que le DNS pointe sur GitHub, aucune
+redirection 301 n'est active en production. Vérifié à l'instant : `/fr/` renvoie
+toujours 404 sur le vrai domaine.
+
+### Tests déjà passés sur la prévisualisation Cloudflare
+
+Ce sont les tests de l'étape 2 ci-dessous. Ils ont été exécutés sur
+`claude-amazing-shannon-1m1mf.site-meridian-architecture.pages.dev` :
+
+```
+/fr/              301 -> /                 /concept/      301 -> /solutions/
+/fr               301 -> /                 /concept       301 -> /solutions/
+/fr/solutions/    301 -> /solutions/        /en/concept/   301 -> /en/solutions/
+/fr/outils/pim/   301 -> /outils/pim/       /en/concept    301 -> /en/solutions/
+/fr/methode/      301 -> /methode/
+/outils/pim/      200, canonical = https://meridian-architecture.com/outils/pim/
+/styleguide/      200, noindex, follow, aucun canonical
+/sitemap.xml      200, 34 <lastmod>
+/page-inexistante/ 404
+```
+
+Rien à revérifier avant la bascule : il reste le domaine et le DNS.
+
+### Un piège trouvé en testant, et corrigé
+
+**Cloudflare Pages cumule toutes les règles `_headers` qui correspondent à une
+URL.** Ce n'est pas « première règle gagnante » comme dans `_redirects`. Une
+directive `Cache-Control` placée dans le bloc `/*` s'ajoutait donc à celles des
+blocs spécifiques :
+
+```
+/fonts/*.woff2  cache-control: public, max-age=31536000, immutable,
+                               public, max-age=0, must-revalidate
+```
+
+Un en-tête avec deux `max-age` est invalide, et le plus restrictif l'emporte en
+pratique : polices et images n'étaient pas mises en cache du tout — pire que de
+ne rien déclarer. Le bloc `/*` ne porte plus que les en-têtes de sécurité, et
+l'avertissement est consigné en tête du fichier.
+
+Cela n'aurait pas été visible en relisant le fichier. C'est l'argument pour
+tester sur la plateforme plutôt que sur le code.
 
 ---
 
-## Étape 1 — Créer le projet Cloudflare Pages
+## Si le projet Cloudflare devait être recréé
 
-1. Ouvrir **dash.cloudflare.com** → menu de gauche : **Workers & Pages** → **Create** → onglet **Pages** → **Connect to Git**.
-2. Autoriser Cloudflare sur le compte GitHub `hacquardvincent-oss`, puis choisir le dépôt **`Site-Meridian-Architecture`**.
-3. Renseigner la configuration de build :
+1. **dash.cloudflare.com** → **Workers & Pages** → **Create** → onglet **Pages** → **Connect to Git**.
+2. Autoriser Cloudflare sur le compte GitHub `hacquardvincent-oss`, puis choisir **`Site-Meridian-Architecture`**.
 
    | Champ | Valeur |
    |---|---|
@@ -39,25 +88,21 @@ Tout se fait depuis une interface web. Aucune commande à taper.
 
    > ⚠️ **Il n'y a pas de branche `main` dans ce dépôt.** La branche par défaut,
    > et la seule effectivement déployée aujourd'hui, est
-   > `claude/eloquent-goodall-Zehcn` (vérifié le 9 oct. 2026 :
-   > `git ls-remote --symref origin HEAD`). C'est elle qu'il faut déclarer comme
-   > *production branch*, sinon Cloudflare construira une branche vide ou
-   > inexistante.
+   > `claude/eloquent-goodall-Zehcn`. C'est elle qu'il faut déclarer comme
+   > *production branch*.
 
-4. **Variables d'environnement : aucune à ajouter.** `astro.config.mjs` utilise
+3. **Variables d'environnement : aucune à ajouter.** `astro.config.mjs` utilise
    déjà `https://meridian-architecture.com` par défaut. N'ajoutez **surtout pas**
    `BASE_PATH` : il n'existe que pour le sous-dossier de GitHub Pages et casserait
    tous les chemins.
-5. **Save and Deploy.** Le premier build prend 1 à 2 minutes.
-
-À la fin, Cloudflare donne une URL de test du type
-`meridian-architecture.pages.dev`.
 
 ---
 
 ## Étape 2 — Vérifier sur l'URL `.pages.dev` AVANT de toucher au DNS
 
-C'est l'étape qui évite toute coupure. Dans un navigateur, sur l'URL `.pages.dev` :
+**Déjà fait** pour la branche de travail (résultats ci-dessus). À refaire une
+fois la branche fusionnée, sur l'URL de production `.pages.dev`, avant de
+toucher au DNS. C'est l'étape qui évite toute coupure.
 
 | À tester | Résultat attendu |
 |---|---|

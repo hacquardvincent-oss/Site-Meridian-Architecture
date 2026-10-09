@@ -432,3 +432,39 @@ concurrence plus faible.
 
 À mesurer dans la Search Console sous 6 à 8 semaines, requête par requête,
 plutôt qu'au volume global.
+
+### 9 octobre 2026 — Validation sur déploiement Cloudflare réel
+
+Découvert en ouvrant la pull request : **un projet Cloudflare Pages
+(`site-meridian-architecture`) était déjà connecté au dépôt.** Le mode
+opératoire a été corrigé en conséquence — l'étape de création n'était pas à
+faire. Le domaine, lui, sert toujours depuis GitHub Pages (`server: GitHub.com`,
+vérifié), donc les 301 restent inactifs en production.
+
+Les 9 règles de `_redirects` ont été testées sur la prévisualisation Cloudflare
+de la branche : **toutes répondent en 301**, vers la bonne cible, sans chaîne.
+
+#### Anomalie trouvée en test, invisible à la relecture du code
+
+**Cloudflare Pages cumule toutes les règles `_headers` qui correspondent à une
+URL** — ce n'est pas « première règle gagnante » comme dans `_redirects`. Le
+`Cache-Control` du bloc `/*` s'ajoutait à celui des blocs spécifiques :
+
+```
+avant   /fonts/*.woff2  cache-control: public, max-age=31536000, immutable,
+                                       public, max-age=0, must-revalidate
+        /images/*.jpg   cache-control: public, max-age=604800,
+                                       public, max-age=0, must-revalidate
+
+après   /fonts/*.woff2  cache-control: public, max-age=31536000, immutable
+        /images/*.jpg   cache-control: public, max-age=604800
+        /outils/pim/    cache-control: public, max-age=0, must-revalidate
+```
+
+Un en-tête à deux `max-age` est invalide et le plus restrictif l'emporte :
+polices et images n'étaient pas mises en cache du tout. Pire que de ne rien
+déclarer. Corrigé et revérifié sur le déploiement : une seule occurrence de
+`max-age` par ressource.
+
+**À retenir pour les prochains projets : un fichier `_headers` ou `_redirects`
+ne se valide pas en le relisant, il se valide en interrogeant la plateforme.**
