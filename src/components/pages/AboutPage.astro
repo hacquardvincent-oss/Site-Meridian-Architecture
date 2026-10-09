@@ -15,7 +15,7 @@ const c = getContent(locale).about;
   <section class="panel panel--ink" style="--i:1" data-section-theme="dark">
     <div class="panel__card ahero">
       <div class="ahero__media">
-        <Image class="ahero__img" src={photos.about} width={fullBleedWidth(photos.about)} widths={fullBleedWidths(photos.about)} sizes={FULL_BLEED_SIZES} format="webp" quality={PHOTO_QUALITY} alt="" fetchpriority="high" loading="eager" decoding="sync" data-parallax />
+        <Image class="ahero__img" src={photos.about} width={fullBleedWidth(photos.about)} widths={fullBleedWidths(photos.about)} sizes={FULL_BLEED_SIZES} format="webp" quality={PHOTO_QUALITY} alt="" fetchpriority="high" loading="eager" decoding="async" data-parallax />
         <div class="ahero__scrim"></div>
       </div>
       <div class="container ahero__inner">

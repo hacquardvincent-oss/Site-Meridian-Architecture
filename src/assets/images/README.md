@@ -34,7 +34,7 @@ import { photos, fullBleedWidth, fullBleedWidths, FULL_BLEED_SIZES, PHOTO_QUALIT
 <Image class="hero__img" src={photos.hero}
        width={fullBleedWidth(photos.hero)} widths={fullBleedWidths(photos.hero)}
        sizes={FULL_BLEED_SIZES} format="webp" quality={PHOTO_QUALITY}
-       alt="" fetchpriority="high" loading="eager" decoding="sync" />
+       alt="" fetchpriority="high" loading="eager" decoding="async" />
 ```
 
 ## Deux pièges, vérifiés en production
@@ -42,8 +42,13 @@ import { photos, fullBleedWidth, fullBleedWidths, FULL_BLEED_SIZES, PHOTO_QUALIT
 - **`<Image>` met `loading="lazy"` par défaut.** Sur l'image la plus grande de
   l'écran d'accueil — celle que Google mesure comme LCP — c'est l'inverse de ce
   qu'on veut, et ça contredit un `fetchpriority="high"`. Toute photo visible
-  sans faire défiler prend `loading="eager" decoding="sync"` explicitement.
-  Les bandeaux plus bas gardent `loading="lazy" decoding="async"`.
+  sans faire défiler prend `loading="eager"` explicitement. Les bandeaux plus
+  bas gardent `loading="lazy"`.
+- **`decoding` reste sur `async` partout**, y compris sur le hero. `sync` est
+  parfois conseillé pour l'image LCP, mais il fait décoder sur le thread
+  principal : sur une variante de 288 Ko, c'est un risque réel sur l'INP pour
+  un gain LCP marginal et débattu. `loading` et `fetchpriority` sont les deux
+  leviers qui comptent ; `decoding` n'en est pas un.
 - **`widths` ne pilote que le `srcset`.** Sans `width`, Astro génère aussi un
   `src` de repli à la taille de la source : 486 Ko que personne ne télécharge
   mais qui sont tout de même produits et déployés. D'où le `width` explicite.

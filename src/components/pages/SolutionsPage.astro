@@ -20,7 +20,7 @@ const pillarBg = ['panel--paper', 'panel--alt', 'panel--paper'];
   <section class="panel" style="--i:1" data-hero data-section-theme="light">
     <div class="panel__card sfhero">
       <div class="sfhero__media">
-        <Image class="sfhero__img" src={photos.solutions} width={fullBleedWidth(photos.solutions)} widths={fullBleedWidths(photos.solutions)} sizes={FULL_BLEED_SIZES} format="webp" quality={PHOTO_QUALITY} alt="" fetchpriority="high" loading="eager" decoding="sync" data-parallax />
+        <Image class="sfhero__img" src={photos.solutions} width={fullBleedWidth(photos.solutions)} widths={fullBleedWidths(photos.solutions)} sizes={FULL_BLEED_SIZES} format="webp" quality={PHOTO_QUALITY} alt="" fetchpriority="high" loading="eager" decoding="async" data-parallax />
         <div class="sfhero__scrim"></div>
       </div>
       <div class="container sfhero__inner">
